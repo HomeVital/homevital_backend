@@ -1,0 +1,6 @@
+@HomeVital.API_HostAddress = http://localhost:5118
+
+GET {{HomeVital.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
