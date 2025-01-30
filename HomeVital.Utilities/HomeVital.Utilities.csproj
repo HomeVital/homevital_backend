@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HomeVital.Models\HomeVital.Models.csproj" />
-    <ProjectReference Include="..\HomeVital.Repositories\HomeVital.Repositories.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
   </ItemGroup>
