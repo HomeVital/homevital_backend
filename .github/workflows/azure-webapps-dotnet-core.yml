@@ -55,6 +55,9 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Create output directory
+        run: mkdir -p ${{env.DOTNET_ROOT}}/myapp
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
