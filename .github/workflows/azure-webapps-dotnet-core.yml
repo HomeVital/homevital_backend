@@ -59,7 +59,7 @@ jobs:
         run: mkdir -p ${{env.DOTNET_ROOT}}/myapp
 
       - name: dotnet publish
-        run: dotnet publish ../HomeVital.API/HomeVital.API.csproj -c Release -o /usr/share/dotnet/myapp
+        run: dotnet publish /HomeVital.API/HomeVital.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
