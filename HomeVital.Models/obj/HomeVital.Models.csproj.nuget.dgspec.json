@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {}
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {}
   },
   "projects": {
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
+        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
         "projectName": "HomeVital.Models",
-        "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
-        "packagesPath": "/Users/thorir/.nuget/packages/",
-        "outputPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/obj/",
+        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
+        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/thorir/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
