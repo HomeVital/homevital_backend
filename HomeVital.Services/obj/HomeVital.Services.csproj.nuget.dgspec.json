@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Services/HomeVital.Services.csproj": {}
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Services\\HomeVital.Services.csproj": {}
   },
   "projects": {
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
+        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
         "projectName": "HomeVital.Models",
-        "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
-        "packagesPath": "/Users/thorir/.nuget/packages/",
-        "outputPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/obj/",
+        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
+        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/thorir/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,21 +58,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/HomeVital.Repositories.csproj": {
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\HomeVital.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/HomeVital.Repositories.csproj",
+        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\HomeVital.Repositories.csproj",
         "projectName": "HomeVital.Repositories",
-        "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/HomeVital.Repositories.csproj",
-        "packagesPath": "/Users/thorir/.nuget/packages/",
-        "outputPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/obj/",
+        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\HomeVital.Repositories.csproj",
+        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/thorir/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -84,11 +84,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
-                "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj"
+              "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
+                "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj"
               },
-              "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/HomeVital.Utilities.csproj": {
-                "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/HomeVital.Utilities.csproj"
+              "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\HomeVital.Utilities.csproj": {
+                "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\HomeVital.Utilities.csproj"
               }
             }
           }
@@ -149,21 +149,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Services/HomeVital.Services.csproj": {
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Services\\HomeVital.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Services/HomeVital.Services.csproj",
+        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Services\\HomeVital.Services.csproj",
         "projectName": "HomeVital.Services",
-        "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Services/HomeVital.Services.csproj",
-        "packagesPath": "/Users/thorir/.nuget/packages/",
-        "outputPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Services/obj/",
+        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Services\\HomeVital.Services.csproj",
+        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/thorir/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -175,11 +175,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
-                "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj"
+              "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
+                "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj"
               },
-              "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/HomeVital.Repositories.csproj": {
-                "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Repositories/HomeVital.Repositories.csproj"
+              "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\HomeVital.Repositories.csproj": {
+                "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Repositories\\HomeVital.Repositories.csproj"
               }
             }
           }
@@ -224,21 +224,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/HomeVital.Utilities.csproj": {
+    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\HomeVital.Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/HomeVital.Utilities.csproj",
+        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\HomeVital.Utilities.csproj",
         "projectName": "HomeVital.Utilities",
-        "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/HomeVital.Utilities.csproj",
-        "packagesPath": "/Users/thorir/.nuget/packages/",
-        "outputPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Utilities/obj/",
+        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\HomeVital.Utilities.csproj",
+        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Utilities\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/thorir/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -250,8 +250,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
-                "projectPath": "/Users/thorir/Desktop/lokaverkefni/homevital_backend/HomeVital.Models/HomeVital.Models.csproj"
+              "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
+                "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj"
               }
             }
           }
@@ -296,7 +296,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
