@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - HomeVital-API
+name: Build and deploy ASP.Net Core app to Azure Web App - HomeVital-API-MAIN
 
 on:
   push:
