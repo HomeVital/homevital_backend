@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {}
+    "/Users/thorir/Desktop/HomeVital/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj": {
+    "/Users/thorir/Desktop/HomeVital/homevital_backend/HomeVital.Models/HomeVital.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
+        "projectUniqueName": "/Users/thorir/Desktop/HomeVital/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
         "projectName": "HomeVital.Models",
-        "projectPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\HomeVital.Models.csproj",
-        "packagesPath": "C:\\Users\\sindr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sindr\\Desktop\\Forritun\\LokaVerkefni\\homevital_backend\\HomeVital.Models\\obj\\",
+        "projectPath": "/Users/thorir/Desktop/HomeVital/homevital_backend/HomeVital.Models/HomeVital.Models.csproj",
+        "packagesPath": "/Users/thorir/.nuget/packages/",
+        "outputPath": "/Users/thorir/Desktop/HomeVital/homevital_backend/HomeVital.Models/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sindr\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/thorir/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
