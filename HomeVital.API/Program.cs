@@ -39,4 +39,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-app.Run("http://0.0.0.0:80"); //Run on port 80
+app.Run("http://*:80"); //Run on port 80
