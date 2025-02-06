@@ -35,8 +35,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.MapControllers();
-app.Run("https://0.0.0.0:443"); //Run on port 80
+app.Run("http://0.0.0.0:80"); //Run on port 80
