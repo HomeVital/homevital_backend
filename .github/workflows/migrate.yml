@@ -24,32 +24,30 @@ jobs:
 
       - name: Set database connection string
         run: |
+          echo "Checking branch: ${{ github.ref_name }}"
+      
+          # Ensure variable is assigned safely
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            CONNECTION_STRING="${{ secrets.PROD_CONNECTION_STRING }}"
+            echo "Using production connection string"
+            echo "DB_CONNECTION_STRING=${{ secrets.PROD_CONNECTION_STRING }}" >> $GITHUB_ENV
           else
-            CONNECTION_STRING="${{ secrets.DEV_CONNECTION_STRING }}"
+            echo "Using development connection string"
+            echo "DB_CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}" >> $GITHUB_ENV
           fi
-          
-          # Debug: Print connection string before modifying it (Masked)
-          echo "Raw Connection String (First 30 chars): ${CONNECTION_STRING:0:30}"
       
-          # Ensure the string is stored correctly in the environment variable
-          echo "DB_CONNECTION_STRING=$(echo "$CONNECTION_STRING" | tr -d '\n' | tr -d '\r')" >> $GITHUB_ENV
-      
-          # Debug: Print masked stored connection string
-          echo "Using stored connection string (First 30 chars): ${DB_CONNECTION_STRING:0:30}"
+          # Debugging - Print first 50 characters of the stored string
+          echo "Stored connection string (masked): ${DB_CONNECTION_STRING:0:50}..."
 
       - name: Apply EF Core Migrations
         run: |
           cd HomeVital.API
-          echo "Running migration with connection string (masked): ${DB_CONNECTION_STRING:0:30}..."
+          echo "Running migration with connection string (masked): ${DB_CONNECTION_STRING:0:50}..."
         
-          # Ensure PostgreSQL connection string is properly formatted
+          # ✅ Escape semicolons to prevent errors
           CONNECTION_STRING_ESCAPED=$(echo "$DB_CONNECTION_STRING" | sed 's/;/\\;/g')
         
           # Debug: Print escaped connection string
-          echo "Escaped Connection String (First 30 chars): ${CONNECTION_STRING_ESCAPED:0:30}"
+          echo "Escaped Connection String (First 50 chars): ${CONNECTION_STRING_ESCAPED:0:50}"
         
-          # Run EF Core migration
+          # ✅ Use the escaped connection string safely
           dotnet ef database update --connection "$CONNECTION_STRING_ESCAPED" --project ../HomeVital.Repositories --startup-project .
-          
