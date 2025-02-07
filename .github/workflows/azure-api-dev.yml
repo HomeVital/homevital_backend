@@ -46,11 +46,10 @@ jobs:
           name: .net-app
 
 
-      - name: Set Azure Web App Environmet Variables (DEV)
+      - name: Set Azure Web App Environment Variables (DEV)
         run: |
-          az webapp config appsettings set --name homevital-api-dev --resource-group HomeVital_harmony \
-              --settings ConnectionStrings__Default=${{ secrets.DEV_CONNECTION_STRING }} \
-                         ASPNETCORE_ENVIRONMENT=Development
+          az webapp config appsettings set --name homevital-api-dev --resource-group HomeVital_harmony --settings "ConnectionStrings__Default=${{ secrets.DEV_CONNECTION_STRING }}"
+        shell: bash
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp

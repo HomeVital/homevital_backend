@@ -47,9 +47,8 @@ jobs:
 
       - name: Set Azure Web App Environment Variables (PROD)
         run: |
-          az webapp config appsettings set --name homevital-api --resource-group HomeVital_harmony \
-              --settings ConnectionStrings__Default=${{ secrets.PROD_CONNECTION_STRING }} \
-                         ASPNETCORE_ENVIRONMENT=Production
+          az webapp config appsettings set --name homevital-api-dev --resource-group HomeVital_harmony --settings "ConnectionStrings__Default=${{ secrets.PROD_CONNECTION_STRING }}"
+        shell: bash
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp

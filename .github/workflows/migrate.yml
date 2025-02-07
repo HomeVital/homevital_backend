@@ -25,12 +25,12 @@ jobs:
       - name: Set database connection string
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "DB_CONNECTION_STRING=${{ secrets.PROD_CONNECTION_STRING }}" >> $GITHUB_ENV
+            echo "DB_CONNECTION_STRING='${{ secrets.PROD_CONNECTION_STRING }}'" >> $GITHUB_ENV
           else
-            echo "DB_CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}" >> $GITHUB_ENV
+            echo "DB_CONNECTION_STRING='${{ secrets.DEV_CONNECTION_STRING }}'" >> $GITHUB_ENV
           fi
       
-          echo "Using connection string: $DB_CONNECTION_STRING" 
+          echo "Using connection string: ${DB_CONNECTION_STRING:0:10}..."
 
       - name: Apply EF Core Migrations
         run: |
