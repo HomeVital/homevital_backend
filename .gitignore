@@ -5,8 +5,10 @@ bin/
 /obj/
 
 # To Enable connection to local Database while testing
+
 # Ignore appsettings.json to prevent committing secrets
 HomeVital.API/appsettings.json
+
 
 # Common node modules locations
 /node_modules
