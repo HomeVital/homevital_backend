@@ -16,11 +16,28 @@
   Appsettings is now gitignored so you can set up your own local database if you want to test something out before it reaches DEV.
   To change the appsettings on DEV/MAIN you need to:
 
-  Run ```git update-index --no-assume-unchanged HomeVital.API/appsettings.json```
+  ~
   
-  Change the appsettings.json file, commit and push and merge to dev.
+  1. Run   
+  
+  ```sh
+  git update-index --no-assume-unchanged HomeVital.API/appsettings.json  
+  ```
+  
 
-  Run ```git update-index --assume-unchanged HomeVital.API/appsettings.json``` to stop tracking again.
+  2. Change the appsettings.json file 
+  
+  3. Comment appsetting.json out in the gitignore
+  
+  4. commit and push and merge to dev.
+
+  5. Uncomment appsettings.json in the gitignore file
+
+  6. Run 
+  ```sh
+  git update-index --assume-unchanged HomeVital.API/appsettings.json
+  ``` 
+  to stop tracking again.
 
   ### Migrations
   Navigate to the Repository folder
