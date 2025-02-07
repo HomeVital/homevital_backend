@@ -48,8 +48,9 @@ jobs:
       - name: Log in to Azure with Managed Identity
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.API_DEV_ID}}
-          enable-managed-identity: true
+          client-id: ${{ secrets.API_DEV_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set Azure Web App Environment Variables (DEV)
         run: |
