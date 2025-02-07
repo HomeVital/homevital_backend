@@ -27,16 +27,29 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// public void ConfigureServices(IServiceCollection services)
+// {
+//     services.AddScoped<IUserService, UserService>();
+//     // Other service registrations
+// }
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+public partial class Program { } // Add this line to make the Program class accessible in tests

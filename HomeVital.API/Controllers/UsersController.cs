@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeVital.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/user")]
     public class UserController : ControllerBase
     {
+    
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] string test)
         {
@@ -18,5 +20,6 @@ namespace HomeVital.API.Controllers
             
             return Ok("wohoow " + test);
         }
+
     }
 }
