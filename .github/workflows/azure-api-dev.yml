@@ -6,6 +6,10 @@ on:
       - dev
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: windows-latest
@@ -51,6 +55,7 @@ jobs:
           client-id: ${{ secrets.API_DEV_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: ID_TOKEN
 
       - name: Set Azure Web App Environment Variables (DEV)
         run: |
