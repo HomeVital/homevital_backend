@@ -10,5 +10,7 @@ namespace HomeVital.Repositories.dbContext
     {
         public HomeVitalDbContext(DbContextOptions<HomeVitalDbContext> options) : base(options) {}
         // TODO: Add DbSet properties for your entities
+        public DbSet<User> Users { get; set;}
+
     }
 }

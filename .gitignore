@@ -4,6 +4,8 @@
 bin/
 /obj/
 
+# To Enable connection to local Database while testing
+
 
 # Common node modules locations
 /node_modules
