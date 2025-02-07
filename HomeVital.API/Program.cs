@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 using HomeVital.Utilities.Mapper;
 using HomeVital.Repositories.dbContext;
+using HomeVital.Services.Interfaces;
+using HomeVital.Services;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +26,10 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("HomeVitalConnectionString"), options =>
     options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
 });
+// Register services
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IHealthcareWorkerService, HealthcareWorkerService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -9,12 +9,12 @@ namespace HomeVital.Utilities.Mapper
 {
     public class HomeVitalProfile : Profile
     {
-        private readonly IMapper _mapper;
+        // private readonly IMapper _mapper;
 
-        public HomeVitalProfile()
-        {
-            // Make the mapping
-        }
+        // public HomeVitalProfile()
+        // {
+        //     _mapper = mapper;
+        // }
 
     }
 }

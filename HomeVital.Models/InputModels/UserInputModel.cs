@@ -2,5 +2,5 @@ namespace HomeVital.Models.InputModels;
 
 public class UserInputModel
 {
-    public string Kennitala { get; set; } // Dummy property
+    public string Kennitala { get; set; } = string.Empty;
 }
