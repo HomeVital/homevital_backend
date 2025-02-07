@@ -29,8 +29,10 @@ jobs:
           else
             echo "DB_CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}" >> $GITHUB_ENV
           fi
+      
+          echo "Using connection string: $DB_CONNECTION_STRING" 
 
       - name: Apply EF Core Migrations
         run: |
           cd HomeVital.API
-          dotnet ef database update --connection "$DB_CONNECTION_STRING"
+          dotnet ef database update --connection "$DB_CONNECTION_STRING" --project ../HomeVital.Repositories --startup-project .
