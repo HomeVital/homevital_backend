@@ -47,7 +47,34 @@ app.Run();
 
 // test config - need to change
 
+using Microsoft.EntityFrameworkCore;
+using HomeVital.Utilities.Mapper;
+using HomeVital.Repositories.dbContext;
+using System.Reflection;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
+
+var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
+
+var connectionString = builder.Configuration.GetConnectionString(
+    environment == "AzureDevelopment" ? "HomeVitalConnectionString" : "Default"
+);
+
+builder.Services.AddDbContext<HomeVitalDbContext>(options =>
+    options.UseNpgsql(connectionString, options =>
+        options.MigrationsAssembly("HomeVital.Repositories"))
+);
+
+builder.Services.AddDbContext<HomeVitalDbContext>(options =>
+{
+    options.UseNpgsql(connectionString, options =>
+    options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    
+});
+
 
 builder.Services.AddControllers();
 
