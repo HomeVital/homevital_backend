@@ -55,8 +55,7 @@ jobs:
           client-id: ${{ secrets.API_DEV_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          auth-type: ID_TOKEN
-
+          auth-type: IDENTITY
       - name: Set Azure Web App Environment Variables (DEV)
         run: |
           az webapp config appsettings set --name homevital-api-dev --resource-group HomeVital_harmony --settings "ConnectionStrings__Default=${{ secrets.DEV_CONNECTION_STRING }}"
