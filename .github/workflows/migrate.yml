@@ -30,16 +30,26 @@ jobs:
             CONNECTION_STRING="${{ secrets.DEV_CONNECTION_STRING }}"
           fi
           
+          # Debug: Print connection string before modifying it (Masked)
+          echo "Raw Connection String (First 30 chars): ${CONNECTION_STRING:0:30}"
+      
           # Ensure the string is stored correctly in the environment variable
           echo "DB_CONNECTION_STRING=$(echo "$CONNECTION_STRING" | tr -d '\n' | tr -d '\r')" >> $GITHUB_ENV
       
-          # Debugging - Print the first 20 characters only (without exposing the secret)
-          echo "Using connection string (masked): ${DB_CONNECTION_STRING:0:20}..."
+          # Debug: Print masked stored connection string
+          echo "Using stored connection string (First 30 chars): ${DB_CONNECTION_STRING:0:30}"
 
       - name: Apply EF Core Migrations
         run: |
           cd HomeVital.API
-          echo "Running migration with connection string (masked): ${DB_CONNECTION_STRING:0:20}..."
-            
-          # Ensure the connection string is passed correctly
-          dotnet ef database update --connection "${DB_CONNECTION_STRING}" --project ../HomeVital.Repositories --startup-project .
+          echo "Running migration with connection string (masked): ${DB_CONNECTION_STRING:0:30}..."
+        
+          # Ensure PostgreSQL connection string is properly formatted
+          CONNECTION_STRING_ESCAPED=$(echo "$DB_CONNECTION_STRING" | sed 's/;/\\;/g')
+        
+          # Debug: Print escaped connection string
+          echo "Escaped Connection String (First 30 chars): ${CONNECTION_STRING_ESCAPED:0:30}"
+        
+          # Run EF Core migration
+          dotnet ef database update --connection "$CONNECTION_STRING_ESCAPED" --project ../HomeVital.Repositories --startup-project .
+          
