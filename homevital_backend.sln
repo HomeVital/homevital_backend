@@ -3,16 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeVital.API", "HomeVital.API\HomeVital.API.csproj", "{3B5CE2CC-2D46-42C8-9BCA-A96AA00599D1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeVital.Models", "HomeVital.Models\HomeVital.Models.csproj", "{ABADFABE-DF0D-42FB-B5B5-E01A3E9EDA41}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeVital.Repositories", "HomeVital.Repositories\HomeVital.Repositories.csproj", "{15B61520-0EE4-4B5F-9BF9-78078496306B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeVital.Services", "HomeVital.Services\HomeVital.Services.csproj", "{848BEBF6-E821-41FA-A04F-612119CAD5D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeVital.Utilities", "HomeVital.Utilities\HomeVital.Utilities.csproj", "{F166792B-845F-4571-9512-109309433630}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,27 +10,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3B5CE2CC-2D46-42C8-9BCA-A96AA00599D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B5CE2CC-2D46-42C8-9BCA-A96AA00599D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B5CE2CC-2D46-42C8-9BCA-A96AA00599D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B5CE2CC-2D46-42C8-9BCA-A96AA00599D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABADFABE-DF0D-42FB-B5B5-E01A3E9EDA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABADFABE-DF0D-42FB-B5B5-E01A3E9EDA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABADFABE-DF0D-42FB-B5B5-E01A3E9EDA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABADFABE-DF0D-42FB-B5B5-E01A3E9EDA41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15B61520-0EE4-4B5F-9BF9-78078496306B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15B61520-0EE4-4B5F-9BF9-78078496306B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15B61520-0EE4-4B5F-9BF9-78078496306B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15B61520-0EE4-4B5F-9BF9-78078496306B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{848BEBF6-E821-41FA-A04F-612119CAD5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{848BEBF6-E821-41FA-A04F-612119CAD5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{848BEBF6-E821-41FA-A04F-612119CAD5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{848BEBF6-E821-41FA-A04F-612119CAD5D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F166792B-845F-4571-9512-109309433630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F166792B-845F-4571-9512-109309433630}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F166792B-845F-4571-9512-109309433630}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F166792B-845F-4571-9512-109309433630}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
