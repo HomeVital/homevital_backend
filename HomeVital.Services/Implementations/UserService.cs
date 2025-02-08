@@ -1,22 +1,22 @@
-using System.Threading.Tasks;
+
 using HomeVital.Services.Interfaces;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext; // Add this using directive
+using HomeVital.Models.Dtos;
+using HomeVital.Models.InputModels;
+using HomeVital.Repositories.Interfaces;
 
-namespace HomeVital.Services
+namespace HomeVital.Services.Implementations;
+
+public class UserService: IUserService
 {
-    public class UserService : IUserService
+    private readonly IUserRepository _userRepository;
+
+    public UserService(IUserRepository userRepository)
     {
-    //     private readonly HomeVitalDbContext _context;
+        _userRepository = userRepository;
+    }
 
-    //     public UserService(HomeVitalDbContext context)
-    //     {
-    //         _context = context;
-    //     }
-
-    //     public async Task<bool> UserExistsAsync(string kennitala)
-    //     {
-    //         return await _context.Users.AnyAsync(u => u.Kennitala == kennitala);
-    //     }
+    public async Task<UserDto> Register(RegisterInputModel inputModel)
+    {
+        return await _userRepository.Register(inputModel);
     }
 }

@@ -1,11 +1,9 @@
-
-
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
 
-namespace HomeVital.Services.Interfaces;
+namespace HomeVital.Repositories.Interfaces;
 
-public interface IUserService
+public interface IUserRepository
 {
     Task<UserDto> Register(RegisterInputModel inputModel);
 }

@@ -15,5 +15,7 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<Bloodsugar> Bloodsugars { get; set; }
         public DbSet<BloodPressure> BloodPressures { get; set; }
 
+        public DbSet<User> Users { get; set;}
+
     }
 }
