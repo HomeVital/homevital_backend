@@ -51,11 +51,24 @@ using Microsoft.EntityFrameworkCore;
 using HomeVital.Utilities.Mapper;
 using HomeVital.Repositories.dbContext;
 using System.Reflection;
+using HomeVital.Services.Interfaces;
+using HomeVital.Services.Implementations;
+using HomeVital.Repositories.Interfaces;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HomeVital.Repositories.Implementations;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
+
+// Add Transient for all service and repository interfaces
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+
+
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
 
