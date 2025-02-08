@@ -10,6 +10,9 @@ using HomeVital.Repositories.Interfaces;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using HomeVital.Repositories.Implementations;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,11 +46,23 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 
 
 builder.Services.AddControllers();
+// Register TimeProvider
+builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// public void ConfigureServices(IServiceCollection services)
+// {
+//     services.AddScoped<IUserService, UserService>();
+//     // Other service registrations
+// }
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseDeveloperExceptionPage();
 app.UseSwagger();
@@ -70,3 +85,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { } // Add this line to make the Program class accessible in tests
