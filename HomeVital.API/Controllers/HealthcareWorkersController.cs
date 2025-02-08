@@ -7,6 +7,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Entities;
 using HomeVital.Repositories.dbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeVital.API.Controllers
 {
@@ -20,6 +21,25 @@ namespace HomeVital.API.Controllers
         {
             _context = context;
         }
+
+        // get all healthcare workers
+        [HttpGet]
+        public async Task<IActionResult> GetHealthcareWorkers()
+        {
+            var workers = await _context.HealthcareWorkers.ToListAsync();
+            var workerDtos = workers.Select(worker => new HealthcareWorkerDto
+            {
+                ID = worker.ID,
+                Name = worker.Name,
+                Phone = worker.Phone,
+                TeamID = worker.TeamID,
+                Status = worker.Status
+            });
+
+            return Ok(workerDtos);
+        }
+
+        // get a healthcare worker by id
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetHealthcareWorkerById(int id)
@@ -35,7 +55,7 @@ namespace HomeVital.API.Controllers
                 ID = worker.ID,
                 Name = worker.Name,
                 Phone = worker.Phone,
-                Team = worker.Team,
+                TeamID = worker.TeamID,
                 Status = worker.Status
             };
 
@@ -49,7 +69,7 @@ namespace HomeVital.API.Controllers
             {
                 Name = inputModel.Name,
                 Phone = inputModel.Phone,
-                Team = inputModel.Team,
+                TeamID = inputModel.TeamID,
                 Status = inputModel.Status
             };
 
@@ -61,7 +81,7 @@ namespace HomeVital.API.Controllers
                 ID = worker.ID,
                 Name = worker.Name,
                 Phone = worker.Phone,
-                Team = worker.Team,
+                TeamID = worker.TeamID,
                 Status = worker.Status
             };
 
@@ -79,7 +99,7 @@ namespace HomeVital.API.Controllers
 
             worker.Name = inputModel.Name;
             worker.Phone = inputModel.Phone;
-            worker.Team = inputModel.Team;
+            worker.TeamID = inputModel.TeamID;
             worker.Status = inputModel.Status;
 
             await _context.SaveChangesAsync();
@@ -89,11 +109,27 @@ namespace HomeVital.API.Controllers
                 ID = worker.ID,
                 Name = worker.Name,
                 Phone = worker.Phone,
-                Team = worker.Team,
+                TeamID = worker.TeamID,
                 Status = worker.Status
             };
 
             return Ok(workerDto);
+        }
+
+        // delete a healthcare worker by id
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteHealthcareWorker(int id)
+        {
+            var worker = await _context.HealthcareWorkers.FindAsync(id);
+            if (worker == null)
+            {
+                return NotFound();
+            }
+
+            _context.HealthcareWorkers.Remove(worker);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

@@ -15,12 +15,10 @@ namespace HomeVital.Services
         {
             _context = context;
         }
-
-        public async Task<HealthcareWorker> GetHealthcareWorkerByIdAsync(int id)
+        public async Task<HealthcareWorker?> GetHealthcareWorkerByIdAsync(int id)
         {
-            return await _context.HealthcareWorkers.FindAsync(id);
+            return await _context.HealthcareWorkers.FindAsync(id)!;
         }
-
         public async Task<HealthcareWorker> CreateHealthcareWorkerAsync(HealthcareWorker worker)
         {
             _context.HealthcareWorkers.Add(worker);

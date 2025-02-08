@@ -23,8 +23,11 @@ builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
 // Add context
 builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("HomeVitalConnectionString"), options =>
-    options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("HomeVitalConnectionString"), options =>
+    // options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("localConnection"), options =>
+    options.MigrationsAssembly("HomeVital.Repositories"));
+    
 });
 // Register services
 builder.Services.AddTransient<IUserService, UserService>();
