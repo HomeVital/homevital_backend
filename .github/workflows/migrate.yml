@@ -24,30 +24,17 @@ jobs:
 
       - name: Set database connection string
         run: |
-          echo "Checking branch: ${{ github.ref_name }}"
-      
-          # Ensure variable is assigned safely
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "Using production connection string"
-            echo "DB_CONNECTION_STRING=${{ secrets.PROD_CONNECTION_STRING }}" >> $GITHUB_ENV
+            CONNECTION_STRING=${{ secrets.PROD_CONNECTION_STRING }}
           else
-            echo "Using development connection string"
-            echo "DB_CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}" >> $GITHUB_ENV
+            CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}
           fi
-      
-          # Debugging - Print first 50 characters of the stored string
-          echo "Stored connection string (masked): ${DB_CONNECTION_STRING:0:50}..."
+
+          echo "DB_CONNECTION_STRING=$CONNECTION_STRING" >> $GITHUB_ENV
+
+          echo "✅ Stored connection string (masked): ${CONNECTION_STRING:0:50}..."
 
       - name: Apply EF Core Migrations
         run: |
           cd HomeVital.API
-          echo "Running migration with connection string (masked): ${DB_CONNECTION_STRING:0:50}..."
-        
-          # ✅ Escape semicolons to prevent errors
-          CONNECTION_STRING_ESCAPED=$(echo "$DB_CONNECTION_STRING" | sed 's/;/\\;/g')
-        
-          # Debug: Print escaped connection string
-          echo "Escaped Connection String (First 50 chars): ${CONNECTION_STRING_ESCAPED:0:50}"
-        
-          # ✅ Use the escaped connection string safely
-          dotnet ef database update --connection "$CONNECTION_STRING_ESCAPED" --project ../HomeVital.Repositories --startup-project .
+          dotnet ef database update --connection "$DB_CONNECTION_STRING" --project ../HomeVital.Repositories --startup-project .
