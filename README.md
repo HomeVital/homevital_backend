@@ -23,7 +23,6 @@
   ```sh
   git update-index --no-assume-unchanged HomeVital.API/appsettings.json  
   ```
-  
 
   2. Change the appsettings.json file 
   
