@@ -1,42 +1,72 @@
-using System.Reflection;
-using System.Text;
+
+
 using Microsoft.EntityFrameworkCore;
-
-
 using HomeVital.Utilities.Mapper;
 using HomeVital.Repositories.dbContext;
+using System.Reflection;
+using HomeVital.Services.Interfaces;
+using HomeVital.Services.Implementations;
+using HomeVital.Repositories.Interfaces;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HomeVital.Repositories.Implementations;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-// ef við viljum nota automapper
 builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
 
-// TODO: Add builder.Services.AddTransient<IUserService, UserService>(); fyrir service og repository
+// Add Transient for all service and repository interfaces
+builder.Services.AddTransient<IUserService, UserService>();
 
-// Add context
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+
+
+
+var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
+
+var connectionString = builder.Configuration.GetConnectionString(
+    environment == "AzureDevelopment" ? "HomeVitalConnectionString" : "Default"
+);
+
+builder.Services.AddDbContext<HomeVitalDbContext>(options =>
+    options.UseNpgsql(connectionString, options =>
+        options.MigrationsAssembly("HomeVital.Repositories"))
+);
+
 builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("HomeVitalConnectionString"), options =>
+    options.UseNpgsql(connectionString, options =>
     options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    
 });
 
+
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseDeveloperExceptionPage();
+app.UseSwagger();
+app.UseSwaggerUI(x =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
+    x.SwaggerEndpoint("/swagger/v1/swagger.json", "Web API V1");
+
+#if DEBUG
+    x.RoutePrefix = "swagger"; // For localhost
+#else
+    x.RoutePrefix = string.Empty; //  For azure
+#endif
+}
+);
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();

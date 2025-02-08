@@ -1,0 +1,40 @@
+name: Run EF Core Migrations
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Set database connection string
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            CONNECTION_STRING=${{ secrets.PROD_CONNECTION_STRING }}
+          else
+            CONNECTION_STRING=${{ secrets.DEV_CONNECTION_STRING }}
+          fi
+
+          echo "DB_CONNECTION_STRING=$CONNECTION_STRING" >> $GITHUB_ENV
+
+          echo "✅ Stored connection string (masked): ${CONNECTION_STRING:0:50}..."
+
+      - name: Apply EF Core Migrations
+        run: |
+          cd HomeVital.API
+          dotnet ef database update --connection "$DB_CONNECTION_STRING" --project ../HomeVital.Repositories --startup-project .
