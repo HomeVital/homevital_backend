@@ -58,5 +58,5 @@
   dotnet ef database update --project HomeVital.Repositories --startup-project HomeVital.API
   ```
 
-Migrations for DEV and Main branches that runs on Azure are updated automatically.
+Migrations for DEV and Main branches that runs on Azure are updated automatically. 
   
