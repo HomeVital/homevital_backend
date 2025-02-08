@@ -8,7 +8,9 @@ using HomeVital.Repositories.dbContext;
 using HomeVital.Services.Interfaces;
 using HomeVital.Services;
 
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,11 @@ builder.Services.AddTransient<IHealthcareWorkerService, HealthcareWorkerService>
 
 
 builder.Services.AddControllers();
+// Register TimeProvider
+builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // public void ConfigureServices(IServiceCollection services)

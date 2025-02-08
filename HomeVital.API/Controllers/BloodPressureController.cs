@@ -8,9 +8,11 @@ using HomeVital.Models.Dtos;
 using HomeVital.Models.Entities;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
+    // [Authorize]
     [ApiController]
     [Route("api/bloodpressure")]
     public class BloodPressureController : ControllerBase
