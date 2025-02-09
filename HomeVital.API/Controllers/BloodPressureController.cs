@@ -72,7 +72,5 @@ namespace HomeVital.API.Controllers
             return Ok(deletedBloodPressure);
         }
 
-
-
     }
 }
