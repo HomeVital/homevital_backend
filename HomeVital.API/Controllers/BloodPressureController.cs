@@ -24,49 +24,7 @@ namespace HomeVital.API.Controllers
         {
             _bloodpressureService = bloodpressureService;
         }
-        
-        [HttpGet]
-        public ActionResult GetBloodPressureByIdAsync(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
-            var bloodpressure = _bloodpressureService.GetBloodPressureByIdAsync(id);
-            return Ok(bloodpressure);
-        }
-        [HttpPost]
-        public ActionResult CreateBloodPressureAsync(BloodPressureInputModel bloodPressureInputModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
-            var bloodpressure = _bloodpressureService.CreateBloodPressureAsync(bloodPressureInputModel);
-            return Ok(bloodpressure);
-        }
-
-        [HttpDelete]
-        public ActionResult DeleteBloodPressureAsync(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
-            var bloodpressure = _bloodpressureService.DeleteBloodPressureAsync(id);
-            return Ok(bloodpressure);
-        }
-
-        [HttpPatch]
-        public ActionResult UpdateBloodPressureAsync(int id, BloodPressureInputModel updatedBloodPressureInputModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
-            var bloodpressure = _bloodpressureService.UpdateBloodPressureAsync(id, updatedBloodPressureInputModel);
-            return Ok(bloodpressure);
-        }
+       
 
     }
 }

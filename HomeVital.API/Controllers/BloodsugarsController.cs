@@ -17,59 +17,13 @@ namespace HomeVital.API.Controllers
     public class BloodsugarsController : ControllerBase
     {
             
-            private readonly IBloodsugarService _bloodsugarService;
+            private readonly BloodsugarService _bloodsugarService;
     
-            public BloodsugarsController(IBloodsugarService bloodsugarService)
+            public BloodsugarsController(BloodsugarService bloodsugarService)
             {
                 _bloodsugarService = bloodsugarService;
             }
             
-            [HttpGet]
-            public ActionResult GetBloodSugarByIdAsync(int id)
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new System.ArgumentException("Invalid input model");
-                }
-                var bloodsugar = _bloodsugarService.GetBloodsugarByIdAsync(id);
-                return Ok(bloodsugar);
-            }
-            [HttpPost]
-            public ActionResult CreateBloodSugarAsync(BloodsugarInputModel bloodSugarInputModel)
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new System.ArgumentException("Invalid input model");
-                }
-                
-                var newBloodsugar = _bloodsugarService.CreateBloodsugarAsync(bloodSugarInputModel);
-                return Ok(newBloodsugar);
-            }
-    
-            [HttpDelete]
-            public ActionResult DeleteBloodSugarAsync(int id)
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new System.ArgumentException("Invalid input model");
-                }
-                var bloodsugar = _bloodsugarService.DeleteBloodsugarAsync(id);
-                return Ok(bloodsugar);
-            }
-    
-            [HttpPatch]
-            public ActionResult UpdateBloodSugarAsync(int id, BloodsugarInputModel bloodSugarInputModel)
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new System.ArgumentException("Invalid input model");
-                }
-                
-                var updatedBloodsugar = _bloodsugarService.UpdateBloodsugarAsync(id, bloodSugarInputModel);
-                return Ok(updatedBloodsugar);
-            }
-        
-        
 
     }
 }

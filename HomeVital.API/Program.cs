@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HomeVital.Services;
+using BloodsugarService = HomeVital.Services.BloodsugarService;
 
 var builder = WebApplication.CreateBuilder(args);
 
