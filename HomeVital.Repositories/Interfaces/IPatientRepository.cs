@@ -1,16 +1,14 @@
-using System.Threading.Tasks;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
 
-
-namespace HomeVital.Services.Interfaces
+namespace HomeVital.Repositories.Interfaces
 {
-    public interface IPatientService
+    public interface IPatientRepository
     {
         Task<PatientDto> CreatePatientAsync(PatientInputModel patient);
         Task<PatientDto[]> GetPatientsAsync();
         Task<PatientDto?> GetPatientByIdAsync(int id);
-        Task<PatientDto?> UpdatePatientAsync(int id, PatientInputModel updatedPatient);
         Task<bool> DeletePatientAsync(int id);
+        Task<PatientDto?> UpdatePatientAsync(int id, PatientInputModel updatedPatient);
     }
 }

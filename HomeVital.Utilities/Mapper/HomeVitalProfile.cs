@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Entities;
+using HomeVital.Models.InputModels;
 
 
 namespace HomeVital.Utilities.Mapper
@@ -15,6 +16,13 @@ namespace HomeVital.Utilities.Mapper
         {
             // Make the mapping
             CreateMap<User, UserDto>();
+            CreateMap<BloodPressure, BloodPressureDto>();
+            CreateMap<Bloodsugar, BloodsugarDto>();
+            CreateMap<Patient, PatientDto>();
+            CreateMap<HealthcareWorker, HealthcareWorkerDto>();
+            CreateMap<HealthcareWorkerInputModel, HealthcareWorker>();
+
+
         }
 
     }

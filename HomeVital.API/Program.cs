@@ -13,6 +13,7 @@ using HomeVital.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HomeVital.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,15 @@ builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
 
 // Add Transient for all service and repository interfaces
 builder.Services.AddTransient<IUserService, UserService>();
-
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IBloodsugarService, BloodsugarService>();
+builder.Services.AddTransient<IBloodsugarRepository, BloodsugarRepository>();
+builder.Services.AddTransient<IBloodPressureService, BloodPressureService>();
+builder.Services.AddTransient<IBloodPressureRepository, BloodPressureRepository>();
+builder.Services.AddTransient<IPatientService, PatientService>();
+builder.Services.AddTransient<IPatientRepository, PatientRepository>();
+builder.Services.AddTransient<IHealthcareWorkerService, HealthcareWorkerService>();
+builder.Services.AddTransient<IHealthcareWorkerRepository, HealthcareWorkerRepository>();
 
 
 
