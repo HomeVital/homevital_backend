@@ -22,83 +22,64 @@ public class BloodPressureRepository : IBloodPressureRepository
         _mapper = mapper;
     }
 
-    public async Task<BloodPressureDto> CreateBloodPressure(BloodPressureInputModel inputModel)
+    public async Task<IEnumerable<BloodPressureDto>> GetBloodPressuresByPatientId(int patientId)
     {
-        BloodPressure? bloodPressure = new BloodPressure
-        {
-            PatientID = inputModel.PatientID,
-            Systolic = inputModel.Systolic,
-            Diastolic = inputModel.Diastolic,
-            Date = inputModel.Date
-        };
+        var bloodPressures = await _dbContext.BloodPressures
+            .Where(b => b.PatientID == patientId)
+            .ToListAsync();
+
+        return _mapper.Map<IEnumerable<BloodPressureDto>>(bloodPressures);
+    }
+
+    public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
+    {
+        var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
+        bloodPressure.PatientID = patientId;
 
         _dbContext.BloodPressures.Add(bloodPressure);
         await _dbContext.SaveChangesAsync();
 
-        BloodPressure? storedBloodPressure = await _dbContext.BloodPressures
-            .FirstOrDefaultAsync(b => b.ID == bloodPressure.ID);
-
-        var bloodPressureDto = _mapper.Map<BloodPressureDto>(storedBloodPressure);
-
-        return bloodPressureDto;
+        return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
-    public async Task<BloodPressureDto?> GetBloodPressureByIdAsync(int id)
+    public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
     {
-        BloodPressure? bloodPressure = await _dbContext.BloodPressures.FindAsync(id);
-        if (bloodPressure == null)
+        var bloodPressure = await _dbContext.BloodPressures
+            .FirstOrDefaultAsync(b => b.ID == id);
+
+        if (bloodPressure != null)
         {
-            return null;
+
+            bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
+            bloodPressure.Systolic = bloodPressureInputModel.Systolic;
+            bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
+            bloodPressure.Pulse = bloodPressureInputModel.Pulse;
+            bloodPressure.Date = bloodPressureInputModel.Date;
+            bloodPressure.Status = bloodPressureInputModel.Status;
+            bloodPressure.Date = DateTime.UtcNow;
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        var bloodPressureDto = _mapper.Map<BloodPressureDto>(bloodPressure);
-
-        return bloodPressureDto;
+        return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
-    public async Task<bool> DeleteBloodPressureAsync(int id)
+    public async Task<BloodPressureDto> DeleteBloodPressure(int id)
     {
-        BloodPressure? bloodPressure = await _dbContext.BloodPressures.FindAsync(id);
+        var bloodPressure = await _dbContext.BloodPressures
+            .FirstOrDefaultAsync(b => b.ID == id);
+
         if (bloodPressure == null)
         {
-            return false;
+            throw new System.ArgumentException("BloodPressure record not found");
         }
 
         _dbContext.BloodPressures.Remove(bloodPressure);
         await _dbContext.SaveChangesAsync();
 
-        return true;
-    }
-
-   
-    public async Task<BloodPressureDto?> UpdateBloodPressureAsync(int id, BloodPressureInputModel updatedBloodPressure)
-    {
-        BloodPressure? bloodPressure = await _dbContext.BloodPressures.FindAsync(id);
-        if (bloodPressure == null)
-        {
-            return null;
-        }
-
-        bloodPressure.PatientID = updatedBloodPressure.PatientID;
-        bloodPressure.Systolic = updatedBloodPressure.Systolic;
-        bloodPressure.Diastolic = updatedBloodPressure.Diastolic;
-        bloodPressure.Date = updatedBloodPressure.Date;
-
-        await _dbContext.SaveChangesAsync();
-
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
-    public async Task<BloodPressureDto?> GetBloodPressureByUserIdAsync(int userId)
-    {
-        var bloodPressure = await _dbContext.BloodPressures
-            .FirstOrDefaultAsync(bp => bp.PatientID == userId);
 
-        if (bloodPressure == null)
-        {
-            return null;
-        }
 
-        return _mapper.Map<BloodPressureDto>(bloodPressure);
-    }
 }

@@ -44,13 +44,14 @@ namespace HomeVital.Repositories.Implementations
             var bloodsugar = await _dbContext.Bloodsugars
                 .FirstOrDefaultAsync(b => b.ID == id);
 
-            if (bloodsugar == null)
+            if (bloodsugar != null)
             {
-                throw new System.ArgumentException("Bloodsugar record not found");
-            }
+                bloodsugar.Date = bloodsugarInputModel.Date;
+                bloodsugar.BloodsugarLevel = bloodsugarInputModel.BloodsugarLevel;
+                bloodsugar.Date = DateTime.Now;
 
-            _mapper.Map(bloodsugarInputModel, bloodsugar);
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+            }
 
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }

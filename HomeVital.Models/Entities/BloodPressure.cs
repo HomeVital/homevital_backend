@@ -10,5 +10,6 @@ namespace HomeVital.Models.Entities
         public int Diastolic { get; set; } = 0;
         public DateTime Date { get; set; } = new DateTime();
         public string Status { get; set; } = string.Empty;
+        public int Pulse { get; set; } = 0;
     }
 }

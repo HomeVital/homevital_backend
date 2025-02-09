@@ -19,5 +19,26 @@ namespace HomeVital.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<BloodPressureDto>> GetBloodPressuresByPatientId(int patientId)
+        {
+            var bloodPressures = await _bloodPressureRepository.GetBloodPressuresByPatientId(patientId);
+            return _mapper.Map<IEnumerable<BloodPressureDto>>(bloodPressures);
+        }
+
+        public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
+        {
+            return await _bloodPressureRepository.CreateBloodPressure(patientId, bloodPressureInputModel);
+        }
+
+        public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
+        {
+            return await _bloodPressureRepository.UpdateBloodPressure(id, bloodPressureInputModel);
+        }
+
+        public async Task<BloodPressureDto> DeleteBloodPressure(int id)
+        {
+            return await _bloodPressureRepository.DeleteBloodPressure(id);
+        }
+
     }
 }

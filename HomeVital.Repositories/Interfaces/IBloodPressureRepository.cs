@@ -5,10 +5,13 @@ namespace HomeVital.Repositories.Interfaces
 {
     public interface IBloodPressureRepository
     {
-        Task<BloodPressureDto> CreateBloodPressure(BloodPressureInputModel bloodPressureInputModel);
-        Task<BloodPressureDto?> GetBloodPressureByIdAsync(int id);
-        Task<bool> DeleteBloodPressureAsync(int id);
-        Task<BloodPressureDto?> UpdateBloodPressureAsync(int id, BloodPressureInputModel updatedBloodPressure);
-        Task<BloodPressureDto?> GetBloodPressureByUserIdAsync(int userId);
+        // GetBloodPressuresByPatientId
+        Task<IEnumerable<BloodPressureDto>> GetBloodPressuresByPatientId(int patientId);
+        // CreateBloodPressure
+        Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel);
+        // UpdateBloodPressure
+        Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel);
+        // DeleteBloodPressure
+        Task<BloodPressureDto> DeleteBloodPressure(int id);
     }
 }
