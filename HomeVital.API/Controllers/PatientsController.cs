@@ -18,6 +18,13 @@ namespace HomeVital.API.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetPatients()
+        {
+            var patients = _patientService.GetPatientsAsync();
+            return Ok(patients);    
+        }
+
+        [HttpGet]
         public ActionResult GetPatientByIdAsync(int id)
         {
             if (!ModelState.IsValid)

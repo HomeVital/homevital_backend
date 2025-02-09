@@ -3,6 +3,7 @@ using HomeVital.Repositories.dbContext;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeVital.Repositories.Implementations;
 
@@ -31,9 +32,19 @@ public class PatientRepository : IPatientRepository
         throw new NotImplementedException();
     }
 
-    public Task<PatientDto[]> GetPatientsAsync()
+    public async Task<PatientDto[]> GetPatientsAsync()
     {
-        throw new NotImplementedException();
+        var patients = await _dbContext.Patients.ToListAsync();
+        var patientDtos = patients.Select(patient => new PatientDto
+        {
+            ID = patient.ID,
+            Name = patient.Name,
+            Phone = patient.Phone,
+            TeamID = patient.TeamID,
+            Status = patient.Status
+        });
+
+        return patientDtos.ToArray();
     }
 
     public Task<PatientDto?> UpdatePatientAsync(int id, PatientInputModel updatedPatient)
