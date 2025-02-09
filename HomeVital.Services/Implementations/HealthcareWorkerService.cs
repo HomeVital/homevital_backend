@@ -1,58 +1,49 @@
-// Services implementation for HealthcareWorker
-
-using System.Threading.Tasks;
 using HomeVital.Services.Interfaces;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext; // Add this using directive
-using Microsoft.EntityFrameworkCore;
+using HomeVital.Models.InputModels;
+using HomeVital.Repositories.Interfaces;
+using HomeVital.Models.Dtos;
+using AutoMapper;
+
 namespace HomeVital.Services
 {
     public class HealthcareWorkerService : IHealthcareWorkerService
     {
-        private readonly HomeVitalDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IHealthcareWorkerRepository _healthcareWorkerRepository;
 
-        public HealthcareWorkerService(HomeVitalDbContext context)
+        public HealthcareWorkerService(IMapper mapper, IHealthcareWorkerRepository healthcareWorkerRepository)
         {
-            _context = context;
+            _mapper = mapper;
+            _healthcareWorkerRepository = healthcareWorkerRepository;
         }
-        public async Task<HealthcareWorker[]> GetHealthcareWorkersAsync()
+
+        public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
         {
-            return await _context.HealthcareWorkers.ToArrayAsync();
+            var healthcareWorkers = await _healthcareWorkerRepository.GetHealthcareWorkers();
+            return _mapper.Map<IEnumerable<HealthcareWorkerDto>>(healthcareWorkers);
         }
-        public async Task<HealthcareWorker?> GetHealthcareWorkerByIdAsync(int id)
+
+        public async Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id)
         {
-            return await _context.HealthcareWorkers.FindAsync(id)!;
+            var healthcareWorker = await _healthcareWorkerRepository.GetHealthcareWorkerById(id);
+            return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
         }
-        public async Task<HealthcareWorker> CreateHealthcareWorkerAsync(HealthcareWorker worker)
+
+        public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
         {
-            _context.HealthcareWorkers.Add(worker);
-            await _context.SaveChangesAsync();
-            return worker;
+            return await _healthcareWorkerRepository.DeleteHealthcareWorker(id);
         }
-        public async Task<bool> DeleteHealthcareWorkerAsync(int id)
+
+        public async Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker)
         {
-            var worker = await _context.HealthcareWorkers.FindAsync(id);
-            if (worker == null)
-            {
-                return false;
-            }
-            _context.HealthcareWorkers.Remove(worker);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _healthcareWorkerRepository.CreateHealthcareWorker(healthcareWorker);
         }
-        public async Task<HealthcareWorker?> UpdateHealthcareWorkerAsync(int id, HealthcareWorker updatedWorker)
+
+        public async Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker)
         {
-            var worker = await _context.HealthcareWorkers.FindAsync(id);
-            if (worker == null)
-            {
-                return null;
-            }
-            worker.Name = updatedWorker.Name;
-            worker.Phone = updatedWorker.Phone;
-            worker.TeamID = updatedWorker.TeamID;
-            worker.Status = updatedWorker.Status;
-            await _context.SaveChangesAsync();
-            return worker;
+            return await _healthcareWorkerRepository.UpdateHealthcareWorker(id, healthcareWorker);
         }
+        
     }
 }
+   

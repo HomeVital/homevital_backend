@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
+using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+
+
 
 namespace HomeVital.API.Controllers
 {
@@ -17,81 +17,60 @@ namespace HomeVital.API.Controllers
     [Route("api/bloodpressure")]
     public class BloodPressureController : ControllerBase
     {
-        private readonly HomeVitalDbContext _context;
+        
+        private readonly IBloodPressureService _bloodpressureService;
 
-        public BloodPressureController(HomeVitalDbContext context)
+        public BloodPressureController(IBloodPressureService bloodpressureService)
         {
-            _context = context;
+            _bloodpressureService = bloodpressureService;
         }
 
-        // get bloodpressures by patient id
+        // Get all bloodpressures by patient ID
         [HttpGet("{patientId}")]
-        public async Task<IActionResult> GetBloodPressuresByPatientId(int patientId)
+        public async Task<ActionResult<IEnumerable<BloodPressureDto>>> GetBloodPressuresByPatientIdAsync(int patientId)
         {
-            var bloodpressures = await _context.BloodPressures.Where(b => b.PatientID == patientId).ToListAsync();
-            var bloodpressureDtos = bloodpressures.Select(bloodpressure => new BloodPressureDto
-            {
-                ID = bloodpressure.ID,
-                PatientID = bloodpressure.PatientID,
-                Systolic = bloodpressure.Systolic,
-                Diastolic = bloodpressure.Diastolic,
-                Date = bloodpressure.Date
-            });
-
-            return Ok(bloodpressureDtos);
+            var bloodpressures = await _bloodpressureService.GetBloodPressuresByPatientId(patientId);
+            return Ok(bloodpressures);
         }
 
-        // make a new bloodpressure record
-        [HttpPost]
-        public async Task<IActionResult> CreateBloodPressure([FromBody] BloodPressureInputModel bloodpressureInputModel)
+        // Create a new bloodpressure record for a patient
+        [HttpPost("{patientId}")]
+        public async Task<ActionResult<BloodPressureDto>> CreateBloodPressureAsync(int patientId, BloodPressureInputModel bloodpressureInputModel)
         {
-            var bloodpressure = new BloodPressure
+            if (!ModelState.IsValid)
             {
-                PatientID = bloodpressureInputModel.PatientID,
-                Systolic = bloodpressureInputModel.Systolic,
-                Diastolic = bloodpressureInputModel.Diastolic,
-                Date = bloodpressureInputModel.Date
-            };
+                throw new System.ArgumentException("Invalid input model");
+            }
 
-            _context.BloodPressures.Add(bloodpressure);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetBloodPressuresByPatientId), new { patientId = bloodpressure.PatientID }, bloodpressure);
+            var newBloodPressure = await _bloodpressureService.CreateBloodPressure(patientId, bloodpressureInputModel);
+            return Ok(newBloodPressure);
         }
 
-        // modify a bloodpressure record with a specific  id
+        // Update a bloodpressure record by ID
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateBloodPressure(int id, [FromBody] BloodPressureInputModel bloodpressureInputModel)
+        public async Task<ActionResult<BloodPressureDto>> UpdateBloodPressureAsync(int id, BloodPressureInputModel bloodpressureInputModel)
         {
-            var bloodpressure = await _context.BloodPressures.FindAsync(id);
-            if (bloodpressure == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
 
-            bloodpressure.Systolic = bloodpressureInputModel.Systolic;
-            bloodpressure.Diastolic = bloodpressureInputModel.Diastolic;
-            bloodpressure.Date = bloodpressureInputModel.Date;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var updatedBloodPressure = await _bloodpressureService.UpdateBloodPressure(id, bloodpressureInputModel);
+            return Ok(updatedBloodPressure);
         }
 
-        // delete a bloodpressure record with a specific id
+        // Delete a bloodpressure record by ID
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBloodPressure(int id)
+        public async Task<ActionResult<BloodPressureDto>> DeleteBloodPressureAsync(int id)
         {
-            var bloodpressure = await _context.BloodPressures.FindAsync(id);
-            if (bloodpressure == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
 
-            _context.BloodPressures.Remove(bloodpressure);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var deletedBloodPressure = await _bloodpressureService.DeleteBloodPressure(id);
+            return Ok(deletedBloodPressure);
         }
+
     }
 }

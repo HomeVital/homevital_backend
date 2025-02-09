@@ -1,52 +1,44 @@
-using System.Threading.Tasks;
 using HomeVital.Services.Interfaces;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext; // Add this using directive
-using Microsoft.EntityFrameworkCore;
+using HomeVital.Models.InputModels;
+using HomeVital.Repositories.Interfaces;
+using HomeVital.Models.Dtos;
+using AutoMapper;
 
 namespace HomeVital.Services
 {
     public class BloodsugarService : IBloodsugarService
     {
-        private readonly HomeVitalDbContext _context;
+        private readonly IBloodsugarRepository _bloodsugarRepository;
+        private readonly IMapper _mapper;
 
-        public BloodsugarService(HomeVitalDbContext context)
+        public BloodsugarService(IBloodsugarRepository bloodsugarRepository, IMapper mapper)
         {
-            _context = context;
+            _bloodsugarRepository = bloodsugarRepository;
+            _mapper = mapper;
         }
-        public async Task<Bloodsugar?> GetBloodsugarByIdAsync(int id)
+
+        public async Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId)
         {
-            return await _context.Bloodsugars.FindAsync(id)!;
+            var bloodsugars = await _bloodsugarRepository.GetBloodsugarsByPatientId(patientId);
+            return _mapper.Map<IEnumerable<BloodsugarDto>>(bloodsugars);
         }
-        public async Task<Bloodsugar> CreateBloodsugarAsync(Bloodsugar bloodsugar)
+
+        public async Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel)
         {
-            _context.Bloodsugars.Add(bloodsugar);
-            await _context.SaveChangesAsync();
-            return bloodsugar;
+            return await _bloodsugarRepository.CreateBloodsugar(patientId, bloodsugarInputModel);
         }
-        public async Task<bool> DeleteBloodsugarAsync(int id)
+
+        public async Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel)
         {
-            var bloodsugar = await _context.Bloodsugars.FindAsync(id);
-            if (bloodsugar == null)
-            {
-                return false;
-            }
-            _context.Bloodsugars.Remove(bloodsugar);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _bloodsugarRepository.UpdateBloodsugar(id, bloodsugarInputModel);
         }
-        public async Task<Bloodsugar?> UpdateBloodsugarAsync(int id, Bloodsugar updatedBloodsugar)
+
+        public async Task<BloodsugarDto> DeleteBloodsugar(int id)
         {
-            var bloodsugar = await _context.Bloodsugars.FindAsync(id);
-            if (bloodsugar == null)
-            {
-                return null;
-            }
-            bloodsugar.PatientID = updatedBloodsugar.PatientID;
-            bloodsugar.BloodsugarLevel = updatedBloodsugar.BloodsugarLevel;
-            bloodsugar.Date = updatedBloodsugar.Date;
-            await _context.SaveChangesAsync();
-            return bloodsugar;
+            return await _bloodsugarRepository.DeleteBloodsugar(id);
         }
+
+
+
     }
 }

@@ -1,9 +1,6 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
-
 using HomeVital.Repositories.dbContext;
 using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;

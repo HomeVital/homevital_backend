@@ -1,10 +1,9 @@
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
 
-
-namespace HomeVital.Services.Interfaces
+namespace HomeVital.Repositories.Interfaces
 {
-    public interface IHealthcareWorkerService
+    public interface IHealthcareWorkerRepository
     {
         // GetHealthcareWorkers
         Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers();

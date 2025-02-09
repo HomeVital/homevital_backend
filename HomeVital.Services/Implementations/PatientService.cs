@@ -1,58 +1,44 @@
 // service for patient
 
-using System.Threading.Tasks;
 using HomeVital.Services.Interfaces;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext; // Add this using directive
-using Microsoft.EntityFrameworkCore;
+using HomeVital.Models.InputModels;
+using HomeVital.Repositories.Interfaces;
+using HomeVital.Models.Dtos;
+
 namespace HomeVital.Services
 {
     public class PatientService : IPatientService
     {
-        private readonly HomeVitalDbContext _context;
+        private readonly IPatientRepository _patientRepository;
 
-        public PatientService(HomeVitalDbContext context)
+        public PatientService(IPatientRepository patientRepository)
         {
-            _context = context;
+            _patientRepository = patientRepository;
         }
-        public async Task<Patient[]> GetPatientsAsync()
+
+        public async Task<PatientDto> CreatePatient(PatientInputModel patient)
         {
-            return await _context.Patients.ToArrayAsync();
+            return await _patientRepository.CreatePatient(patient);
         }
-        public async Task<Patient?> GetPatientByIdAsync(int id)
+
+        public async Task<IEnumerable<PatientDto>> GetPatients()
         {
-            return await _context.Patients.FindAsync(id)!;
+            return await _patientRepository.GetPatients();
         }
-        public async Task<Patient> CreatePatientAsync(Patient patient)
+
+        public async Task<PatientDto> GetPatientById(int id)
         {
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
-            return patient;
+            return await _patientRepository.GetPatientById(id);
         }
-        public async Task<bool> DeletePatientAsync(int id)
+
+        public async Task<PatientDto> DeletePatient(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-            {
-                return false;
-            }
-            _context.Patients.Remove(patient);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _patientRepository.DeletePatient(id);
         }
-        public async Task<Patient?> UpdatePatientAsync(int id, Patient updatedPatient)
+
+        public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-            {
-                return null;
-            }
-            patient.Name = updatedPatient.Name;
-            patient.Phone = updatedPatient.Phone;
-            patient.TeamID = updatedPatient.TeamID;
-            patient.Status = updatedPatient.Status;
-            await _context.SaveChangesAsync();
-            return patient;
+            return await _patientRepository.UpdatePatient(id, patient);
         }
     }
 }

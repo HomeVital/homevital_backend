@@ -1,135 +1,74 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
+using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext;
-using Microsoft.EntityFrameworkCore;
 
 namespace HomeVital.API.Controllers
 {
     [ApiController]
-    [Route("api/healthcareworkers")]
+    [Route("[controller]")]
     public class HealthcareWorkersController : ControllerBase
     {
-        private readonly HomeVitalDbContext _context;
+        private readonly IHealthcareWorkerService _healthcareWorkerService;
 
-        public HealthcareWorkersController(HomeVitalDbContext context)
+        public HealthcareWorkersController(IHealthcareWorkerService healthcareWorkerService)
         {
-            _context = context;
+            _healthcareWorkerService = healthcareWorkerService;
         }
 
-        // get all healthcare workers
-        [HttpGet]
-        public async Task<IActionResult> GetHealthcareWorkers()
+        [HttpGet] // Get all healthcare workers
+        public async Task<ActionResult<IEnumerable<HealthcareWorkerDto>>> GetHealthcareWorkersAsync()
         {
-            var workers = await _context.HealthcareWorkers.ToListAsync();
-            var workerDtos = workers.Select(worker => new HealthcareWorkerDto
-            {
-                ID = worker.ID,
-                Name = worker.Name,
-                Phone = worker.Phone,
-                TeamID = worker.TeamID,
-                Status = worker.Status
-            });
-
-            return Ok(workerDtos);
+            var healthcareWorkers = await _healthcareWorkerService.GetHealthcareWorkers();
+            return Ok(healthcareWorkers);
         }
 
-        // get a healthcare worker by id
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetHealthcareWorkerById(int id)
+        [HttpGet("{id}")] // Get a healthcare worker by ID
+        public async Task<ActionResult<HealthcareWorkerDto>> GetHealthcareWorkerByIdAsync(int id)
         {
-            var worker = await _context.HealthcareWorkers.FindAsync(id);
-            if (worker == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var healthcareWorker = await _healthcareWorkerService.GetHealthcareWorkerById(id);
+            return Ok(healthcareWorker);
+        }
+
+        [HttpDelete("{id}")] // Delete a healthcare worker by ID
+        public async Task<ActionResult<HealthcareWorkerDto>> DeleteHealthcareWorkerAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var healthcareWorker = await _healthcareWorkerService.DeleteHealthcareWorker(id);
+            return Ok(healthcareWorker);
+        }
+
+        [HttpPost] // Create a new healthcare worker
+        public async Task<ActionResult<HealthcareWorkerDto>> CreateHealthcareWorkerAsync(HealthcareWorkerInputModel healthcareWorkerInputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
             }
 
-            var workerDto = new HealthcareWorkerDto
-            {
-                ID = worker.ID,
-                Name = worker.Name,
-                Phone = worker.Phone,
-                TeamID = worker.TeamID,
-                Status = worker.Status
-            };
-
-            return Ok(workerDto);
+            var newHealthcareWorker = await _healthcareWorkerService.CreateHealthcareWorker(healthcareWorkerInputModel);
+            return Ok(newHealthcareWorker);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateHealthcareWorker([FromBody] HealthcareWorkerInputModel inputModel)
+        [HttpPatch("{id}")] // Update a healthcare worker by ID
+        public async Task<ActionResult<HealthcareWorkerDto>> UpdateHealthcareWorkerAsync(int id, HealthcareWorkerInputModel healthcareWorkerInputModel)
         {
-            var worker = new HealthcareWorker
+            if (!ModelState.IsValid)
             {
-                Name = inputModel.Name,
-                Phone = inputModel.Phone,
-                TeamID = inputModel.TeamID,
-                Status = inputModel.Status
-            };
-
-            _context.HealthcareWorkers.Add(worker);
-            await _context.SaveChangesAsync();
-
-            var workerDto = new HealthcareWorkerDto
-            {
-                ID = worker.ID,
-                Name = worker.Name,
-                Phone = worker.Phone,
-                TeamID = worker.TeamID,
-                Status = worker.Status
-            };
-
-            return CreatedAtAction(nameof(GetHealthcareWorkerById), new { id = worker.ID }, workerDto);
-        }
-
-        [HttpPatch("update/{id}")]
-        public async Task<IActionResult> UpdateHealthcareWorker(int id, [FromBody] HealthcareWorkerInputModel inputModel)
-        {
-            var worker = await _context.HealthcareWorkers.FindAsync(id);
-            if (worker == null)
-            {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
 
-            worker.Name = inputModel.Name;
-            worker.Phone = inputModel.Phone;
-            worker.TeamID = inputModel.TeamID;
-            worker.Status = inputModel.Status;
-
-            await _context.SaveChangesAsync();
-
-            var workerDto = new HealthcareWorkerDto
-            {
-                ID = worker.ID,
-                Name = worker.Name,
-                Phone = worker.Phone,
-                TeamID = worker.TeamID,
-                Status = worker.Status
-            };
-
-            return Ok(workerDto);
+            var updatedHealthcareWorker = await _healthcareWorkerService.UpdateHealthcareWorker(id, healthcareWorkerInputModel);
+            return Ok(updatedHealthcareWorker);
         }
 
-        // delete a healthcare worker by id
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteHealthcareWorker(int id)
-        {
-            var worker = await _context.HealthcareWorkers.FindAsync(id);
-            if (worker == null)
-            {
-                return NotFound();
-            }
 
-            _context.HealthcareWorkers.Remove(worker);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
     }
 }

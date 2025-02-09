@@ -1,13 +1,19 @@
-using System.Threading.Tasks;
-using HomeVital.Models.Entities;
+using HomeVital.Models.Dtos;
+using HomeVital.Models.InputModels;
+
 
 namespace HomeVital.Services.Interfaces
 {
     public interface IBloodsugarService
     {
-        Task<Bloodsugar?> GetBloodsugarByIdAsync(int id);
-        Task<Bloodsugar> CreateBloodsugarAsync(Bloodsugar bloodsugar);
-        Task<bool> DeleteBloodsugarAsync(int id);
-        Task<Bloodsugar?> UpdateBloodsugarAsync(int id, Bloodsugar updatedBloodsugar);
+        // GetBloodsugarsByPatientId
+        Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId);
+        // CreateBloodsugar
+        Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel);
+        // UpdateBloodsugar
+        Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel);
+        // DeleteBloodsugar
+        Task<BloodsugarDto> DeleteBloodsugar(int id);
+        
     }
 }

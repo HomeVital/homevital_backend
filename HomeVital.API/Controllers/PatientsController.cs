@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
+using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
-using HomeVital.Models.Entities;
-using HomeVital.Repositories.dbContext;
-using Microsoft.EntityFrameworkCore;
 
 namespace HomeVital.API.Controllers
 {
@@ -15,104 +9,63 @@ namespace HomeVital.API.Controllers
     [Route("api/patients")]
     public class PatientsController : ControllerBase
     {
-        private readonly HomeVitalDbContext _context;
+        private readonly IPatientService _patientService;
 
-        public PatientsController(HomeVitalDbContext context)
+        public PatientsController(IPatientService patientService)
         {
-            _context = context;
+            _patientService = patientService;
         }
 
-        // get all patients
-        [HttpGet]
-        public async Task<IActionResult> GetPatients()
+        [HttpGet] // Get all patients
+        public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientsAsync()
         {
-            var patients = await _context.Patients.ToListAsync();
-            var patientDtos = patients.Select(patient => new PatientDto
-            {
-                ID = patient.ID,
-                Name = patient.Name,
-                Phone = patient.Phone,
-                TeamID = patient.TeamID,
-                Status = patient.Status
-            });
-
-            return Ok(patientDtos);
+            var patients = await _patientService.GetPatients();
+            return Ok(patients);
         }
 
-        // get patient by id
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPatientById([FromQuery] int id)
+        [HttpGet("{id}")] // Get a patient by ID
+        public async Task<ActionResult<PatientDto>> GetPatientByIdAsync(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
-
-            var patientDto = new PatientDto
-            {
-                ID = patient.ID,
-                Name = patient.Name,
-                Phone = patient.Phone,
-                TeamID = patient.TeamID,
-                Status = patient.Status
-            };
-
-            return Ok(patientDto);
-        }
-        
-        // create a patient
-        [HttpPost("create")]
-        public async Task<IActionResult> CreatePatient([FromBody] PatientInputModel patientInputModel)
-        {
-            var patient = new Patient
-            {
-                Name = patientInputModel.Name,
-                Phone = patientInputModel.Phone,
-                TeamID = patientInputModel.TeamID,
-                Status = patientInputModel.Status
-            };
-
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
-
+            var patient = await _patientService.GetPatientById(id);
             return Ok(patient);
         }
 
-        // update a patient
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdatePatient([FromQuery] int id, [FromBody] PatientInputModel patientInputModel)
+        [HttpDelete("{id}")] // Delete a patient by ID
+        public async Task<ActionResult<PatientDto>> DeletePatientAsync(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
-
-            patient.Name = patientInputModel.Name;
-            patient.Phone = patientInputModel.Phone;
-            patient.TeamID = patientInputModel.TeamID;
-            patient.Status = patientInputModel.Status;
-
-            await _context.SaveChangesAsync();
-
+            var patient = await _patientService.DeletePatient(id);
             return Ok(patient);
         }
 
-        // delete a patient
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePatient([FromQuery] int id)
+        [HttpPost] // Create a new patient
+        public async Task<ActionResult<PatientDto>> CreatePatientAsync(PatientInputModel patientInputModel)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                throw new System.ArgumentException("Invalid input model");
             }
 
-            _context.Patients.Remove(patient);
-            await _context.SaveChangesAsync();
+            var newPatient = await _patientService.CreatePatient(patientInputModel);
+            return Ok(newPatient);
+        }
 
-            return Ok();
+        [HttpPatch("{id}")] // Update a patient by ID
+        public async Task<ActionResult<PatientDto>> UpdatePatientAsync(int id, PatientInputModel patientInputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var updatedPatient = await _patientService.UpdatePatient(id, patientInputModel);
+            return Ok(updatedPatient);
         }
     }
 }

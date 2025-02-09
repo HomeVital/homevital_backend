@@ -1,10 +1,9 @@
 using HomeVital.Models.Dtos;
-using HomeVital.Models.Entities;
 using HomeVital.Models.InputModels;
 
-namespace HomeVital.Services.Interfaces
+namespace HomeVital.Repositories.Interfaces
 {
-    public interface IPatientService
+    public interface IPatientRepository
     {
         Task<PatientDto> CreatePatient(PatientInputModel patient);
         // GetPatients
@@ -15,8 +14,5 @@ namespace HomeVital.Services.Interfaces
         Task<PatientDto> DeletePatient(int id);
         // UpdatePatient
         Task<PatientDto> UpdatePatient(int id, PatientInputModel patient);
-
-        
     }
-        
 }
