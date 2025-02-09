@@ -20,5 +20,25 @@ namespace HomeVital.Services
         {
             return await _patientRepository.CreatePatient(patient);
         }
+
+        public async Task<IEnumerable<PatientDto>> GetPatients()
+        {
+            return await _patientRepository.GetPatients();
+        }
+
+        public async Task<PatientDto> GetPatientById(int id)
+        {
+            return await _patientRepository.GetPatientById(id);
+        }
+
+        public async Task<PatientDto> DeletePatient(int id)
+        {
+            return await _patientRepository.DeletePatient(id);
+        }
+
+        public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
+        {
+            return await _patientRepository.UpdatePatient(id, patient);
+        }
     }
 }
