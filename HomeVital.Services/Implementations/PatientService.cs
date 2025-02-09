@@ -27,8 +27,8 @@ namespace HomeVital.Services
 
         public async Task<PatientDto[]> GetPatientsAsync()
         {
-            var patients = await _patientRepository.GetPatientsAsync();
-            return _mapper.Map<PatientDto[]>(patients);
+            return await _patientRepository.GetPatientsAsync();
+        
         }
 
         public async Task<PatientDto?> GetPatientByIdAsync(int id)
