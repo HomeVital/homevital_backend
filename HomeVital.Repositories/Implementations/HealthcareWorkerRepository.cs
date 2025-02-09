@@ -18,77 +18,50 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         _mapper = mapper;
     }
 
-    public async Task<HealthcareWorkerDto> CreateHealthcareWorkerAsync(HealthcareWorkerInputModel healthcareWorker)
+    public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
-        var healthcareWorker_ = new HealthcareWorker
-        {
-            Name = healthcareWorker.Name,
-            Phone = healthcareWorker.Phone,
-            TeamID = healthcareWorker.TeamID,
-            Status = healthcareWorker.Status
-        };
-
-        _dbContext.HealthcareWorkers.Add(healthcareWorker_);
-        await _dbContext.SaveChangesAsync();
-
-        var healthcareWorkerDto = new HealthcareWorkerDto
-        {
-            ID = healthcareWorker_.ID,
-            Name = healthcareWorker_.Name,
-            Phone = healthcareWorker_.Phone,
-            TeamID = healthcareWorker_.TeamID,
-            Status = healthcareWorker_.Status
-        };
-
-        return healthcareWorkerDto;
+        var healthcareWorkers = await _dbContext.HealthcareWorkers.ToListAsync();
+        return _mapper.Map<IEnumerable<HealthcareWorkerDto>>(healthcareWorkers);
     }
 
-    public async Task<HealthcareWorkerDto?> GetHealthcareWorkerByIdAsync(int id)
+    public async Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id)
     {
-        HealthcareWorker? healthcareWorker = await _dbContext.HealthcareWorkers.FindAsync(id);
-        if (healthcareWorker == null)
-        {
-            return null;
-        }
-
-        var healthcareWorkerDto = _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
-
-        return healthcareWorkerDto;
-    }
-
-    public async Task<bool> DeleteHealthcareWorkerAsync(int id)
-    {
-        HealthcareWorker? healthcareWorker = await _dbContext.HealthcareWorkers.FindAsync(id);
-        if (healthcareWorker == null)
-        {
-            return false;
-        }
-
-        _dbContext.HealthcareWorkers.Remove(healthcareWorker);
-        await _dbContext.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<HealthcareWorkerDto?> UpdateHealthcareWorkerAsync(int id, HealthcareWorkerInputModel updatedHealthcareWorker)
-    {
-        HealthcareWorker? healthcareWorker = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(h => h.ID == id);
-        if (healthcareWorker == null)
-        {
-            return null;
-        }
-
-        _mapper.Map(updatedHealthcareWorker, healthcareWorker);
-        await _dbContext.SaveChangesAsync();
-
+        var healthcareWorker = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(x => x.ID == id);
         return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
     }
 
-    public async Task<HealthcareWorkerDto[]> GetHealthcareWorkersAsync()
+    public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
     {
-        var healthcareWorkers = await _dbContext.HealthcareWorkers.ToArrayAsync();
-        var healthcareWorkerDtos = _mapper.Map<HealthcareWorkerDto[]>(healthcareWorkers);
-
-        return healthcareWorkerDtos;
+        var healthcareWorker = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(x => x.ID == id);
+        if (healthcareWorker != null)
+        {
+            _dbContext.HealthcareWorkers.Remove(healthcareWorker);
+            await _dbContext.SaveChangesAsync();
+        }
+        return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
     }
+
+    public async Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker)
+    {
+        var newHealthcareWorker = _mapper.Map<HealthcareWorker>(healthcareWorker);
+        await _dbContext.HealthcareWorkers.AddAsync(newHealthcareWorker);
+        await _dbContext.SaveChangesAsync();
+        return _mapper.Map<HealthcareWorkerDto>(newHealthcareWorker);
+    }
+
+    // UpdateHealthcareWorker
+    public async Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker)
+    {
+        var healthcareWorkerToUpdate = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(x => x.ID == id);
+        if (healthcareWorkerToUpdate != null)
+        {
+            healthcareWorkerToUpdate.Name = healthcareWorker.Name;
+            healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
+            healthcareWorkerToUpdate.TeamID = healthcareWorker.TeamID;
+            healthcareWorkerToUpdate.Status = healthcareWorker.Status;
+            await _dbContext.SaveChangesAsync();
+        }
+        return _mapper.Map<HealthcareWorkerDto>(healthcareWorkerToUpdate);
+    }
+    
 }

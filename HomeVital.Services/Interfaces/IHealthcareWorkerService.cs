@@ -6,7 +6,15 @@ namespace HomeVital.Services.Interfaces
 {
     public interface IHealthcareWorkerService
     {
-        // Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker);
-        
+        // GetHealthcareWorkers
+        Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers();
+        // GetHealthcareWorkerById
+        Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id);
+        // DeleteHealthcareWorker
+        Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id);
+        // CreateHealthcareWorker
+        Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker);
+        // UpdateHealthcareWorker
+        Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker);
     }
 }

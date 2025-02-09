@@ -5,11 +5,15 @@ namespace HomeVital.Repositories.Interfaces
 {
     public interface IHealthcareWorkerRepository
     {
-        // input models
-        Task<HealthcareWorkerDto> CreateHealthcareWorkerAsync(HealthcareWorkerInputModel healthcareWorker);
-        Task<HealthcareWorkerDto[]> GetHealthcareWorkersAsync();
-        Task<HealthcareWorkerDto?> GetHealthcareWorkerByIdAsync(int id);
-        Task<bool> DeleteHealthcareWorkerAsync(int id);
-        Task<HealthcareWorkerDto?> UpdateHealthcareWorkerAsync(int id, HealthcareWorkerInputModel updatedHealthcareWorker);
+        // GetHealthcareWorkers
+        Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers();
+        // GetHealthcareWorkerById
+        Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id);
+        // DeleteHealthcareWorker
+        Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id);
+        // CreateHealthcareWorker
+        Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker);
+        // UpdateHealthcareWorker
+        Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker);
     }
 }
