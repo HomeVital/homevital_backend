@@ -5,11 +5,13 @@ namespace HomeVital.Repositories.Interfaces;
 
 public interface IBloodsugarRepository
 {
-    Task<BloodsugarDto> CreateBloodsugarAsync(BloodsugarInputModel bloodsugar);
-    Task<BloodsugarDto[]> GetBloodsugarsByPatientId(int patientId);
-    Task<BloodsugarDto?> GetBloodsugarByIdAsync(int id); 
-    Task<bool> DeleteBloodsugarAsync(int id);
-    Task<BloodsugarDto?> UpdateBloodsugarAsync(int id, BloodsugarInputModel updatedBloodsugar);
-    Task<BloodsugarDto?> GetBloodsugarByUserIdAsync(int userId);
+    // GetBloodsugarsByPatientId
+    Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId);
+    // CreateBloodsugar
+    Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel);
+    // UpdateBloodsugar
+    Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel);
+    // DeleteBloodsugar
+    Task<BloodsugarDto> DeleteBloodsugar(int id);
     
 }

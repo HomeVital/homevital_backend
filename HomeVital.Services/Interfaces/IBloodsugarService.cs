@@ -4,9 +4,16 @@ using HomeVital.Models.InputModels;
 
 namespace HomeVital.Services.Interfaces
 {
-    public interface BloodsugarService
+    public interface IBloodsugarService
     {
-        // Task<BloodsugarDto> CreateBloodsugar(BloodsugarInputModel bloodsugar);
+        // GetBloodsugarsByPatientId
+        Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId);
+        // CreateBloodsugar
+        Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel);
+        // UpdateBloodsugar
+        Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel);
+        // DeleteBloodsugar
+        Task<BloodsugarDto> DeleteBloodsugar(int id);
         
     }
 }

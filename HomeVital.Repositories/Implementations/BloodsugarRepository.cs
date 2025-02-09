@@ -19,61 +19,59 @@ namespace HomeVital.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public async Task<BloodsugarDto> CreateBloodsugarAsync(BloodsugarInputModel bloodsugar)
-        {
-            var newBloodsugar = _mapper.Map<Bloodsugar>(bloodsugar);
-            await _dbContext.Bloodsugars.AddAsync(newBloodsugar);
-            await _dbContext.SaveChangesAsync();
-
-            return _mapper.Map<BloodsugarDto>(newBloodsugar);
-        }
-
-        public async Task<BloodsugarDto[]> GetBloodsugarsByPatientId(int patientId)
+        public async Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId)
         {
             var bloodsugars = await _dbContext.Bloodsugars
                 .Where(b => b.PatientID == patientId)
-                .ToArrayAsync();
+                .ToListAsync();
 
-            return _mapper.Map<BloodsugarDto[]>(bloodsugars);
+            return _mapper.Map<IEnumerable<BloodsugarDto>>(bloodsugars);
         }
 
-        public async Task<BloodsugarDto?> UpdateBloodsugarAsync(int id, BloodsugarInputModel updatedBloodsugar)
+        public async Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel)
         {
-            var bloodsugar = await _dbContext.Bloodsugars.FirstOrDefaultAsync(b => b.ID == id);
-            if (bloodsugar == null)
-            {
-                return null;
-            }
+            var bloodsugar = _mapper.Map<Bloodsugar>(bloodsugarInputModel);
+            bloodsugar.PatientID = patientId;
 
-            _mapper.Map(updatedBloodsugar, bloodsugar);
+            _dbContext.Bloodsugars.Add(bloodsugar);
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
 
-        public async Task<BloodsugarDto?> GetBloodsugarByIdAsync(int id)
+        public async Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel)
         {
-            var bloodsugar = await _dbContext.Bloodsugars.FirstOrDefaultAsync(b => b.ID == id);
+            var bloodsugar = await _dbContext.Bloodsugars
+                .FirstOrDefaultAsync(b => b.ID == id);
+
+            if (bloodsugar == null)
+            {
+                throw new System.ArgumentException("Bloodsugar record not found");
+            }
+
+            _mapper.Map(bloodsugarInputModel, bloodsugar);
+            await _dbContext.SaveChangesAsync();
+
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
 
-        public async Task<bool> DeleteBloodsugarAsync(int id)
+        public async Task<BloodsugarDto> DeleteBloodsugar(int id)
         {
-            var bloodsugar = await _dbContext.Bloodsugars.FirstOrDefaultAsync(b => b.ID == id);
+            var bloodsugar = await _dbContext.Bloodsugars
+                .FirstOrDefaultAsync(b => b.ID == id);
+
             if (bloodsugar == null)
             {
-                return false;
+                throw new System.ArgumentException("Bloodsugar record not found");
             }
 
             _dbContext.Bloodsugars.Remove(bloodsugar);
             await _dbContext.SaveChangesAsync();
-            return true;
-        }
 
-        public async Task<BloodsugarDto?> GetBloodsugarByUserIdAsync(int userId)
-        {
-            var bloodsugar = await _dbContext.Bloodsugars.FirstOrDefaultAsync(b => b.PatientID == userId);
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
+
+
+
     }
 }

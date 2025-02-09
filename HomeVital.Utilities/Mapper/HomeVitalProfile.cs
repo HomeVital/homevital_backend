@@ -21,6 +21,10 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<Patient, PatientDto>();
             CreateMap<HealthcareWorker, HealthcareWorkerDto>();
             CreateMap<HealthcareWorkerInputModel, HealthcareWorker>();
+            CreateMap<PatientInputModel, Patient>();
+            CreateMap<BloodPressureInputModel, BloodPressure>();
+            CreateMap<BloodsugarInputModel, Bloodsugar>();
+            
         }
     }
 }

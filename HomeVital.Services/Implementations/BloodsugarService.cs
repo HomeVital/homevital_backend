@@ -8,17 +8,37 @@ namespace HomeVital.Services
 {
     public class BloodsugarService : IBloodsugarService
     {
-        private readonly IMapper _mapper;
         private readonly IBloodsugarRepository _bloodsugarRepository;
+        private readonly IMapper _mapper;
 
-        public BloodsugarService(IMapper mapper, IBloodsugarRepository bloodsugarRepository)
+        public BloodsugarService(IBloodsugarRepository bloodsugarRepository, IMapper mapper)
         {
-            _mapper = mapper;
             _bloodsugarRepository = bloodsugarRepository;
+            _mapper = mapper;
         }
-    }
 
-    public interface IBloodsugarService
-    {
+        public async Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId)
+        {
+            var bloodsugars = await _bloodsugarRepository.GetBloodsugarsByPatientId(patientId);
+            return _mapper.Map<IEnumerable<BloodsugarDto>>(bloodsugars);
+        }
+
+        public async Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel)
+        {
+            return await _bloodsugarRepository.CreateBloodsugar(patientId, bloodsugarInputModel);
+        }
+
+        public async Task<BloodsugarDto> UpdateBloodsugar(int id, BloodsugarInputModel bloodsugarInputModel)
+        {
+            return await _bloodsugarRepository.UpdateBloodsugar(id, bloodsugarInputModel);
+        }
+
+        public async Task<BloodsugarDto> DeleteBloodsugar(int id)
+        {
+            return await _bloodsugarRepository.DeleteBloodsugar(id);
+        }
+
+
+
     }
 }
