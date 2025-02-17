@@ -31,6 +31,11 @@ namespace HomeVital.API.Controllers
                 throw new System.ArgumentException("Invalid input model");
             }
             var patient = await _patientService.GetPatientById(id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
             return Ok(patient);
         }
 
@@ -42,6 +47,10 @@ namespace HomeVital.API.Controllers
                 throw new System.ArgumentException("Invalid input model");
             }
             var patient = await _patientService.DeletePatient(id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
             return Ok(patient);
         }
 

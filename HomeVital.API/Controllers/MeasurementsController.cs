@@ -1,55 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
+using HomeVital.Models.Dtos;
+using HomeVital.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 namespace HomeVital.API.Controllers
 {
     [ApiController]
-    [Route("api/measurements")]
+    [Route("api/[controller]")]
     public class MeasurementsController : ControllerBase
     {
-        [HttpGet("bloodsugar")]
-        // get measurement by id
+        private readonly IMeasurementService _measurementService;
 
-        public async Task<IActionResult> GetMeasurementById([FromQuery] int id)
+        public MeasurementsController(IMeasurementService measurementService)
         {
-            // get measurement by id
-            await Task.Delay(1000);
-            
-            return Ok("blood sugar is 8" );
+            _measurementService = measurementService;
         }
 
-        // body temperature
-        [HttpGet("bodytemperature")]
-        public async Task<IActionResult> GetBodyTemperatureById([FromQuery] int id)
+        [HttpGet("getById")]
+        public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromQuery] int id)
         {
-            // get measurement by id
-            await Task.Delay(1000);
-            
-            return Ok("body temperature is 36.6" );
+            var measurements = await _measurementService.GetMeasurementsById(id);
+            return Ok(measurements);
         }
-
-        // blood pressure
-        [HttpGet("bloodpressure")]
-        public async Task<IActionResult> GetBloodPressureById([FromQuery] int id)
-        {
-            // get measurement by id
-            await Task.Delay(1000);
-            
-            return Ok("blood pressure is 120/80" );
-        }
-
-        // weight
-        [HttpGet("weight")]
-        public async Task<IActionResult> GetWeightById([FromQuery] int id)
-        {
-            // get measurement by id
-            await Task.Delay(1000);
-            
-            return Ok("weight is 80" );
-        }
-
+        // Post method to get measurements by id so that we can use the id in the body of the request and keep security in mind
+        // [HttpPost("getById")]
+        // public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromBody] int id)
+        // {
+        //     var measurements = await _measurementService.GetMeasurementsById(id);
+        //     return Ok(measurements);
+        // }
     }
 }

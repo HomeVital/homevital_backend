@@ -19,12 +19,18 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<BloodPressure, BloodPressureDto>();
             CreateMap<Bloodsugar, BloodsugarDto>();
             CreateMap<Patient, PatientDto>();
+            CreateMap<PatientInputModel, Patient>();
             CreateMap<HealthcareWorker, HealthcareWorkerDto>();
             CreateMap<HealthcareWorkerInputModel, HealthcareWorker>();
-            CreateMap<PatientInputModel, Patient>();
             CreateMap<BloodPressureInputModel, BloodPressure>();
             CreateMap<BloodsugarInputModel, Bloodsugar>();
-            
+            CreateMap<MeasurementDto, Measurement>();
+            CreateMap<Measurement, MeasurementDto>();
+            CreateMap<BloodPressure, MeasurementDto>();
+            CreateMap<Bloodsugar, MeasurementDto>();
+            CreateMap<Measurement, MeasurementDto>()
+                .ForMember(dest => dest.BloodPressure, opt => opt.MapFrom(src => src.BloodPressure))
+                .ForMember(dest => dest.BloodSugar, opt => opt.MapFrom(src => src.BloodSugar));
         }
     }
 }

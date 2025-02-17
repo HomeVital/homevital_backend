@@ -32,6 +32,14 @@ namespace HomeVital.Services
 
         public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
         {
+            // get the blood pressure record by id 
+            var bloodPressure = await _bloodPressureRepository.GetBloodPressureById(id);
+            // if the blood pressure record is not found, throw an exception
+            if (bloodPressure == null)
+            {
+                throw new ArgumentException("Blood pressure record not found");
+            }
+            
             return await _bloodPressureRepository.UpdateBloodPressure(id, bloodPressureInputModel);
         }
 

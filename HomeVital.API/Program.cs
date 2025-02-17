@@ -20,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(HomeVitalProfile));
 
 // Add Transient for all service and repository interfaces
+
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IBloodsugarService, BloodsugarService>();
@@ -30,8 +31,9 @@ builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddTransient<IPatientRepository, PatientRepository>();
 builder.Services.AddTransient<IHealthcareWorkerService, HealthcareWorkerService>();
 builder.Services.AddTransient<IHealthcareWorkerRepository, HealthcareWorkerRepository>();
-
-
+builder.Services.AddTransient<IMeasurementService, MeasurementsService>();
+builder.Services.AddTransient<IMeasurementsRepository, MeasurementsRepository>();
+builder.Services.AddTransient<MeasurementsService>();
 
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";

@@ -13,5 +13,7 @@ namespace HomeVital.Repositories.Interfaces
         Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel);
         // DeleteBloodPressure
         Task<BloodPressureDto> DeleteBloodPressure(int id);
+        // GetBloodPressureById
+        Task<BloodPressureDto> GetBloodPressureById(int id);
     }
 }

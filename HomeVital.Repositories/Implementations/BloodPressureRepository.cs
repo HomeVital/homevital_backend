@@ -80,6 +80,14 @@ public class BloodPressureRepository : IBloodPressureRepository
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
+    public async Task<BloodPressureDto> GetBloodPressureById(int id)
+    {
+        var bloodPressure = await _dbContext.BloodPressures
+            .FirstOrDefaultAsync(b => b.ID == id);
+
+        return _mapper.Map<BloodPressureDto>(bloodPressure);
+    }
+
 
 
 }

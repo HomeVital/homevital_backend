@@ -17,5 +17,7 @@ namespace HomeVital.Repositories.dbContext
 
         public DbSet<User> Users { get; set;}
 
+        public DbSet<Measurement> Measurements { get; set; }
+
     }
 }
