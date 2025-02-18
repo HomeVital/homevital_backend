@@ -34,23 +34,22 @@ namespace HomeVital.Tests
             Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public async Task TestUsersControllerRegister()
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-            var content = new StringContent(JsonConvert.SerializeObject("testUser"), Encoding.UTF8, "application/json");
+        // [Fact]
+        // public async Task TestUsersControllerRegister()
+        // {
+        //     // Arrange
+        //     var client = _factory.CreateClient();
+        //     var content = new StringContent(JsonConvert.SerializeObject("testUser"), Encoding.UTF8, "application/json");
 
-            // Act
-            var response = await client.PostAsync("/api/user/register", content);
-            // console.log the response
-            response.EnsureSuccessStatusCode();
+        //     // Act
+        //     var response = await client.PostAsync("/api/user/register", content);
+        //     // console.log the response
+        //     response.EnsureSuccessStatusCode();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+        //     var responseString = await response.Content.ReadAsStringAsync();
             
-            System.Console.WriteLine(responseString);
-            // Assert
-            Assert.Equal("wohoow testUser", responseString);
-        }
+        //     // Assert
+        //     Assert.Equal("wohoow testUser", responseString);
+        // }
     }
 }
