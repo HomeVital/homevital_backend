@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
+using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 
 namespace HomeVital.API.Controllers
@@ -10,9 +11,12 @@ namespace HomeVital.API.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
+        private readonly IPatientService _patientService;
 
         public PatientsController(IPatientService patientService)
+        public PatientsController(IPatientService patientService)
         {
+            _patientService = patientService;
             _patientService = patientService;
         }
 
@@ -31,6 +35,11 @@ namespace HomeVital.API.Controllers
                 throw new System.ArgumentException("Invalid input model");
             }
             var patient = await _patientService.GetPatientById(id);
+            if (patient == null)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+
             return Ok(patient);
         }
 
@@ -42,6 +51,10 @@ namespace HomeVital.API.Controllers
                 throw new System.ArgumentException("Invalid input model");
             }
             var patient = await _patientService.DeletePatient(id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
             return Ok(patient);
         }
 

@@ -3,6 +3,7 @@ using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
+using HomeVital.Models.Entities;
 
 namespace HomeVital.Services.Implementations;
 
@@ -15,8 +16,13 @@ public class UserService: IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserDto> Register(RegisterInputModel inputModel)
+    public async Task<UserDto?> MockLogin(RegisterInputModel registerInputModel)
     {
-        return await _userRepository.Register(inputModel);
+        return await _userRepository.MockLogin(registerInputModel);
+    }
+
+    public async Task<UserDto?> Login(RegisterInputModel registerInputModel)
+    {
+        return await _userRepository.Login(registerInputModel);
     }
 }

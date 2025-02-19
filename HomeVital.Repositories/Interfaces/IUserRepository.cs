@@ -5,5 +5,7 @@ namespace HomeVital.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    Task<UserDto> Register(RegisterInputModel inputModel);
+    Task<UserDto?> MockLogin(RegisterInputModel registerInputModel);
+    // Login
+    Task<UserDto?> Login(RegisterInputModel registerInputModel);
 }

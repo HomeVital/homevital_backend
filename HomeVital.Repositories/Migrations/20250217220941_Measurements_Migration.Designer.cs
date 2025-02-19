@@ -3,6 +3,7 @@ using System;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217220941_Measurements_Migration")]
+    partial class Measurements_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +47,6 @@ namespace HomeVital.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("MeasurementID")
-                        .HasColumnType("integer");
-
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -61,8 +61,6 @@ namespace HomeVital.Repositories.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MeasurementID");
 
                     b.ToTable("BloodPressures");
                 });
@@ -81,15 +79,10 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("MeasurementID")
-                        .HasColumnType("integer");
-
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MeasurementID");
 
                     b.ToTable("Bloodsugars");
                 });
@@ -130,8 +123,28 @@ namespace HomeVital.Repositories.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
+                    b.Property<string>("BloodPressure")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HeartRate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OxygenSaturation")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Temperature")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
@@ -189,27 +202,6 @@ namespace HomeVital.Repositories.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.BloodPressure", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
-                        .WithMany("BloodPressure")
-                        .HasForeignKey("MeasurementID");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.Bloodsugar", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
-                        .WithMany("BloodSugar")
-                        .HasForeignKey("MeasurementID");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.Measurement", b =>
-                {
-                    b.Navigation("BloodPressure");
-
-                    b.Navigation("BloodSugar");
                 });
 #pragma warning restore 612, 618
         }
