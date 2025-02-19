@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
-using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 
 namespace HomeVital.API.Controllers
@@ -11,12 +10,9 @@ namespace HomeVital.API.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-        private readonly IPatientService _patientService;
 
         public PatientsController(IPatientService patientService)
-        public PatientsController(IPatientService patientService)
         {
-            _patientService = patientService;
             _patientService = patientService;
         }
 
