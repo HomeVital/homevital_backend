@@ -20,4 +20,9 @@ public class UserService: IUserService
     {
         return await _userRepository.MockLogin(registerInputModel);
     }
+
+    public async Task<UserDto?> Login(RegisterInputModel registerInputModel)
+    {
+        return await _userRepository.Login(registerInputModel);
+    }
 }

@@ -1,5 +1,3 @@
-
-
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Utilities.Mapper;
 using HomeVital.Repositories.dbContext;
@@ -14,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HomeVital.Services;
+using HomeVital.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +34,6 @@ builder.Services.AddTransient<IMeasurementService, MeasurementsService>();
 builder.Services.AddTransient<IMeasurementsRepository, MeasurementsRepository>();
 builder.Services.AddTransient<MeasurementsService>();
 
-
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
 
 var connectionString = builder.Configuration.GetConnectionString(
@@ -54,7 +52,6 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
     
 });
 
-
 builder.Services.AddControllers();
 // Register TimeProvider
 builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
@@ -63,13 +60,16 @@ builder.Services.AddAuthentication("BasicAuthentication")
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// public void ConfigureServices(IServiceCollection services)
-// {
-//     services.AddScoped<IUserService, UserService>();
-//     // Other service registrations
-// }
 
 var app = builder.Build();
+
+// Initialize the database with seed data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<HomeVitalDbContext>();
+    DatabaseInitializer.Initialize(context);
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -78,7 +78,6 @@ app.UseDeveloperExceptionPage();
 app.UseSwagger();
 app.UseSwaggerUI(x =>
 {
-
     x.SwaggerEndpoint("/swagger/v1/swagger.json", "Web API V1");
 
 #if DEBUG

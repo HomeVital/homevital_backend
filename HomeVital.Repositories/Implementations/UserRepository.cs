@@ -28,8 +28,20 @@ public class UserRepository : IUserRepository
         {
             return null;
         }
+        // map the model so id is not exposed
+        user.Id = 0;
         return _mapper.Map<UserDto>(user);
+
     }
 
+    public async Task <UserDto?> Login(RegisterInputModel registerInputModel)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Kennitala == registerInputModel.Kennitala);
+        if (user == null)
+        {
+            return null;
+        }
+        return _mapper.Map<UserDto>(user);
+    }
 
 }

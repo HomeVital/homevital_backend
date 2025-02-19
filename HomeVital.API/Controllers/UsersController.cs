@@ -20,14 +20,35 @@ namespace HomeVital.API.Controllers
         [HttpPost("MockLogin")]
         // POST api/user/MockLogin 
         // take in Kennitala and returns the kennitala if it exists in the database
-        public ActionResult<string> MockLogin([FromBody] string kennitala)
+        public async Task<ActionResult<string>> MockLogin([FromBody] RegisterInputModel registerInputModel)
         {   
-            var user = _userService.MockLogin(new RegisterInputModel { Kennitala = kennitala });
-            if (user == null)
+            if(!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var user_ = await _userService.MockLogin(registerInputModel);
+            if (user_ == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(user_);
+        }
+
+        [HttpPost("Login")]
+        // POST api/user/Login
+        // take in Kennitala and password and returns the user id if the user exists in the database
+        public async Task<ActionResult<string>> Login([FromBody] RegisterInputModel registerInputModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var user_ = await _userService.Login(registerInputModel);
+            if (user_ == null)
+            {
+                return NotFound();
+            }
+            return Ok(user_);
         }
         
 
