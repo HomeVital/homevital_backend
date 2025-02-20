@@ -3,6 +3,7 @@ using System;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220125229_BodyWeight_1")]
+    partial class BodyWeight_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,9 +108,6 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("MeasurementID")
-                        .HasColumnType("integer");
-
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -115,8 +115,6 @@ namespace HomeVital.Repositories.Migrations
                         .HasColumnType("double precision");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MeasurementID");
 
                     b.ToTable("BodyWeights");
                 });
@@ -232,20 +230,11 @@ namespace HomeVital.Repositories.Migrations
                         .HasForeignKey("MeasurementID");
                 });
 
-            modelBuilder.Entity("HomeVital.Models.Entities.BodyWeight", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
-                        .WithMany("BodyWeight")
-                        .HasForeignKey("MeasurementID");
-                });
-
             modelBuilder.Entity("HomeVital.Models.Entities.Measurement", b =>
                 {
                     b.Navigation("BloodPressure");
 
                     b.Navigation("BloodSugar");
-
-                    b.Navigation("BodyWeight");
                 });
 #pragma warning restore 612, 618
         }

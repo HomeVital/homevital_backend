@@ -31,6 +31,9 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<Measurement, MeasurementDto>()
                 .ForMember(dest => dest.BloodPressure, opt => opt.MapFrom(src => src.BloodPressure))
                 .ForMember(dest => dest.BloodSugar, opt => opt.MapFrom(src => src.BloodSugar));
+
+            CreateMap<BodyWeight, BodyWeightDto>();
+            CreateMap<BodyWeightInputModel, BodyWeight>();
         }
     }
 }

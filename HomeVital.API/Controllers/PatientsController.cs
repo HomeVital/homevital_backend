@@ -28,12 +28,12 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("input model is not valid");
             }
             var patient = await _patientService.GetPatientById(id);
             if (patient == null)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return NotFound();
             }
 
             return Ok(patient);
@@ -44,7 +44,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("input model is not valid");
             }
             var patient = await _patientService.DeletePatient(id);
             if (patient == null)
@@ -59,7 +59,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("input model is not valid");
             }
 
             var newPatient = await _patientService.CreatePatient(patientInputModel);
@@ -71,10 +71,11 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("input model is not valid");
             }
             var updatedPatient = await _patientService.UpdatePatient(id, patientInputModel);
             return Ok(updatedPatient);
-        }
+        }        
+
     }
 }

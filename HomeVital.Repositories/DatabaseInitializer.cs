@@ -15,7 +15,53 @@ namespace HomeVital.Repositories
             context.Bloodsugars.RemoveRange(context.Bloodsugars);
             context.BloodPressures.RemoveRange(context.BloodPressures);
             context.HealthcareWorkers.RemoveRange(context.HealthcareWorkers);
+            context.BodyWeights.RemoveRange(context.BodyWeights);
             context.SaveChanges();
+
+            // // Reset identity columns
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Users_Id_seq\" RESTART WITH 1");
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Patients_Id_seq\" RESTART WITH 1");
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Bloodsugars_Id_seq\" RESTART WITH 1");
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BloodPressures_Id_seq\" RESTART WITH 1");
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"HealthcareWorkers_Id_seq\" RESTART WITH 1");
+            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BodyWeights_Id_seq\" RESTART WITH 1");
+
+            // Ensure sequences exist and reset identity columns
+            context.Database.ExecuteSqlRaw(@"
+                DO $$
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Users_Id_seq') THEN
+                        CREATE SEQUENCE ""Users_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""Users_Id_seq"" RESTART WITH 1;
+
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Patients_Id_seq') THEN
+                        CREATE SEQUENCE ""Patients_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""Patients_Id_seq"" RESTART WITH 1;
+
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Bloodsugars_Id_seq') THEN
+                        CREATE SEQUENCE ""Bloodsugars_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""Bloodsugars_Id_seq"" RESTART WITH 1;
+
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BloodPressures_Id_seq') THEN
+                        CREATE SEQUENCE ""BloodPressures_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""BloodPressures_Id_seq"" RESTART WITH 1;
+
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'HealthcareWorkers_Id_seq') THEN
+                        CREATE SEQUENCE ""HealthcareWorkers_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""HealthcareWorkers_Id_seq"" RESTART WITH 1;
+
+                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BodyWeights_Id_seq') THEN
+                        CREATE SEQUENCE ""BodyWeights_Id_seq"";
+                    END IF;
+                    ALTER SEQUENCE ""BodyWeights_Id_seq"" RESTART WITH 1;
+                END
+                $$;
+            ");
             
 
             if (!context.Users.Any())
@@ -71,6 +117,18 @@ namespace HomeVital.Repositories
                 context.HealthcareWorkers.AddRange(
                     new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamID = 1 },
                     new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamID = 2 }
+                );
+            }
+            // bodyweight
+            if (!context.BodyWeights.Any())
+            {
+                context.BodyWeights.AddRange(
+                    new BodyWeight { PatientID = 1, Weight = 70.5f, Date = DateTime.UtcNow },
+                    new BodyWeight { PatientID = 2, Weight = 75.5f, Date = DateTime.UtcNow },
+                    new BodyWeight { PatientID = 3, Weight = 80.5f, Date = DateTime.UtcNow },
+                    new BodyWeight { PatientID = 4, Weight = 85.5f, Date = DateTime.UtcNow },
+                    new BodyWeight { PatientID = 5, Weight = 90.5f, Date = DateTime.UtcNow },
+                    new BodyWeight { PatientID = 6, Weight = 95.5f, Date = DateTime.UtcNow }
                 );
             }
 
