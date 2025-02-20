@@ -19,6 +19,7 @@ namespace HomeVital.Repositories.dbContext
 
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<BodyWeight> BodyWeights { get; set; }
+        public DbSet<BodyTemperature> BodyTemperatures { get; set; }
 
     }
 }

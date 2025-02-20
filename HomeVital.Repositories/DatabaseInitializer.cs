@@ -132,6 +132,19 @@ namespace HomeVital.Repositories
                 );
             }
 
+            // bodytemperature
+            if (!context.BodyTemperatures.Any())
+            {
+                context.BodyTemperatures.AddRange(
+                    new BodyTemperature { PatientID = 1, Temperature = 36.5f, Date = DateTime.UtcNow },
+                    new BodyTemperature { PatientID = 2, Temperature = 37.5f, Date = DateTime.UtcNow },
+                    new BodyTemperature { PatientID = 3, Temperature = 38.5f, Date = DateTime.UtcNow },
+                    new BodyTemperature { PatientID = 4, Temperature = 39.5f, Date = DateTime.UtcNow },
+                    new BodyTemperature { PatientID = 5, Temperature = 40.5f, Date = DateTime.UtcNow },
+                    new BodyTemperature { PatientID = 6, Temperature = 41.5f, Date = DateTime.UtcNow }
+                );
+            }
+
             context.SaveChanges();
         }
     }

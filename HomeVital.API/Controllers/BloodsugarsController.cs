@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
-using HomeVital.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 using HomeVital.Services.Interfaces;
-
 
 namespace HomeVital.API.Controllers
 {
