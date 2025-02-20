@@ -8,6 +8,8 @@ using HomeVital.Models.Entities;
 using HomeVital.Models.InputModels;
 
 
+
+
 namespace HomeVital.Utilities.Mapper
 {
     public class HomeVitalProfile : Profile
@@ -34,6 +36,8 @@ namespace HomeVital.Utilities.Mapper
 
             CreateMap<BodyWeight, BodyWeightDto>();
             CreateMap<BodyWeightInputModel, BodyWeight>();
+            CreateMap<BodyTemperature, BodyTemperatureDto>();
+            CreateMap<BodyTemperatureInputModel, BodyTemperature>();
         }
     }
 }
