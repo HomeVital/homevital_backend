@@ -21,7 +21,7 @@ namespace HomeVital.Models.Dtos
         // list of oxygen saturation measurements
         // public List<OxygenSaturationDto> OxygenSaturation { get; set; }
         // list of temperature measurements
-        // public List<TemperatureDto> Temperature { get; set; }
+        public List<BodyTemperatureDto> BodyTemperature { get; set; } = new List<BodyTemperatureDto>();
         
     }
 }

@@ -32,14 +32,18 @@ namespace HomeVital.Repositories.Implementations
             var bodyWeights = await _dbContext.BodyWeights
             .Where(m => m.PatientID == id)
             .ToListAsync();
-        
+
+            var bodyTemperatures = await _dbContext.BodyTemperatures
+            .Where(m => m.PatientID == id)
+            .ToListAsync();
 
             // Map the measurements to the Dto object
             var measurementDto = new MeasurementDto
             {
                 BloodPressure = _mapper.Map<List<BloodPressureDto>>(bloodPressures),
                 BloodSugar = _mapper.Map<List<BloodsugarDto>>(bloodSugars),
-                BodyWeight = _mapper.Map<List<BodyWeightDto>>(bodyWeights)
+                BodyWeight = _mapper.Map<List<BodyWeightDto>>(bodyWeights),
+                BodyTemperature = _mapper.Map<List<BodyTemperatureDto>>(bodyTemperatures)
 
             };
 
