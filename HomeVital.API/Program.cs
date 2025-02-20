@@ -33,6 +33,8 @@ builder.Services.AddTransient<IHealthcareWorkerRepository, HealthcareWorkerRepos
 builder.Services.AddTransient<IMeasurementService, MeasurementsService>();
 builder.Services.AddTransient<IMeasurementsRepository, MeasurementsRepository>();
 builder.Services.AddTransient<MeasurementsService>();
+builder.Services.AddTransient<IBodyWeightService, BodyWeightService>();
+builder.Services.AddTransient<IBodyWeightRepository, BodyWeightRepository>();
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
 

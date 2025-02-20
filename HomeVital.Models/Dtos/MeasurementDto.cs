@@ -16,8 +16,8 @@ namespace HomeVital.Models.Dtos
         public List<BloodPressureDto> BloodPressure { get; set; } = new List<BloodPressureDto>();
         // list of blood sugar measurements
         public List<BloodsugarDto> BloodSugar { get; set; } = new List<BloodsugarDto>();
-        // list of heart rate measurements
-        // public List<HeartRateDto> HeartRate { get; set; }
+        // list of body weight measurements
+        public List<BodyWeightDto> BodyWeight { get; set; } = new List<BodyWeightDto>();
         // list of oxygen saturation measurements
         // public List<OxygenSaturationDto> OxygenSaturation { get; set; }
         // list of temperature measurements

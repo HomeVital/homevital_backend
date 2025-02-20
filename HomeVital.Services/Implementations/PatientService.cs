@@ -40,5 +40,6 @@ namespace HomeVital.Services
         {
             return await _patientRepository.UpdatePatient(id, patient);
         }
+
     }
 }

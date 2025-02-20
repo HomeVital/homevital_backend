@@ -15,7 +15,6 @@ namespace HomeVital.Services.Interfaces
         Task<PatientDto> DeletePatient(int id);
         // UpdatePatient
         Task<PatientDto> UpdatePatient(int id, PatientInputModel patient);
-
         
     }
         
