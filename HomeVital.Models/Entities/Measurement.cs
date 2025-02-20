@@ -9,7 +9,7 @@ namespace HomeVital.Models.Entities
         public List<BodyWeight> BodyWeight { get; set; } = new List<BodyWeight>();
         // public List<OxygenSaturation> OxygenSaturation { get; set; } = new List<OxygenSaturation>();
         // public List<Temperature> Temperature { get; set; } = new List<Temperature>();
-        // public List<Weight> Weight { get; set; } = new List<Weight>();
+        public List<BodyTemperature> BodyTemperature { get; set; } = new List<BodyTemperature>();
         
     }
 }
