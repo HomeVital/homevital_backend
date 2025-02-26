@@ -8,117 +8,26 @@ namespace HomeVital.Repositories
     {
         public static void Initialize(HomeVitalDbContext context)
         {
+            // Apply any pending migrations
             context.Database.Migrate();
-            // Clear existing data (optional)
-            context.Users.RemoveRange(context.Users);
-            context.Patients.RemoveRange(context.Patients);
-            context.Bloodsugars.RemoveRange(context.Bloodsugars);
-            context.BloodPressures.RemoveRange(context.BloodPressures);
-            context.HealthcareWorkers.RemoveRange(context.HealthcareWorkers);
-            context.BodyWeights.RemoveRange(context.BodyWeights);
-            context.BodyWeights.RemoveRange(context.BodyWeights);
-            context.SaveChanges();
 
-            // // Reset identity columns
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Users_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Patients_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Bloodsugars_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BloodPressures_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"HealthcareWorkers_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BodyWeights_Id_seq\" RESTART WITH 1");
+            // Drop all tables
+            context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
+            context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
 
-            // Ensure sequences exist and reset identity columns
-            context.Database.ExecuteSqlRaw(@"
-                DO $$
-                BEGIN
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Users_Id_seq') THEN
-                        CREATE SEQUENCE ""Users_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Users_Id_seq"" RESTART WITH 1;
+            // Reapply migrations to recreate the tables
+            context.Database.Migrate();
 
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Patients_Id_seq') THEN
-                        CREATE SEQUENCE ""Patients_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Patients_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Bloodsugars_Id_seq') THEN
-                        CREATE SEQUENCE ""Bloodsugars_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Bloodsugars_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BloodPressures_Id_seq') THEN
-                        CREATE SEQUENCE ""BloodPressures_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""BloodPressures_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'HealthcareWorkers_Id_seq') THEN
-                        CREATE SEQUENCE ""HealthcareWorkers_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""HealthcareWorkers_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BodyWeights_Id_seq') THEN
-                        CREATE SEQUENCE ""BodyWeights_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""BodyWeights_Id_seq"" RESTART WITH 1;
-                END
-                $$;
-            ");
-
-            // // Reset identity columns
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Users_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Patients_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"Bloodsugars_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BloodPressures_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"HealthcareWorkers_Id_seq\" RESTART WITH 1");
-            // context.Database.ExecuteSqlRaw("ALTER SEQUENCE \"BodyWeights_Id_seq\" RESTART WITH 1");
-
-            // Ensure sequences exist and reset identity columns
-            context.Database.ExecuteSqlRaw(@"
-                DO $$
-                BEGIN
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Users_Id_seq') THEN
-                        CREATE SEQUENCE ""Users_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Users_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Patients_Id_seq') THEN
-                        CREATE SEQUENCE ""Patients_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Patients_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'Bloodsugars_Id_seq') THEN
-                        CREATE SEQUENCE ""Bloodsugars_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""Bloodsugars_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BloodPressures_Id_seq') THEN
-                        CREATE SEQUENCE ""BloodPressures_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""BloodPressures_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'HealthcareWorkers_Id_seq') THEN
-                        CREATE SEQUENCE ""HealthcareWorkers_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""HealthcareWorkers_Id_seq"" RESTART WITH 1;
-
-                    IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'BodyWeights_Id_seq') THEN
-                        CREATE SEQUENCE ""BodyWeights_Id_seq"";
-                    END IF;
-                    ALTER SEQUENCE ""BodyWeights_Id_seq"" RESTART WITH 1;
-                END
-                $$;
-            ");
-            
-
+            // Repopulate the tables with dummy data
             if (!context.Users.Any())
             {
                 context.Users.AddRange(
                     new User { UserName = "user1", Kennitala = "1234567890" },
                     new User { UserName = "user2", Kennitala = "0987654321" },
-                    new User {UserName = "Jakub", Kennitala = "1111111111"} ,
-                    new User {UserName = "þorir", Kennitala = "2222222222"},
-                    new User {UserName = "sindri", Kennitala = "3333333333"},
-                    new User {UserName = "aron", Kennitala = "4444444444"}
+                    new User { UserName = "Jakub", Kennitala = "1111111111" },
+                    new User { UserName = "þorir", Kennitala = "2222222222" },
+                    new User { UserName = "sindri", Kennitala = "3333333333" },
+                    new User { UserName = "aron", Kennitala = "4444444444" }
                 );
             }
 
@@ -157,15 +66,7 @@ namespace HomeVital.Repositories
                     new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Hypertension" }
                 );
             }
-            // healthcareworker
-            if (!context.HealthcareWorkers.Any())
-            {
-                context.HealthcareWorkers.AddRange(
-                    new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamID = 1 },
-                    new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamID = 2 }
-                );
-            }
-            // bodyweight
+
             if (!context.BodyWeights.Any())
             {
                 context.BodyWeights.AddRange(
@@ -178,7 +79,6 @@ namespace HomeVital.Repositories
                 );
             }
 
-            // bodytemperature
             if (!context.BodyTemperatures.Any())
             {
                 context.BodyTemperatures.AddRange(
@@ -188,6 +88,14 @@ namespace HomeVital.Repositories
                     new BodyTemperature { PatientID = 4, Temperature = 39.5f, Date = DateTime.UtcNow },
                     new BodyTemperature { PatientID = 5, Temperature = 40.5f, Date = DateTime.UtcNow },
                     new BodyTemperature { PatientID = 6, Temperature = 41.5f, Date = DateTime.UtcNow }
+                );
+            }
+
+            if (!context.HealthcareWorkers.Any())
+            {
+                context.HealthcareWorkers.AddRange(
+                    new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamID = 1 },
+                    new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamID = 2 }
                 );
             }
 
