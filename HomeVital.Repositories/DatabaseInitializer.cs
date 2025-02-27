@@ -22,20 +22,22 @@ namespace HomeVital.Repositories
             if (!context.Users.Any())
             {
                 context.Users.AddRange(
-                    new User { UserName = "user1", Kennitala = "1234567890" },
-                    new User { UserName = "user2", Kennitala = "0987654321" },
-                    new User { UserName = "Jakub", Kennitala = "1111111111" },
-                    new User { UserName = "þorir", Kennitala = "2222222222" },
-                    new User { UserName = "sindri", Kennitala = "3333333333" },
-                    new User { UserName = "aron", Kennitala = "4444444444" }
+                    new User {Kennitala = "1234567890", PatientID = 1 },
+                    new User {Kennitala = "0987654321", PatientID = 2 },
+                    new User {Kennitala = "1111111111", PatientID = 3 },
+                    new User {Kennitala = "2222222222" , PatientID = 4 },
+                    new User {Kennitala = "3333333333" , PatientID = 5 },
+                    new User {Kennitala = "4444444444" , PatientID = 6 },
+                    new User {Kennitala = "5555555555" , HealthcareWorkerID = 1 },
+                    new User {Kennitala = "6666666666" , HealthcareWorkerID = 2 }
                 );
             }
 
             if (!context.Patients.Any())
             {
                 context.Patients.AddRange(
-                    new Patient { Name = "John Doe", Phone = "123456789", Status = "Active", Address = "123 Main St", TeamID = 1 },
-                    new Patient { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", Address = "456 Elm St", TeamID = 2 },
+                    new Patient { Name = "Patient zero", Phone = "123456789", Status = "Active", Address = "123 Main St", TeamID = 1 },
+                    new Patient { Name = "Patient 1", Phone = "987654321", Status = "Inactive", Address = "456 Elm St", TeamID = 2 },
                     new Patient { Name = "Jakub", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
                     new Patient { Name = "þorir", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
                     new Patient { Name = "sindri", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
