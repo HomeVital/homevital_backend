@@ -5,12 +5,9 @@ using System.Reflection;
 using HomeVital.Services.Interfaces;
 using HomeVital.Services.Implementations;
 using HomeVital.Repositories.Interfaces;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using HomeVital.Repositories.Implementations;
 
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using HomeVital.Services;
 using HomeVital.Repositories;
 
