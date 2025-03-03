@@ -31,7 +31,7 @@ namespace HomeVital.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(user_);
+            return Ok(user_.Kennitala);
         }
 
         [HttpPost("Login")]
@@ -48,7 +48,7 @@ namespace HomeVital.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(user_);
+            return Ok(user_.Id);
         }
         
 
