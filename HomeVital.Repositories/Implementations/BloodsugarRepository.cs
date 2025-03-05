@@ -32,6 +32,7 @@ namespace HomeVital.Repositories.Implementations
         {
             var bloodsugar = _mapper.Map<Bloodsugar>(bloodsugarInputModel);
             bloodsugar.PatientID = patientId;
+            bloodsugar.Date = DateTime.UtcNow;
 
             _dbContext.Bloodsugars.Add(bloodsugar);
             await _dbContext.SaveChangesAsync();
@@ -46,9 +47,8 @@ namespace HomeVital.Repositories.Implementations
 
             if (bloodsugar != null)
             {
-                bloodsugar.Date = bloodsugarInputModel.Date;
                 bloodsugar.BloodsugarLevel = bloodsugarInputModel.BloodsugarLevel;
-                bloodsugar.Date = DateTime.Now;
+                bloodsugar.Date = DateTime.UtcNow;
 
                 await _dbContext.SaveChangesAsync();
             }

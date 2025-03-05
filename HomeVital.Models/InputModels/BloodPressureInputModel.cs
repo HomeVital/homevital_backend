@@ -8,7 +8,7 @@ namespace HomeVital.Models.InputModels
         public int Systolic { get; set; } = 0;
         public int Diastolic { get; set; } = 0;
         public int Pulse { get; set; } = 0;
-        public DateTime Date { get; set; } = new DateTime();
+        // public DateTime Date { get; set; } = new DateTime();
         public string Status { get; set; } = string.Empty;
     }
 }

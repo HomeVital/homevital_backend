@@ -33,6 +33,7 @@ public class BodyWeightRepository : IBodyWeightRepository
     {
         var bodyWeight = _mapper.Map<BodyWeight>(bodyWeightInputModel);
         bodyWeight.PatientID = patientId;
+        bodyWeight.Date = DateTime.UtcNow;
 
         _dbContext.BodyWeights.Add(bodyWeight);
         await _dbContext.SaveChangesAsync();
@@ -48,7 +49,6 @@ public class BodyWeightRepository : IBodyWeightRepository
         if (bodyWeight != null)
         {
             bodyWeight.Weight = bodyWeightInputModel.Weight;
-            bodyWeight.Date = bodyWeightInputModel.Date;
             bodyWeight.Date = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();

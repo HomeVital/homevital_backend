@@ -35,6 +35,7 @@ public class BloodPressureRepository : IBloodPressureRepository
     {
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
+        bloodPressure.Date = DateTime.UtcNow;
 
         _dbContext.BloodPressures.Add(bloodPressure);
         await _dbContext.SaveChangesAsync();
@@ -54,7 +55,6 @@ public class BloodPressureRepository : IBloodPressureRepository
             bloodPressure.Systolic = bloodPressureInputModel.Systolic;
             bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
             bloodPressure.Pulse = bloodPressureInputModel.Pulse;
-            bloodPressure.Date = bloodPressureInputModel.Date;
             bloodPressure.Status = bloodPressureInputModel.Status;
             bloodPressure.Date = DateTime.UtcNow;
 
