@@ -52,9 +52,15 @@ public class PatientRepository : IPatientRepository
 
     public async Task<PatientDto> DeletePatient(int id)
     {
+        // delete patient
         var patient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.ID == id);
-        var patientDto = _mapper.Map<PatientDto>(patient); 
-        return patientDto; 
+        if (patient != null) 
+        {
+            _dbContext.Patients.Remove(patient);
+            await _dbContext.SaveChangesAsync();
+        }
+        var patientDto = _mapper.Map<PatientDto>(patient);
+        return patientDto;
     }
 
     public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)

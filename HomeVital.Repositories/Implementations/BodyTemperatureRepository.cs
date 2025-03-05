@@ -32,6 +32,7 @@ namespace HomeVital.Repositories.Implementations
         {
             var bodyTemperature = _mapper.Map<BodyTemperature>(bodyTemperatureInputModel);
             bodyTemperature.PatientID = patientId;
+            bodyTemperature.Date = DateTime.UtcNow;
 
             _dbContext.BodyTemperatures.Add(bodyTemperature);
             await _dbContext.SaveChangesAsync();
@@ -47,7 +48,7 @@ namespace HomeVital.Repositories.Implementations
             if (bodyTemperature != null)
             {
                 bodyTemperature.Temperature = bodyTemperatureInputModel.Temperature;
-                bodyTemperature.Date = DateTime.Now;
+                bodyTemperature.Date = DateTime.UtcNow;
 
                 await _dbContext.SaveChangesAsync();
             }
