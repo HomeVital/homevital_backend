@@ -65,7 +65,10 @@ namespace HomeVital.Repositories
                     new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Hypertension" },
                     new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 95, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 85, Status = "Hypertension" },
                     new BloodPressure { PatientID = 5, Systolic = 160, Diastolic = 100, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Standing", Pulse = 90, Status = "Hypertension" },
-                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Hypertension" }
+                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Hypertension" },
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal" },
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Right", BodyPosition = "Standing", Pulse = 75, Status = "Elevated" },
+                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Hypertension" }
                 );
             }
 
