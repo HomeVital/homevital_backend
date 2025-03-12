@@ -6,7 +6,7 @@ using HomeVital.Models.Dtos;
 namespace HomeVital.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/healthcareWorkers")]
     public class HealthcareWorkersController : ControllerBase
     {
         private readonly IHealthcareWorkerService _healthcareWorkerService;
