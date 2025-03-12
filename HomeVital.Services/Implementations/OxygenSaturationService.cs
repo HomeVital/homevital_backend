@@ -26,24 +26,23 @@ namespace HomeVital.Services
 
         public async Task<OxygenSaturationDto> CreateOxygenSaturation(int patientId, OxygenSaturationInputModel oxygenSaturationInputModel)
         {
-            var oxygenSaturation = _mapper.Map<OxygenSaturation>(oxygenSaturationInputModel);
-            oxygenSaturation.PatientID = patientId;
-            var createdOxygenSaturation = await _oxygenSaturationRepository.CreateOxygenSaturation(patientId, oxygenSaturationInputModel);
-            return _mapper.Map<OxygenSaturationDto>(createdOxygenSaturation);
+            return await _oxygenSaturationRepository.CreateOxygenSaturation(patientId, oxygenSaturationInputModel);
         }
 
         public async Task<OxygenSaturationDto> UpdateOxygenSaturation(int id, OxygenSaturationInputModel oxygenSaturationInputModel)
         {
-            var oxygenSaturation = _mapper.Map<OxygenSaturation>(oxygenSaturationInputModel);
-            oxygenSaturation.ID = id;
-            var updatedOxygenSaturation = await _oxygenSaturationRepository.UpdateOxygenSaturation(id, oxygenSaturationInputModel);
-            return _mapper.Map<OxygenSaturationDto>(updatedOxygenSaturation);
+            var oxygenSaturation = await _oxygenSaturationRepository.GetOxygenSaturationById(id);
+
+            if (oxygenSaturation == null)
+            {
+                throw new ArgumentException("Oxygen saturation record not found");
+            }
+            return await _oxygenSaturationRepository.UpdateOxygenSaturation(id, oxygenSaturationInputModel);
         }
 
         public async Task<OxygenSaturationDto> DeleteOxygenSaturation(int id)
         {
-            var deletedOxygenSaturation = await _oxygenSaturationRepository.DeleteOxygenSaturation(id);
-            return _mapper.Map<OxygenSaturationDto>(deletedOxygenSaturation);
+            return await _oxygenSaturationRepository.DeleteOxygenSaturation(id);
         }
     }
 }
