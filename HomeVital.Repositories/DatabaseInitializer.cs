@@ -93,6 +93,18 @@ namespace HomeVital.Repositories
                 );
             }
 
+            if (!context.OxygenSaturations.Any())
+            {
+                context.OxygenSaturations.AddRange(
+                    new OxygenSaturation { PatientID = 1, OxygenSaturationLevel = 100, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 2, OxygenSaturationLevel = 98, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 3, OxygenSaturationLevel = 97, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 4, OxygenSaturationLevel = 96, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 5, OxygenSaturationLevel = 95, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 6, OxygenSaturationLevel = 94, Date = DateTime.UtcNow }
+                );
+            }
+
             if (!context.HealthcareWorkers.Any())
             {
                 context.HealthcareWorkers.AddRange(
