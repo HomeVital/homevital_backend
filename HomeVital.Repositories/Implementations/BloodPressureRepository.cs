@@ -33,8 +33,17 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
     {
+        var newMeasurement = new Measurement
+        {
+            PatientID = patientId,
+            
+        };
+        _dbContext.Measurements.Add(newMeasurement);
+        await _dbContext.SaveChangesAsync();
+
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
+        bloodPressure.MeasurementID = newMeasurement.ID;
         bloodPressure.Date = DateTime.UtcNow;
 
         _dbContext.BloodPressures.Add(bloodPressure);
@@ -42,6 +51,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
+  
 
     public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
     {
@@ -87,6 +97,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
+
 
 
 

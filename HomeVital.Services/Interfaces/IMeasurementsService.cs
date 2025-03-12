@@ -7,6 +7,8 @@ namespace HomeVital.Services.Interfaces
     {
         // GetallMeasurements
         Task<List<MeasurementDto>> GetMeasurementsById(int id);
+        // GetMeasurementByPatientId
+        Task<List<MeasurementDto>> GetMeasurementsByPatientId(int id);
         
     }
 }

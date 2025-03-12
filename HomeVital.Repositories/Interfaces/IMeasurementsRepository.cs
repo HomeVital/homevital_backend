@@ -7,5 +7,7 @@ namespace HomeVital.Repositories.Interfaces
     {
         // GetAllMeasurements
         Task<List<MeasurementDto>> GetMeasurementsById(int id);
+        // GetMeasurementBypatientId
+        Task<List<MeasurementDto>> GetMeasurementsByPatientId(int id);
     }
 }

@@ -28,5 +28,13 @@ namespace HomeVital.API.Controllers
         //     var measurements = await _measurementService.GetMeasurementsById(id);
         //     return Ok(measurements);
         // }
+
+
+        [HttpGet("getByPatientId")]
+        public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsByPatientId([FromQuery] int id)
+        {
+            var measurements = await _measurementService.GetMeasurementsByPatientId(id);
+            return Ok(measurements);
+        }
     }
 }

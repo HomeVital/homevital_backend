@@ -12,7 +12,7 @@ namespace HomeVital.Models.Dtos
 {
     public class MeasurementDto
     {
-        public int ID { get; set; }
+        // public int ID { get; set; }
         public int PatientID { get; set; }
         // list of measurements
         public List<Measurements> Measurements { get; set; } = new List<Measurements>();
@@ -21,7 +21,6 @@ namespace HomeVital.Models.Dtos
 
     public class Measurements
     {
-        public int ID { get; set; }
         public int MeasurementID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
         public List<MeasurementValues> MeasurementValues { get; set; } = new List<MeasurementValues>();

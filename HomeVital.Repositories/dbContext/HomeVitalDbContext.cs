@@ -21,10 +21,16 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<BodyWeight> BodyWeights { get; set; }
         public DbSet<BodyTemperature> BodyTemperatures { get; set; }
 
+        public DbSet<OxygenSaturation> OxygenSaturations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().HasIndex(u => u.Kennitala).IsUnique();
+
+            modelBuilder.Entity<Measurement>()
+                .Property(m => m.ID)
+                .ValueGeneratedOnAdd();
         }
 
     }

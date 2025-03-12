@@ -17,5 +17,10 @@ namespace HomeVital.Services.Implementations
         {
             return await _measurementsRepository.GetMeasurementsById(id);
         }
+
+        public async Task<List<MeasurementDto>> GetMeasurementsByPatientId(int id)
+        {
+            return await _measurementsRepository.GetMeasurementsByPatientId(id);
+        }
     }
 }

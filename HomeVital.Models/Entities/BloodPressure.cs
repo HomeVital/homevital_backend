@@ -11,5 +11,6 @@ namespace HomeVital.Models.Entities
         public DateTime Date { get; set; } = new DateTime();
         public string Status { get; set; } = string.Empty;
         public int Pulse { get; set; } = 0;
+        public int? MeasurementID { get; set; }
     }
 }
