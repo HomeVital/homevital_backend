@@ -28,11 +28,15 @@ public class BloodPressureRepository : IBloodPressureRepository
             .Where(b => b.PatientID == patientId)
             .ToListAsync();
 
+        // order by date
+        bloodPressures = bloodPressures.OrderByDescending(b => b.Date).ToList();
+
         return _mapper.Map<IEnumerable<BloodPressureDto>>(bloodPressures);
     }
 
     public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
     {
+        // create a new measurement
         var newMeasurement = new Measurement
         {
             PatientID = patientId,

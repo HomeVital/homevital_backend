@@ -29,6 +29,9 @@ namespace HomeVital.Repositories.dbContext
             modelBuilder.Entity<User>().HasIndex(u => u.Kennitala).IsUnique();
 
             modelBuilder.Entity<Measurement>()
+                .HasKey(m => m.ID);
+
+            modelBuilder.Entity<Measurement>()
                 .Property(m => m.ID)
                 .ValueGeneratedOnAdd();
         }

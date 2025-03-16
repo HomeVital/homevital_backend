@@ -6,9 +6,10 @@ namespace HomeVital.Services.Interfaces
     public interface IMeasurementService
     {
         // GetallMeasurements
-        Task<List<MeasurementDto>> GetMeasurementsById(int id);
+        Task<MeasurementDto> GetMeasurementsById(int id);
         // GetMeasurementByPatientId
-        Task<List<MeasurementDto>> GetMeasurementsByPatientId(int id);
+        // Task<MeasurementDto> GetMeasurementsByPatientId(int id);
+        Task<List<Measurements>> GetMeasurementsByPatientId(int id);
         
     }
 }

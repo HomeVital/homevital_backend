@@ -17,7 +17,7 @@ namespace HomeVital.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public async Task<List<MeasurementDto>> GetMeasurementsById(int id)
+        public async Task<MeasurementDto> GetMeasurementsById(int id)
         {
             // Query the database for measurements with the given patient id
             var bloodPressures = await _dbContext.BloodPressures
@@ -39,7 +39,6 @@ namespace HomeVital.Repositories.Implementations
             // Map the measurements to the Dto object
             var measurementDto = new MeasurementDto
             {
-                PatientID = id,
                 Measurements = new List<Measurements>()
             };
 
@@ -47,16 +46,13 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BloodPressure",
                 MeasurementID = bp.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Systolic = bp.Systolic,
-                        Diastolic = bp.Diastolic,
-                        BPM = bp.Pulse,
-                        MeasureHand = bp.MeasureHand,
-                        BodyPosition = bp.BodyPosition
-                    }
+                    Systolic = bp.Systolic,
+                    Diastolic = bp.Diastolic,
+                    BPM = bp.Pulse,
+                    MeasureHand = bp.MeasureHand,
+                    BodyPosition = bp.BodyPosition
                 },
                 MeasurementDate = bp.Date
             }));
@@ -65,12 +61,9 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BloodSugar",
                 MeasurementID = bs.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        BloodSugar = bs.BloodsugarLevel
-                    }
+                    BloodSugar = bs.BloodsugarLevel
                 },
                 MeasurementDate = bs.Date
             }));
@@ -79,12 +72,9 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BodyWeight",
                 MeasurementID = bw.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Weight = bw.Weight
-                    }
+                    Weight = bw.Weight
                 },
                 MeasurementDate = bw.Date
             }));
@@ -93,12 +83,9 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BodyTemperature",
                 MeasurementID = bt.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Temperature = bt.Temperature
-                    }
+                    Temperature = bt.Temperature
                 },
                 MeasurementDate = bt.Date
             }));
@@ -106,7 +93,7 @@ namespace HomeVital.Repositories.Implementations
             // sort the measurements by date
             measurementDto.Measurements = measurementDto.Measurements.OrderByDescending(m => m.MeasurementDate).ToList();
 
-            return new List<MeasurementDto> { measurementDto };
+            return new MeasurementDto { Measurements = measurementDto.Measurements };
         }
 
         // get measurements by patient id and use the measurements table to get the measurementsID and then get the measurements values
@@ -250,26 +237,121 @@ namespace HomeVital.Repositories.Implementations
         //     return new List<MeasurementDto> { measurementDto };
         // }
 
-        public async Task<List<MeasurementDto>> GetMeasurementsByPatientId(int id)
+        // public async Task<MeasurementDto> GetMeasurementsByPatientId(int id)
+        // {
+        //     var bloodPressures = await _dbContext.BloodPressures
+        //         .Where(m => m.PatientID == id)
+        //         .Select(bp => new Measurements
+        //         {
+        //             MeasurementType = "BloodPressure",
+        //             MeasurementID = (int)bp.MeasurementID,
+        //             MeasurementValues = new MeasurementValues
+        //             {
+        //                 Systolic = bp.Systolic,
+        //                 Diastolic = bp.Diastolic,
+        //                 BPM = bp.Pulse,
+        //                 MeasureHand = bp.MeasureHand,
+        //                 BodyPosition = bp.BodyPosition
+        //             },
+        //             MeasurementDate = bp.Date
+        //         })
+        //         .ToListAsync();
+
+        //     var bloodSugars = await _dbContext.Bloodsugars
+        //         .Where(m => m.PatientID == id)
+        //         .Select(bs => new Measurements
+        //         {
+        //             MeasurementType = "BloodSugar",
+        //             MeasurementID = (int)bs.MeasurementID,
+        //             MeasurementValues = new MeasurementValues
+        //             {
+        //                 BloodSugar = bs.BloodsugarLevel
+        //             },
+        //             MeasurementDate = bs.Date
+        //         })
+        //         .ToListAsync();
+
+        //     var bodyWeights = await _dbContext.BodyWeights
+        //         .Where(m => m.PatientID == id)
+        //         .Select(bw => new Measurements
+        //         {
+        //             MeasurementType = "BodyWeight",
+        //             MeasurementID = (int)bw.MeasurementID,
+        //             MeasurementValues = new MeasurementValues
+        //             {
+        //                 Weight = bw.Weight
+        //             },
+        //             MeasurementDate = bw.Date
+        //         })
+        //         .ToListAsync();
+
+        //     var bodyTemperatures = await _dbContext.BodyTemperatures
+        //         .Where(m => m.PatientID == id)
+        //         .Select(bt => new Measurements
+        //         {
+                    
+        //             MeasurementType = "BodyTemperature",
+        //             MeasurementID = (int)bt.MeasurementID,
+        //             MeasurementValues = new MeasurementValues
+        //             {
+        //                 Temperature = bt.Temperature
+        //             },
+        //             MeasurementDate = bt.Date
+        //         })
+        //         .ToListAsync();
+
+        //     var oxygenSaturations = await _dbContext.OxygenSaturations
+        //         .Where(m => m.PatientID == id)
+        //         .Select(os => new Measurements
+        //         {
+        //             MeasurementType = "OxygenSaturation",
+        //             MeasurementID = os.MeasurementID,
+        //             MeasurementValues = new MeasurementValues 
+        //             {
+        //                 OxygenSaturation = os.OxygenSaturationValue
+        //             },
+        //             MeasurementDate = os.Date
+        //         })
+        //         .ToListAsync();
+
+        //     // Combine all measurements into a single list
+        //     var measurements = bloodPressures
+        //         .Concat(bloodSugars)
+        //         .Concat(bodyWeights)
+        //         .Concat(bodyTemperatures)
+        //         .Concat(oxygenSaturations)
+        //         .ToList();
+
+        //     // Map the measurements to the Dto object
+        //     // var measurementDto = new MeasurementDto
+        //     // {
+        //     //     PatientID = id,
+        //     //     Measurements = measurements
+        //     // };   
+
+        //     // return the measurements use map to map the measurements to the Dto object
+        //     return new MeasurementDto { Measurements = measurements };
+
+        
+        // }
+        public async Task<List<Measurements>> GetMeasurementsByPatientId(int id)
         {
             var bloodPressures = await _dbContext.BloodPressures
                 .Where(m => m.PatientID == id)
                 .Select(bp => new Measurements
                 {
                     MeasurementType = "BloodPressure",
-                    MeasurementID = (int)bp.MeasurementID,
-                    MeasurementValues = new List<MeasurementValues>
+                    MeasurementID = bp.MeasurementID ?? 0,
+                    MeasurementDate = bp.Date,
+                    MeasurementValues = new MeasurementValues
                     {
-                        new MeasurementValues
-                        {
-                            Systolic = bp.Systolic,
-                            Diastolic = bp.Diastolic,
-                            BPM = bp.Pulse,
-                            MeasureHand = bp.MeasureHand,
-                            BodyPosition = bp.BodyPosition
-                        }
+                        Systolic = bp.Systolic,
+                        Diastolic = bp.Diastolic,
+                        BPM = bp.Pulse,
+                        MeasureHand = bp.MeasureHand,
+                        BodyPosition = bp.BodyPosition
                     },
-                    MeasurementDate = bp.Date
+                    
                 })
                 .ToListAsync();
 
@@ -278,15 +360,12 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bs => new Measurements
                 {
                     MeasurementType = "BloodSugar",
-                    MeasurementID = (int)bs.MeasurementID,
-                    MeasurementValues = new List<MeasurementValues>
+                    MeasurementID = bs.MeasurementID ?? 0,
+                    MeasurementDate = bs.Date,
+                    MeasurementValues = new MeasurementValues
                     {
-                        new MeasurementValues
-                        {
-                            BloodSugar = bs.BloodsugarLevel
-                        }
+                        BloodSugar = bs.BloodsugarLevel
                     },
-                    MeasurementDate = bs.Date
                 })
                 .ToListAsync();
 
@@ -295,15 +374,13 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bw => new Measurements
                 {
                     MeasurementType = "BodyWeight",
-                    MeasurementID = (int)bw.MeasurementID,
-                    MeasurementValues = new List<MeasurementValues>
+                    MeasurementID = bw.MeasurementID ?? 0,
+                    MeasurementDate = bw.Date,
+                    MeasurementValues = new MeasurementValues
                     {
-                        new MeasurementValues
-                        {
-                            Weight = bw.Weight
-                        }
+                        Weight = bw.Weight
                     },
-                    MeasurementDate = bw.Date
+                    
                 })
                 .ToListAsync();
 
@@ -311,17 +388,13 @@ namespace HomeVital.Repositories.Implementations
                 .Where(m => m.PatientID == id)
                 .Select(bt => new Measurements
                 {
-                    
                     MeasurementType = "BodyTemperature",
-                    MeasurementID = (int)bt.MeasurementID,
-                    MeasurementValues = new List<MeasurementValues>
+                    MeasurementID = bt.MeasurementID ?? 0,
+                    MeasurementDate = bt.Date,
+                    MeasurementValues = new MeasurementValues
                     {
-                        new MeasurementValues
-                        {
-                            Temperature = bt.Temperature
-                        }
+                        Temperature = bt.Temperature
                     },
-                    MeasurementDate = bt.Date
                 })
                 .ToListAsync();
 
@@ -331,14 +404,11 @@ namespace HomeVital.Repositories.Implementations
                 {
                     MeasurementType = "OxygenSaturation",
                     MeasurementID = os.MeasurementID,
-                    MeasurementValues = new List<MeasurementValues>
+                    MeasurementDate = os.Date,
+                    MeasurementValues = new MeasurementValues 
                     {
-                        new MeasurementValues
-                        {
-                            OxygenSaturation = os.OxygenSaturationValue
-                        }
+                        OxygenSaturation = os.OxygenSaturationValue
                     },
-                    MeasurementDate = os.Date
                 })
                 .ToListAsync();
 
@@ -350,14 +420,13 @@ namespace HomeVital.Repositories.Implementations
                 .Concat(oxygenSaturations)
                 .ToList();
 
-            // Map the measurements to the Dto object
-            var measurementDto = new MeasurementDto
+            // Assign sequential UIDs
+            for (int i = 0; i < measurements.Count; i++)
             {
-                PatientID = id,
-                Measurements = measurements
-            };
-
-            return new List<MeasurementDto> { measurementDto };
+                measurements[i].UID = i + 1;
+            }
+            // Return the list of measurements
+            return measurements;
         }
     }
 }
