@@ -6,6 +6,5 @@ namespace HomeVital.Models.Entities
         public int PatientID { get; set; }
         public float Temperature { get; set; } = 0;
         public DateTime Date { get; set; } = new DateTime();
-        public int? MeasurementID { get; set; }
     }
 }

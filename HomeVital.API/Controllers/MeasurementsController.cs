@@ -15,12 +15,12 @@ namespace HomeVital.API.Controllers
             _measurementService = measurementService;
         }
 
-        [HttpGet("getById")]
-        public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromQuery] int id)
-        {
-            var measurements = await _measurementService.GetMeasurementsById(id);
-            return Ok(measurements);
-        }
+        // [HttpGet("getById")]
+        // public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromQuery] int id)
+        // {
+        //     var measurements = await _measurementService.GetMeasurementsById(id);
+        //     return Ok(measurements);
+        // }
         // Post method to get measurements by id so that we can use the id in the body of the request and keep security in mind
         // [HttpPost("getById")]
         // public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromBody] int id)
@@ -31,9 +31,9 @@ namespace HomeVital.API.Controllers
 
 
         [HttpGet("getByPatientId")]
-        public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsByPatientId([FromQuery] int id)
+        public async Task<ActionResult<Measurements>> GetMeasurementsByPatientId([FromQuery] int patientId)
         {
-            var measurements = await _measurementService.GetMeasurementsByPatientId(id);
+            var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);
             return Ok(measurements);
         }
     }

@@ -47,7 +47,6 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
-        bloodPressure.MeasurementID = newMeasurement.ID;
         bloodPressure.Date = DateTime.UtcNow;
 
         _dbContext.BloodPressures.Add(bloodPressure);
