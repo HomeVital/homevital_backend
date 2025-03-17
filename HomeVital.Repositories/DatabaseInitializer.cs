@@ -116,6 +116,65 @@ namespace HomeVital.Repositories
                 );
             }
 
+            // add the ranges
+            if(!context.BloodPressureRanges.Any())
+            {
+                context.BloodPressureRanges.AddRange(
+                    new BloodPressureRange { PatientID = 1},
+                    new BloodPressureRange { PatientID = 2},
+                    new BloodPressureRange { PatientID = 3},
+                    new BloodPressureRange { PatientID = 4},
+                    new BloodPressureRange { PatientID = 5},
+                    new BloodPressureRange { PatientID = 6}
+                );
+            }
+            if(!context.BloodSugarRanges.Any())
+            {
+                context.BloodSugarRanges.AddRange(
+                    new BloodSugarRange { PatientID = 1},
+                    new BloodSugarRange { PatientID = 2},
+                    new BloodSugarRange { PatientID = 3},
+                    new BloodSugarRange { PatientID = 4},
+                    new BloodSugarRange { PatientID = 5},
+                    new BloodSugarRange { PatientID = 6}
+                );
+            }
+            if(!context.BodyTemperatureRanges.Any())
+            {
+                context.BodyTemperatureRanges.AddRange(
+                    new BodyTemperatureRange { PatientID = 1},
+                    new BodyTemperatureRange { PatientID = 2},
+                    new BodyTemperatureRange { PatientID = 3},
+                    new BodyTemperatureRange { PatientID = 4},
+                    new BodyTemperatureRange { PatientID = 5},
+                    new BodyTemperatureRange { PatientID = 6}
+                );
+            }
+            if(!context.BodyWeightRanges.Any())
+            {
+                context.BodyWeightRanges.AddRange(
+                    new BodyWeightRange { PatientID = 1},
+                    new BodyWeightRange { PatientID = 2},
+                    new BodyWeightRange { PatientID = 3},
+                    new BodyWeightRange { PatientID = 4},
+                    new BodyWeightRange { PatientID = 5},
+                    new BodyWeightRange { PatientID = 6}
+                );
+            }
+            if(!context.OxygenSaturationRanges.Any())
+            {
+                context.OxygenSaturationRanges.AddRange(
+                    new OxygenSaturationRange { PatientID = 1},
+                    new OxygenSaturationRange { PatientID = 2},
+                    new OxygenSaturationRange { PatientID = 3},
+                    new OxygenSaturationRange { PatientID = 4},
+                    new OxygenSaturationRange { PatientID = 5},
+                    new OxygenSaturationRange { PatientID = 6}
+                );
+            }
+
+
+
             context.SaveChanges();
         }
     }

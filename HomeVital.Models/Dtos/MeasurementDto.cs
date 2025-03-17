@@ -24,7 +24,7 @@ namespace HomeVital.Models.Dtos
         public int ID { get; set; }
         public int MeasurementID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
-        public List<MeasurementValues> MeasurementValues { get; set; } = new List<MeasurementValues>();
+        public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
         public DateTime MeasurementDate { get; set; }
     }
 
