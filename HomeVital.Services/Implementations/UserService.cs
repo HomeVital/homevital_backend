@@ -3,6 +3,7 @@ using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
+using HomeVital.Models.Entities;
 
 namespace HomeVital.Services.Implementations;
 

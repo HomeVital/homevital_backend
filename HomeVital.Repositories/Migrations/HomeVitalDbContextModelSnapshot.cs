@@ -67,116 +67,6 @@ namespace HomeVital.Repositories.Migrations
                     b.ToTable("BloodPressures");
                 });
 
-            modelBuilder.Entity("HomeVital.Models.Entities.BloodPressureRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DiastolicCriticalMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicCriticalMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicCriticalStage3Max")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicCriticalStage3Min")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicGoodMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicNotOkMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicNotOkMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicOkMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DiastolicOkMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicCriticalMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicCriticalMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicCriticalStage3Max")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicCriticalStage3Min")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicGoodMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicNotOkMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicNotOkMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicOkMax")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SystolicOkMin")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodPressureRanges");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.BloodSugarRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("BloodSugarCriticalMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarCriticalMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarGoodMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarGoodMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarNotOkMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarNotOkMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarlowMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("BloodSugarlowMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodSugarRanges");
-                });
-
             modelBuilder.Entity("HomeVital.Models.Entities.Bloodsugar", b =>
                 {
                     b.Property<int>("ID")
@@ -231,43 +121,6 @@ namespace HomeVital.Repositories.Migrations
                     b.ToTable("BodyTemperatures");
                 });
 
-            modelBuilder.Entity("HomeVital.Models.Entities.BodyTemperatureRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("TemperatureCriticalMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureCriticalMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureGoodMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureGoodMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureNotOkMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureNotOkMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("TemperatureUnderAverage")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BodyTemperatureRanges");
-                });
-
             modelBuilder.Entity("HomeVital.Models.Entities.BodyWeight", b =>
                 {
                     b.Property<int>("ID")
@@ -293,31 +146,6 @@ namespace HomeVital.Repositories.Migrations
                     b.HasIndex("MeasurementID");
 
                     b.ToTable("BodyWeights");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.BodyWeightRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("WeightGainFluctuationPercentageGood")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("WeightGainPercentageGoodMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("WeightLossFluctuationPercentageGood")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BodyWeightRanges");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.HealthcareWorker", b =>
@@ -384,43 +212,6 @@ namespace HomeVital.Repositories.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("OxygenSaturations");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.OxygenSaturationRange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("OxygenSaturationCriticalMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationCriticalMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationGood")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationNotOkMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationNotOkMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationOkMax")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("OxygenSaturationOkMin")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OxygenSaturationRanges");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.Patient", b =>

@@ -19,12 +19,6 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<BodyWeight> BodyWeights { get; set; }
         public DbSet<BodyTemperature> BodyTemperatures { get; set; }
-        public DbSet<BloodPressureRange> BloodPressureRanges { get; set; }
-        public DbSet<BodyTemperatureRange> BodyTemperatureRanges { get; set; }
-        public DbSet<BodyWeightRange> BodyWeightRanges { get; set; }
-        public DbSet<BloodSugarRange> BloodSugarRanges { get; set; }
-        public DbSet<OxygenSaturationRange> OxygenSaturationRanges { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
