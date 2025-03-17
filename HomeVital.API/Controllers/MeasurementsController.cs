@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeVital.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/measurements")]
     public class MeasurementsController : ControllerBase
     {
         private readonly IMeasurementService _measurementService;
@@ -30,7 +30,7 @@ namespace HomeVital.API.Controllers
         // }
 
 
-        [HttpGet("getByPatientId")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Measurements>> GetMeasurementsByPatientId([FromQuery] int patientId)
         {
             var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);

@@ -36,15 +36,6 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
     {
-        // create a new measurement
-        var newMeasurement = new Measurement
-        {
-            PatientID = patientId,
-            
-        };
-        _dbContext.Measurements.Add(newMeasurement);
-        await _dbContext.SaveChangesAsync();
-
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
         bloodPressure.Date = DateTime.UtcNow;

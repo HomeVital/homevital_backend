@@ -44,6 +44,12 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
     public async Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker)
     {
         var newHealthcareWorker = _mapper.Map<HealthcareWorker>(healthcareWorker);
+
+        // add date to when the healthcare worker was created???
+        // newHealthcareWorker.DateCreated = DateTime.UtcNow;
+
+
+
         await _dbContext.HealthcareWorkers.AddAsync(newHealthcareWorker);
         await _dbContext.SaveChangesAsync();
         return _mapper.Map<HealthcareWorkerDto>(newHealthcareWorker);
