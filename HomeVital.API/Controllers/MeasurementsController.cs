@@ -15,23 +15,17 @@ namespace HomeVital.API.Controllers
             _measurementService = measurementService;
         }
 
-        // [HttpGet("getById")]
-        // public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromQuery] int id)
-        // {
-        //     var measurements = await _measurementService.GetMeasurementsById(id);
-        //     return Ok(measurements);
-        // }
-        // Post method to get measurements by id so that we can use the id in the body of the request and keep security in mind
-        // [HttpPost("getById")]
-        // public async Task<ActionResult<List<MeasurementDto>>> GetMeasurementsById([FromBody] int id)
-        // {
-        //     var measurements = await _measurementService.GetMeasurementsById(id);
-        //     return Ok(measurements);
-        // }
+        // get X number of measurements for a patient by patient id
+        [HttpGet("{patientId}/latest/{count}")]
+        public async Task<ActionResult<IEnumerable<Measurements>>> GetXMeasurementsByPatientId(int patientId, int count)
+        {
+            var measurements = await _measurementService.GetXMeasurementsByPatientId(patientId, count);
+            return Ok(measurements);
+        }
+        
 
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Measurements>> GetMeasurementsByPatientId([FromQuery] int patientId)
+        [HttpGet("{patientId}")]
+        public async Task<ActionResult<Measurements>> GetMeasurementsByPatientId(int patientId)
         {
             var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);
             return Ok(measurements);

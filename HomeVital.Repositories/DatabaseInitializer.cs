@@ -12,11 +12,11 @@ namespace HomeVital.Repositories
             context.Database.Migrate();
 
             // Drop all tables
-            context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
-            context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
+            // context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
+            // context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
 
-            // Reapply migrations to recreate the tables
-            context.Database.Migrate();
+            // // Reapply migrations to recreate the tables
+            // context.Database.Migrate();
 
             // Repopulate the tables with dummy data
             if (!context.Users.Any())

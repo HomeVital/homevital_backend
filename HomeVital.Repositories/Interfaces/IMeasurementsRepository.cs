@@ -10,5 +10,6 @@ namespace HomeVital.Repositories.Interfaces
         // GetMeasurementBypatientId
         // Task<MeasurementDto> GetMeasurementsByPatientId(int id);
         Task<List<Measurements>> GetMeasurementsByPatientId(int id);
+        Task<List<Measurements>> GetXMeasurementsByPatientId(int patientId, int count);
     }
 }

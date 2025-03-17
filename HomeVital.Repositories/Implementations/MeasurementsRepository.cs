@@ -188,5 +188,17 @@ namespace HomeVital.Repositories.Implementations
             // Return the list of measurements
             return measurements;
         }
+
+        public async Task<List<Measurements>> GetXMeasurementsByPatientId(int patientId, int count)
+        {
+            // call the GetMeasurementsByPatientId method to get all measurements for the patient
+            var measurements = await GetMeasurementsByPatientId(patientId);
+
+            // return the first 'count' measurements
+
+            measurements =  measurements.Take(count).ToList();
+
+            return _mapper.Map<List<Measurements>>(measurements);
+        }
     }
 }
