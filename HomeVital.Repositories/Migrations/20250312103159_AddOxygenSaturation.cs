@@ -12,6 +12,10 @@ namespace HomeVital.Repositories.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+            // Drop the existing table if it exists
+            migrationBuilder.Sql("DROP TABLE IF EXISTS \"OxygenSaturations\";");
+
             migrationBuilder.AlterColumn<float>(
                 name: "Weight",
                 table: "BodyWeights",
