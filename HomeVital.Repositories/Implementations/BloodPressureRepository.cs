@@ -26,6 +26,7 @@ public class BloodPressureRepository : IBloodPressureRepository
     {
         var bloodPressures = await _dbContext.BloodPressures
             .Where(b => b.PatientID == patientId)
+            .OrderByDescending(b => b.Date)
             .ToListAsync();
 
         // order by date

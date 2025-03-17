@@ -23,6 +23,7 @@ namespace HomeVital.Repositories.Implementations
         {
             var oxygenSaturations = await _dbContext.OxygenSaturations
                 .Where(b => b.PatientID == patientId)
+                .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<OxygenSaturationDto>>(oxygenSaturations);
