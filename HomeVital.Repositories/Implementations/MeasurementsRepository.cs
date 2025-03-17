@@ -45,6 +45,7 @@ namespace HomeVital.Repositories.Implementations
             measurementDto.Measurements.AddRange(bloodPressures.Select(bp => new Measurements
             {
                 MeasurementType = "BloodPressure",
+                // MeasurementID = bp.ID,
                 MeasurementValues = new MeasurementValues
                 {
                     Systolic = bp.Systolic,
@@ -59,31 +60,37 @@ namespace HomeVital.Repositories.Implementations
             measurementDto.Measurements.AddRange(bloodSugars.Select(bs => new Measurements
             {
                 MeasurementType = "BloodSugar",
+                // MeasurementID = bs.ID,
                 MeasurementValues = new MeasurementValues
                 {
                     BloodSugar = bs.BloodsugarLevel
                 },
+                
                 MeasurementDate = bs.Date
             }));
 
             measurementDto.Measurements.AddRange(bodyWeights.Select(bw => new Measurements
             {
                 MeasurementType = "BodyWeight",
+                // MeasurementID = bw.ID,
                 MeasurementValues = new MeasurementValues
                 {
                     Weight = bw.Weight
-                },
+                }
+                ,
                 MeasurementDate = bw.Date
             }));
 
             measurementDto.Measurements.AddRange(bodyTemperatures.Select(bt => new Measurements
             {
                 MeasurementType = "BodyTemperature",
+                // MeasurementID = bt.ID,
+                MeasurementDate = bt.Date,
                 MeasurementValues = new MeasurementValues
                 {
                     Temperature = bt.Temperature
-                },
-                MeasurementDate = bt.Date
+                }
+                
             }));
 
             // sort the measurements by date

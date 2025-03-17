@@ -12,11 +12,11 @@ namespace HomeVital.Repositories
             context.Database.Migrate();
 
             // Drop all tables
-            // context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
-            // context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
+            context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
+            context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
 
             // // Reapply migrations to recreate the tables
-            // context.Database.Migrate();
+            context.Database.Migrate();
 
             // Repopulate the tables with dummy data
             if (!context.Users.Any())
@@ -65,7 +65,10 @@ namespace HomeVital.Repositories
                     new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Hypertension" },
                     new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 95, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 85, Status = "Hypertension" },
                     new BloodPressure { PatientID = 5, Systolic = 160, Diastolic = 100, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Standing", Pulse = 90, Status = "Hypertension" },
-                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Hypertension" }
+                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Hypertension" },
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal" },
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Right", BodyPosition = "Standing", Pulse = 75, Status = "Elevated" },
+                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Hypertension" }
                 );
             }
 
@@ -112,6 +115,65 @@ namespace HomeVital.Repositories
                     new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamID = 2 }
                 );
             }
+
+            // add the ranges
+            if (!context.BloodPressureRanges.Any())
+            {
+                context.BloodPressureRanges.AddRange(
+                    new BloodPressureRange { PatientID = 1 },
+                    new BloodPressureRange { PatientID = 2 },
+                    new BloodPressureRange { PatientID = 3 },
+                    new BloodPressureRange { PatientID = 4 },
+                    new BloodPressureRange { PatientID = 5 },
+                    new BloodPressureRange { PatientID = 6 }
+                );
+            }
+            if (!context.BloodSugarRanges.Any())
+            {
+                context.BloodSugarRanges.AddRange(
+                    new BloodSugarRange { PatientID = 1 },
+                    new BloodSugarRange { PatientID = 2 },
+                    new BloodSugarRange { PatientID = 3 },
+                    new BloodSugarRange { PatientID = 4 },
+                    new BloodSugarRange { PatientID = 5 },
+                    new BloodSugarRange { PatientID = 6 }
+                );
+            }
+            if (!context.BodyTemperatureRanges.Any())
+            {
+                context.BodyTemperatureRanges.AddRange(
+                    new BodyTemperatureRange { PatientID = 1 },
+                    new BodyTemperatureRange { PatientID = 2 },
+                    new BodyTemperatureRange { PatientID = 3 },
+                    new BodyTemperatureRange { PatientID = 4 },
+                    new BodyTemperatureRange { PatientID = 5 },
+                    new BodyTemperatureRange { PatientID = 6 }
+                );
+            }
+            if (!context.BodyWeightRanges.Any())
+            {
+                context.BodyWeightRanges.AddRange(
+                    new BodyWeightRange { PatientID = 1 },
+                    new BodyWeightRange { PatientID = 2 },
+                    new BodyWeightRange { PatientID = 3 },
+                    new BodyWeightRange { PatientID = 4 },
+                    new BodyWeightRange { PatientID = 5 },
+                    new BodyWeightRange { PatientID = 6 }
+                );
+            }
+            if (!context.OxygenSaturationRanges.Any())
+            {
+                context.OxygenSaturationRanges.AddRange(
+                    new OxygenSaturationRange { PatientID = 1 },
+                    new OxygenSaturationRange { PatientID = 2 },
+                    new OxygenSaturationRange { PatientID = 3 },
+                    new OxygenSaturationRange { PatientID = 4 },
+                    new OxygenSaturationRange { PatientID = 5 },
+                    new OxygenSaturationRange { PatientID = 6 }
+                );
+            }
+
+
 
             context.SaveChanges();
         }

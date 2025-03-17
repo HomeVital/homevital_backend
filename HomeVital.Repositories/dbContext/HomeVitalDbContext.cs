@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Models.Entities;
 
-
-
 namespace HomeVital.Repositories.dbContext
 {
     public class HomeVitalDbContext : DbContext
@@ -13,6 +11,7 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<HealthcareWorker> HealthcareWorkers { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Bloodsugar> Bloodsugars { get; set; }
+        public DbSet<OxygenSaturation> OxygenSaturations { get; set; }
         public DbSet<BloodPressure> BloodPressures { get; set; }
 
         public DbSet<User> Users { get; set;}
@@ -20,8 +19,11 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<BodyWeight> BodyWeights { get; set; }
         public DbSet<BodyTemperature> BodyTemperatures { get; set; }
-
-        public DbSet<OxygenSaturation> OxygenSaturations { get; set; }
+        public DbSet<BloodPressureRange> BloodPressureRanges { get; set; }
+        public DbSet<BodyTemperatureRange> BodyTemperatureRanges { get; set; }
+        public DbSet<BodyWeightRange> BodyWeightRanges { get; set; }
+        public DbSet<BloodSugarRange> BloodSugarRanges { get; set; }
+        public DbSet<OxygenSaturationRange> OxygenSaturationRanges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

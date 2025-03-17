@@ -36,7 +36,8 @@ builder.Services.AddTransient<IBodyTemperatureService, BodyTemperatureService>()
 builder.Services.AddTransient<IBodyTemperatureRepository, BodyTemperatureRepository>();
 builder.Services.AddTransient<IOxygenSaturationService, OxygenSaturationService>();
 builder.Services.AddTransient<IOxygenSaturationRepository, OxygenSaturationRepository>();
-
+builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
+builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
 
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
@@ -54,7 +55,7 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 {
     options.UseNpgsql(connectionString, options =>
     options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
-    
+
 });
 
 builder.Services.AddControllers();

@@ -16,17 +16,17 @@ namespace HomeVital.Models.Dtos
         // public int PatientID { get; set; }
         // list of measurements
         public List<Measurements> Measurements { get; set; } = new List<Measurements>();
-        
+
     }
 
     public class Measurements
     {
-        public int  UID { get; set; }
+        public int UID { get; set; }
         public int ID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
         public DateTime MeasurementDate { get; set; }
         public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
-        
+
     }
 
 
@@ -40,7 +40,7 @@ namespace HomeVital.Models.Dtos
         public string BodyPosition { get; set; } = string.Empty;
 
         // if type is blood sugar then rest of the fields will be null
-        
+
         public float BloodSugar { get; set; } = 0;
         // if type is body weight
         public float Weight { get; set; } = 0;

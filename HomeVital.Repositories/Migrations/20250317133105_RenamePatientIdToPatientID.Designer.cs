@@ -3,6 +3,7 @@ using System;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317133105_RenamePatientIdToPatientID")]
+    partial class RenamePatientIdToPatientID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -362,28 +365,6 @@ namespace HomeVital.Repositories.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Measurements");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.OxygenSaturation", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("OxygenSaturationValue")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PatientID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("OxygenSaturations");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.OxygenSaturationRange", b =>
