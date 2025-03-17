@@ -3,6 +3,7 @@ using System;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317125541_AddVitalRanges")]
+    partial class AddVitalRanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +105,7 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<int>("DiastolicOkMin")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PatientID")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<int>("SystolicCriticalMax")
@@ -169,7 +172,7 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<double>("BloodSugarlowMin")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("PatientID")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -239,7 +242,7 @@ namespace HomeVital.Repositories.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PatientID")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<double>("TemperatureCriticalMax")
@@ -303,7 +306,7 @@ namespace HomeVital.Repositories.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PatientID")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<double>("WeightGainFluctuationPercentageGood")
@@ -393,7 +396,7 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<double>("OxygenSaturationOkMin")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("PatientID")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

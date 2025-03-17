@@ -34,6 +34,8 @@ builder.Services.AddTransient<IBodyWeightService, BodyWeightService>();
 builder.Services.AddTransient<IBodyWeightRepository, BodyWeightRepository>();
 builder.Services.AddTransient<IBodyTemperatureService, BodyTemperatureService>();
 builder.Services.AddTransient<IBodyTemperatureRepository, BodyTemperatureRepository>();
+builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
+builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
 
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
