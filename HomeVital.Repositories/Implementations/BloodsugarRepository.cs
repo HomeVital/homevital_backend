@@ -21,8 +21,10 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<BloodsugarDto>> GetBloodsugarsByPatientId(int patientId)
         {
+            //order by date
             var bloodsugars = await _dbContext.Bloodsugars
                 .Where(b => b.PatientID == patientId)
+                .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<BloodsugarDto>>(bloodsugars);

@@ -12,21 +12,23 @@ namespace HomeVital.Models.Dtos
 {
     public class MeasurementDto
     {
-        public int ID { get; set; }
-        public int PatientID { get; set; }
+        // public int ID { get; set; }
+        // public int PatientID { get; set; }
         // list of measurements
         public List<Measurements> Measurements { get; set; } = new List<Measurements>();
-        
+
     }
 
     public class Measurements
     {
+        public int UID { get; set; }
         public int ID { get; set; }
-        public int MeasurementID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
-        public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
         public DateTime MeasurementDate { get; set; }
+        public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
+
     }
+
 
     public class MeasurementValues
     {
@@ -38,7 +40,7 @@ namespace HomeVital.Models.Dtos
         public string BodyPosition { get; set; } = string.Empty;
 
         // if type is blood sugar then rest of the fields will be null
-        
+
         public float BloodSugar { get; set; } = 0;
         // if type is body weight
         public float Weight { get; set; } = 0;
@@ -46,6 +48,7 @@ namespace HomeVital.Models.Dtos
         public float Temperature { get; set; } = 0;
         // if type is oxygen saturation
         public int OxygenSaturation { get; set; } = 0;
+        // 
 
     }
 }

@@ -21,58 +21,62 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<OxygenSaturationDto>> GetOxygenSaturationsByPatientId(int patientId)
         {
-            var oxygensaturations = await _dbContext.OxygenSaturations
+            var oxygenSaturations = await _dbContext.OxygenSaturations
                 .Where(b => b.PatientID == patientId)
+                .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
-            return _mapper.Map<IEnumerable<OxygenSaturationDto>>(oxygensaturations);
+            return _mapper.Map<IEnumerable<OxygenSaturationDto>>(oxygenSaturations);
         }
 
-        public async Task<OxygenSaturationDto> CreateOxygenSaturation(int patientId, OxygenSaturationInputModel oxygensaturationInputModel)
+        public async Task<OxygenSaturationDto> CreateOxygenSaturation(int patientId, OxygenSaturationInputModel oxygenSaturationInputModel)
         {
-            var oxygensaturation = _mapper.Map<OxygenSaturation>(oxygensaturationInputModel);
-            oxygensaturation.PatientID = patientId;
-            oxygensaturation.Date = DateTime.UtcNow;
+            var oxygenSaturation = _mapper.Map<OxygenSaturation>(oxygenSaturationInputModel);
+            oxygenSaturation.PatientID = patientId;
+            oxygenSaturation.Date = DateTime.UtcNow;
 
-            _dbContext.OxygenSaturations.Add(oxygensaturation);
+            _dbContext.OxygenSaturations.Add(oxygenSaturation);
             await _dbContext.SaveChangesAsync();
 
-            return _mapper.Map<OxygenSaturationDto>(oxygensaturation);
+            return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }
 
-        public async Task<OxygenSaturationDto> UpdateOxygenSaturation(int id, OxygenSaturationInputModel oxygensaturationInputModel)
+        public async Task<OxygenSaturationDto> UpdateOxygenSaturation(int id, OxygenSaturationInputModel oxygenSaturationInputModel)
         {
-            var oxygensaturation = await _dbContext.OxygenSaturations
+            var oxygenSaturation = await _dbContext.OxygenSaturations
                 .FirstOrDefaultAsync(b => b.ID == id);
 
-            if (oxygensaturation != null)
+            if (oxygenSaturation != null)
             {
-                oxygensaturation.OxygenSaturationLevel = oxygensaturationInputModel.OxygenSaturationLevel;
-                oxygensaturation.Date = DateTime.UtcNow;
+                oxygenSaturation.OxygenSaturationValue = oxygenSaturationInputModel.OxygenSaturationValue;
+                oxygenSaturation.Date = DateTime.UtcNow;
 
                 await _dbContext.SaveChangesAsync();
             }
 
-            return _mapper.Map<OxygenSaturationDto>(oxygensaturation);
+            return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }
 
         public async Task<OxygenSaturationDto> DeleteOxygenSaturation(int id)
         {
-            var oxygensaturation = await _dbContext.OxygenSaturations
+            var oxygenSaturation = await _dbContext.OxygenSaturations
                 .FirstOrDefaultAsync(b => b.ID == id);
 
-            if (oxygensaturation == null)
+            if (oxygenSaturation != null)
             {
-                throw new System.ArgumentException("OxygenSaturation record not found");
+                _dbContext.OxygenSaturations.Remove(oxygenSaturation);
+                await _dbContext.SaveChangesAsync();
             }
 
-            _dbContext.OxygenSaturations.Remove(oxygensaturation);
-            await _dbContext.SaveChangesAsync();
-
-            return _mapper.Map<OxygenSaturationDto>(oxygensaturation);
+            return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }
 
+        public async Task<OxygenSaturationDto> GetOxygenSaturationById(int id)
+        {
+            var oxygenSaturation = await _dbContext.OxygenSaturations
+                .FirstOrDefaultAsync(b => b.ID == id);
 
-
+            return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
+        }
     }
 }

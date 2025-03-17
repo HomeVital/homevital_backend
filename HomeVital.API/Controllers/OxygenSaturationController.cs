@@ -13,7 +13,7 @@ namespace HomeVital.API.Controllers
     [Route("api/oxygensaturation")]
     public class OxygenSaturationController : ControllerBase
     {
-
+        
         private readonly IOxygenSaturationService _oxygensaturationService;
 
         public OxygenSaturationController(IOxygenSaturationService oxygensaturationService)
@@ -57,16 +57,10 @@ namespace HomeVital.API.Controllers
 
         // Delete a oxygensaturation record by ID
         [HttpDelete("{id}")]
-        public async Task<ActionResult<OxygenSaturationDto>> DeleteOxygenSaturationAsync(int id)
+        public async Task<ActionResult> DeleteOxygenSaturationAsync(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
-
-            var deletedOxygenSaturation = await _oxygensaturationService.DeleteOxygenSaturation(id);
-            return Ok(deletedOxygenSaturation);
+            await _oxygensaturationService.DeleteOxygenSaturation(id);
+            return Ok();
         }
-
     }
 }

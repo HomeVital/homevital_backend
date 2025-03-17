@@ -23,6 +23,7 @@ namespace HomeVital.Repositories.Implementations
         {
             var bodyTemperatures = await _dbContext.BodyTemperatures
                 .Where(b => b.PatientID == patientId)
+                .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<BodyTemperatureDto>>(bodyTemperatures);

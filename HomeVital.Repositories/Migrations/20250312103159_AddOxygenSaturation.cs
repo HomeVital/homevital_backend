@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     /// <inheritdoc />
-    public partial class AddOxygenSaturationsTable : Migration
+    public partial class AddOxygenSaturation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,8 @@ namespace HomeVital.Repositories.Migrations
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PatientID = table.Column<int>(type: "integer", nullable: false),
-                    OxygenSaturationLevel = table.Column<float>(type: "real", nullable: false),
+                    MeasurementID = table.Column<int>(type: "integer", nullable: false),
+                    OxygenSaturationValue = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

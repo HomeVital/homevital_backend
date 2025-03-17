@@ -25,11 +25,17 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<BloodSugarRange> BloodSugarRanges { get; set; }
         public DbSet<OxygenSaturationRange> OxygenSaturationRanges { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().HasIndex(u => u.Kennitala).IsUnique();
+
+            modelBuilder.Entity<Measurement>()
+                .HasKey(m => m.ID);
+
+            modelBuilder.Entity<Measurement>()
+                .Property(m => m.ID)
+                .ValueGeneratedOnAdd();
         }
 
     }

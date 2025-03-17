@@ -24,6 +24,7 @@ public class BodyWeightRepository : IBodyWeightRepository
     {
         var bodyWeights = await _dbContext.BodyWeights
             .Where(b => b.PatientID == patientId)
+            .OrderByDescending(b => b.Date)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<BodyWeightDto>>(bodyWeights);

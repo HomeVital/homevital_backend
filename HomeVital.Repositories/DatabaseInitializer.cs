@@ -15,21 +15,21 @@ namespace HomeVital.Repositories
             context.Database.ExecuteSqlRaw("DROP SCHEMA public CASCADE;");
             context.Database.ExecuteSqlRaw("CREATE SCHEMA public;");
 
-            // Reapply migrations to recreate the tables
+            // // Reapply migrations to recreate the tables
             context.Database.Migrate();
 
             // Repopulate the tables with dummy data
             if (!context.Users.Any())
             {
                 context.Users.AddRange(
-                    new User {Kennitala = "1234567890", PatientID = 1 },
-                    new User {Kennitala = "0987654321", PatientID = 2 },
-                    new User {Kennitala = "1111111111", PatientID = 3 },
-                    new User {Kennitala = "2222222222" , PatientID = 4 },
-                    new User {Kennitala = "3333333333" , PatientID = 5 },
-                    new User {Kennitala = "4444444444" , PatientID = 6 },
-                    new User {Kennitala = "5555555555" , HealthcareWorkerID = 1 },
-                    new User {Kennitala = "6666666666" , HealthcareWorkerID = 2 }
+                    new User { Kennitala = "1234567890", PatientID = 1 },
+                    new User { Kennitala = "0987654321", PatientID = 2 },
+                    new User { Kennitala = "1111111111", PatientID = 3 },
+                    new User { Kennitala = "2222222222", PatientID = 4 },
+                    new User { Kennitala = "3333333333", PatientID = 5 },
+                    new User { Kennitala = "4444444444", PatientID = 6 },
+                    new User { Kennitala = "5555555555", HealthcareWorkerID = 1 },
+                    new User { Kennitala = "6666666666", HealthcareWorkerID = 2 }
                 );
             }
 
@@ -99,12 +99,12 @@ namespace HomeVital.Repositories
             if (!context.OxygenSaturations.Any())
             {
                 context.OxygenSaturations.AddRange(
-                    new OxygenSaturation { PatientID = 1, OxygenSaturationLevel = 100, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 2, OxygenSaturationLevel = 98, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 3, OxygenSaturationLevel = 97, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 4, OxygenSaturationLevel = 96, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 5, OxygenSaturationLevel = 95, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 6, OxygenSaturationLevel = 94, Date = DateTime.UtcNow }
+                    new OxygenSaturation { PatientID = 1, OxygenSaturationValue = 98, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 2, OxygenSaturationValue = 97, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 3, OxygenSaturationValue = 96, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 4, OxygenSaturationValue = 95, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 5, OxygenSaturationValue = 94, Date = DateTime.UtcNow },
+                    new OxygenSaturation { PatientID = 6, OxygenSaturationValue = 93, Date = DateTime.UtcNow }
                 );
             }
 
@@ -117,59 +117,59 @@ namespace HomeVital.Repositories
             }
 
             // add the ranges
-            if(!context.BloodPressureRanges.Any())
+            if (!context.BloodPressureRanges.Any())
             {
                 context.BloodPressureRanges.AddRange(
-                    new BloodPressureRange { PatientID = 1},
-                    new BloodPressureRange { PatientID = 2},
-                    new BloodPressureRange { PatientID = 3},
-                    new BloodPressureRange { PatientID = 4},
-                    new BloodPressureRange { PatientID = 5},
-                    new BloodPressureRange { PatientID = 6}
+                    new BloodPressureRange { PatientID = 1 },
+                    new BloodPressureRange { PatientID = 2 },
+                    new BloodPressureRange { PatientID = 3 },
+                    new BloodPressureRange { PatientID = 4 },
+                    new BloodPressureRange { PatientID = 5 },
+                    new BloodPressureRange { PatientID = 6 }
                 );
             }
-            if(!context.BloodSugarRanges.Any())
+            if (!context.BloodSugarRanges.Any())
             {
                 context.BloodSugarRanges.AddRange(
-                    new BloodSugarRange { PatientID = 1},
-                    new BloodSugarRange { PatientID = 2},
-                    new BloodSugarRange { PatientID = 3},
-                    new BloodSugarRange { PatientID = 4},
-                    new BloodSugarRange { PatientID = 5},
-                    new BloodSugarRange { PatientID = 6}
+                    new BloodSugarRange { PatientID = 1 },
+                    new BloodSugarRange { PatientID = 2 },
+                    new BloodSugarRange { PatientID = 3 },
+                    new BloodSugarRange { PatientID = 4 },
+                    new BloodSugarRange { PatientID = 5 },
+                    new BloodSugarRange { PatientID = 6 }
                 );
             }
-            if(!context.BodyTemperatureRanges.Any())
+            if (!context.BodyTemperatureRanges.Any())
             {
                 context.BodyTemperatureRanges.AddRange(
-                    new BodyTemperatureRange { PatientID = 1},
-                    new BodyTemperatureRange { PatientID = 2},
-                    new BodyTemperatureRange { PatientID = 3},
-                    new BodyTemperatureRange { PatientID = 4},
-                    new BodyTemperatureRange { PatientID = 5},
-                    new BodyTemperatureRange { PatientID = 6}
+                    new BodyTemperatureRange { PatientID = 1 },
+                    new BodyTemperatureRange { PatientID = 2 },
+                    new BodyTemperatureRange { PatientID = 3 },
+                    new BodyTemperatureRange { PatientID = 4 },
+                    new BodyTemperatureRange { PatientID = 5 },
+                    new BodyTemperatureRange { PatientID = 6 }
                 );
             }
-            if(!context.BodyWeightRanges.Any())
+            if (!context.BodyWeightRanges.Any())
             {
                 context.BodyWeightRanges.AddRange(
-                    new BodyWeightRange { PatientID = 1},
-                    new BodyWeightRange { PatientID = 2},
-                    new BodyWeightRange { PatientID = 3},
-                    new BodyWeightRange { PatientID = 4},
-                    new BodyWeightRange { PatientID = 5},
-                    new BodyWeightRange { PatientID = 6}
+                    new BodyWeightRange { PatientID = 1 },
+                    new BodyWeightRange { PatientID = 2 },
+                    new BodyWeightRange { PatientID = 3 },
+                    new BodyWeightRange { PatientID = 4 },
+                    new BodyWeightRange { PatientID = 5 },
+                    new BodyWeightRange { PatientID = 6 }
                 );
             }
-            if(!context.OxygenSaturationRanges.Any())
+            if (!context.OxygenSaturationRanges.Any())
             {
                 context.OxygenSaturationRanges.AddRange(
-                    new OxygenSaturationRange { PatientID = 1},
-                    new OxygenSaturationRange { PatientID = 2},
-                    new OxygenSaturationRange { PatientID = 3},
-                    new OxygenSaturationRange { PatientID = 4},
-                    new OxygenSaturationRange { PatientID = 5},
-                    new OxygenSaturationRange { PatientID = 6}
+                    new OxygenSaturationRange { PatientID = 1 },
+                    new OxygenSaturationRange { PatientID = 2 },
+                    new OxygenSaturationRange { PatientID = 3 },
+                    new OxygenSaturationRange { PatientID = 4 },
+                    new OxygenSaturationRange { PatientID = 5 },
+                    new OxygenSaturationRange { PatientID = 6 }
                 );
             }
 

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    [Migration("20250312143309_AddOxygenSaturationsTable")]
-    partial class AddOxygenSaturationsTable
+    [Migration("20250316161847_Fix1")]
+    partial class Fix1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,8 +206,8 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<float>("OxygenSaturationLevel")
-                        .HasColumnType("real");
+                    b.Property<int>("OxygenSaturationValue")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");

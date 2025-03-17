@@ -26,7 +26,11 @@ public class BloodPressureRepository : IBloodPressureRepository
     {
         var bloodPressures = await _dbContext.BloodPressures
             .Where(b => b.PatientID == patientId)
+            .OrderByDescending(b => b.Date)
             .ToListAsync();
+
+        // order by date
+        bloodPressures = bloodPressures.OrderByDescending(b => b.Date).ToList();
 
         return _mapper.Map<IEnumerable<BloodPressureDto>>(bloodPressures);
     }
@@ -42,6 +46,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
+  
 
     public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
     {
@@ -87,6 +92,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
+
 
 
 
