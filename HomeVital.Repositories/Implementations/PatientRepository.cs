@@ -23,10 +23,38 @@ public class PatientRepository : IPatientRepository
     public async Task<PatientDto> CreatePatient(PatientInputModel patient)
     {
         var newPatient = _mapper.Map<Patient>(patient); 
-
         _dbContext.Patients.Add(newPatient);
         await _dbContext.SaveChangesAsync();
 
+        // init patients measurements vital ranges
+        var newVitalRangeBodyTemp = new BodyTemperatureRange
+        {
+            PatientID = newPatient.ID  
+        };
+        var newVitalRangeBloodPressure = new BloodPressureRange
+        {
+            PatientID = newPatient.ID  
+        };
+        var newVitalRangeBloodSugar = new BloodSugarRange
+        {
+            PatientID = newPatient.ID  
+        };
+        var newVitalRangeBodyWeight = new BodyWeightRange
+        {
+            PatientID = newPatient.ID  
+        };
+        var newVitalRangeOxygenSaturation = new OxygenSaturationRange
+        {
+            PatientID = newPatient.ID  
+        };
+
+        _dbContext.BodyTemperatureRanges.Add(newVitalRangeBodyTemp);
+        _dbContext.BloodPressureRanges.Add(newVitalRangeBloodPressure);
+        _dbContext.BloodSugarRanges.Add(newVitalRangeBloodSugar);
+        _dbContext.BodyWeightRanges.Add(newVitalRangeBodyWeight);
+        _dbContext.OxygenSaturationRanges.Add(newVitalRangeOxygenSaturation);
+
+        await _dbContext.SaveChangesAsync();
         var patientDto = _mapper.Map<PatientDto>(newPatient); 
         return patientDto; 
     }

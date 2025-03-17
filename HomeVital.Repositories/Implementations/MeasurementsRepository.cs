@@ -47,16 +47,13 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BloodPressure",
                 MeasurementID = bp.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Systolic = bp.Systolic,
-                        Diastolic = bp.Diastolic,
-                        BPM = bp.Pulse,
-                        MeasureHand = bp.MeasureHand,
-                        BodyPosition = bp.BodyPosition
-                    }
+                    Systolic = bp.Systolic,
+                    Diastolic = bp.Diastolic,
+                    BPM = bp.Pulse,
+                    MeasureHand = bp.MeasureHand,
+                    BodyPosition = bp.BodyPosition
                 },
                 MeasurementDate = bp.Date
             }));
@@ -65,13 +62,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BloodSugar",
                 MeasurementID = bs.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        BloodSugar = bs.BloodsugarLevel
-                    }
+                    BloodSugar = bs.BloodsugarLevel
                 },
+                
                 MeasurementDate = bs.Date
             }));
 
@@ -79,13 +74,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BodyWeight",
                 MeasurementID = bw.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Weight = bw.Weight
-                    }
-                },
+                    Weight = bw.Weight
+                }
+                ,
                 MeasurementDate = bw.Date
             }));
 
@@ -93,14 +86,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 MeasurementType = "BodyTemperature",
                 MeasurementID = bt.ID,
-                MeasurementValues = new List<MeasurementValues>
+                MeasurementValues = new MeasurementValues
                 {
-                    new MeasurementValues
-                    {
-                        Temperature = bt.Temperature
-                    }
-                },
-                MeasurementDate = bt.Date
+                    Temperature = bt.Temperature
+                }
+                
             }));
 
             // sort the measurements by date

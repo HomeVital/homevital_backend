@@ -38,6 +38,18 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<BodyTemperatureInputModel, BodyTemperature>();
             CreateMap<OxygenSaturation, OxygenSaturationDto>();
             CreateMap<OxygenSaturationInputModel, OxygenSaturation>();
-        }
+
+            CreateMap<BodyTemperatureRange, BodyTemperatureRangeDto>();
+            CreateMap<BodyTemperatureRangeInputModel, BodyTemperatureRange>();
+            CreateMap<BloodPressureRange, BloodPressureRangeDto>();
+            CreateMap<BloodPressureRangeInputModel, BloodPressureRange>();
+            CreateMap<BloodSugarRange, BloodSugarRangeDto>();
+            CreateMap<BloodSugarRangeInputModel, BloodSugarRange>();
+            CreateMap<BodyWeightRange, BodyWeightRangeDto>();
+            CreateMap<BodyWeightRangeInputModel, BodyWeightRange>();
+            CreateMap<OxygenSaturationRange, OxygenSaturationRangeDto>();
+            CreateMap<OxygenSaturationRangeInputModel, OxygenSaturationRange>();
+            
+            }
     }
 }
