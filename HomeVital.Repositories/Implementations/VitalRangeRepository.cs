@@ -82,7 +82,6 @@ public class VitalRangeRepository : IVitalRangeRepository
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
-        
         return _mapper.Map<BloodSugarRangeDto>(patientsBloodSugarRange);
     }
 
@@ -135,14 +134,13 @@ public class VitalRangeRepository : IVitalRangeRepository
 
         foreach (var inputProperty in inputProperties)
         {
-            if(inputProperty.Name == "PatientID") continue;
+            if (inputProperty.Name == "PatientID") continue;
             var inputValue = inputProperty.GetValue(inputModel);
             if (inputValue != null)
             {
                 var entityProperty = entityProperties.FirstOrDefault(p => p.Name == inputProperty.Name);
                 if (entityProperty != null)
                 {
-                    
                     entityProperty.SetValue(entity, inputValue);
                 }
             }

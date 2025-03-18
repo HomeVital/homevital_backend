@@ -18,10 +18,10 @@ public class VitalRangeService: IVitalRangeService
     public async Task<BodyTemperatureRangeDto> UpdateBodyTemperatureRangeAsync(int patientId, BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel)
     {
         // check if any of the input values are less than 0 or 0
-        if (bodyTemperatureRangeInputModel.TemperatureGoodMin <= 0 || bodyTemperatureRangeInputModel.TemperatureGoodMax <= 0 ||
-            bodyTemperatureRangeInputModel.TemperatureUnderAverage <= 0 || bodyTemperatureRangeInputModel.TemperatureNotOkMin <= 0 ||
-            bodyTemperatureRangeInputModel.TemperatureNotOkMax <= 0 || bodyTemperatureRangeInputModel.TemperatureCriticalMin <= 0 ||
-            bodyTemperatureRangeInputModel.TemperatureCriticalMax <= 0)
+        if (bodyTemperatureRangeInputModel.TemperatureGoodMin < 0 || bodyTemperatureRangeInputModel.TemperatureGoodMax < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureUnderAverage < 0 || bodyTemperatureRangeInputModel.TemperatureNotOkMin < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureNotOkMax < 0 || bodyTemperatureRangeInputModel.TemperatureCriticalMin < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureCriticalMax < 0)
         {
             throw new ArgumentException("Body temperature values cannot be less than 0");
         }
