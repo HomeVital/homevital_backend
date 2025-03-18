@@ -13,7 +13,7 @@ namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
     [Migration("20250317200404_merge")]
-    partial class merge
+    partial class Merge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

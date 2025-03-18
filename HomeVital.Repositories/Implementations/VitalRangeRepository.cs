@@ -128,199 +128,50 @@ public class VitalRangeRepository : IVitalRangeRepository
         };
     }
 
+    private void UpdateEntity<TInputModel, TEntity>(TInputModel inputModel, TEntity entity)
+    {
+        var inputProperties = typeof(TInputModel).GetProperties();
+        var entityProperties = typeof(TEntity).GetProperties();
 
-
+        foreach (var inputProperty in inputProperties)
+        {
+            if(inputProperty.Name == "PatientID") continue;
+            var inputValue = inputProperty.GetValue(inputModel);
+            if (inputValue != null)
+            {
+                var entityProperty = entityProperties.FirstOrDefault(p => p.Name == inputProperty.Name);
+                if (entityProperty != null)
+                {
+                    
+                    entityProperty.SetValue(entity, inputValue);
+                }
+            }
+        }
+    }
     private void BodyTempRangesHelper(BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel, BodyTemperatureRange patientsBodyTemperatureRange)
     {
-        if (bodyTemperatureRangeInputModel.BodyTemperatureGoodMin.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureGoodMin = bodyTemperatureRangeInputModel.BodyTemperatureGoodMin.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureGoodMax.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureGoodMax = bodyTemperatureRangeInputModel.BodyTemperatureGoodMax.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureUnderAverage.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureUnderAverage = bodyTemperatureRangeInputModel.BodyTemperatureUnderAverage.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureNotOkMin.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureNotOkMin = bodyTemperatureRangeInputModel.BodyTemperatureNotOkMin.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureNotOkMax.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureNotOkMax = bodyTemperatureRangeInputModel.BodyTemperatureNotOkMax.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureCriticalMin.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureCriticalMin = bodyTemperatureRangeInputModel.BodyTemperatureCriticalMin.Value;
-        }
-        if (bodyTemperatureRangeInputModel.BodyTemperatureCriticalMax.HasValue)
-        {
-            patientsBodyTemperatureRange.TemperatureCriticalMax = bodyTemperatureRangeInputModel.BodyTemperatureCriticalMax.Value;
-        }
+        UpdateEntity(bodyTemperatureRangeInputModel, patientsBodyTemperatureRange);
     }
 
     private void BodyWeightHelpter(BodyWeightRangeInputModel bodyWeightRangeInputModel, BodyWeightRange patientsBodyWeightRange)
     {
-        if (bodyWeightRangeInputModel.WeightGainFluctuationPercentageGood.HasValue)
-        {
-            patientsBodyWeightRange.WeightGainFluctuationPercentageGood = bodyWeightRangeInputModel.WeightGainFluctuationPercentageGood.Value;
-        }
-        if (bodyWeightRangeInputModel.WeightGainPercentageGoodMax.HasValue)
-        {
-            patientsBodyWeightRange.WeightGainPercentageGoodMax = bodyWeightRangeInputModel.WeightGainPercentageGoodMax.Value;
-        }
-        if (bodyWeightRangeInputModel.WeightLossFluctuationPercentageGood.HasValue)
-        {
-            patientsBodyWeightRange.WeightLossFluctuationPercentageGood = bodyWeightRangeInputModel.WeightLossFluctuationPercentageGood.Value;
-        }
+        UpdateEntity(bodyWeightRangeInputModel, patientsBodyWeightRange);
+      
     }
 
     private void BloodPressureRangeHelpger(BloodPressureRangeInputModel bloodPressureRangeInputModel, BloodPressureRange patientsBloodPressureRange)
     {
-        if (bloodPressureRangeInputModel.SystolicCriticalMax.HasValue)
-        {
-            patientsBloodPressureRange.SystolicCriticalMax = bloodPressureRangeInputModel.SystolicCriticalMax.Value;
-        } 
-        if (bloodPressureRangeInputModel.SystolicCriticalMin.HasValue)
-        {
-            patientsBloodPressureRange.SystolicCriticalMin = bloodPressureRangeInputModel.SystolicCriticalMin.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicCriticalStage3Max.HasValue)
-        {
-            patientsBloodPressureRange.SystolicCriticalStage3Max = bloodPressureRangeInputModel.SystolicCriticalStage3Max.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicCriticalStage3Min.HasValue)
-        {
-            patientsBloodPressureRange.SystolicCriticalStage3Min = bloodPressureRangeInputModel.SystolicCriticalStage3Min.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicNotOkMax.HasValue)
-        {
-            patientsBloodPressureRange.SystolicNotOkMax = bloodPressureRangeInputModel.SystolicNotOkMax.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicNotOkMin.HasValue)
-        {
-            patientsBloodPressureRange.SystolicNotOkMin = bloodPressureRangeInputModel.SystolicNotOkMin.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicOkMax.HasValue)
-        {
-            patientsBloodPressureRange.SystolicOkMax = bloodPressureRangeInputModel.SystolicOkMax.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicOkMin.HasValue)
-        {
-            patientsBloodPressureRange.SystolicOkMin = bloodPressureRangeInputModel.SystolicOkMin.Value;
-        }
-        if (bloodPressureRangeInputModel.SystolicGoodMax.HasValue)
-        {
-            patientsBloodPressureRange.SystolicGoodMax = bloodPressureRangeInputModel.SystolicGoodMax.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicCriticalMax.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicCriticalMax = bloodPressureRangeInputModel.DiastolicCriticalMax.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicCriticalMin.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicCriticalMin = bloodPressureRangeInputModel.DiastolicCriticalMin.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicCriticalStage3Max.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicCriticalStage3Max = bloodPressureRangeInputModel.DiastolicCriticalStage3Max.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicCriticalStage3Min.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicCriticalStage3Min = bloodPressureRangeInputModel.DiastolicCriticalStage3Min.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicNotOkMax.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicNotOkMax = bloodPressureRangeInputModel.DiastolicNotOkMax.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicNotOkMin.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicNotOkMin = bloodPressureRangeInputModel.DiastolicNotOkMin.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicOkMax.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicOkMax = bloodPressureRangeInputModel.DiastolicOkMax.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicOkMin.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicOkMin = bloodPressureRangeInputModel.DiastolicOkMin.Value;
-        }
-        if (bloodPressureRangeInputModel.DiastolicGoodMax.HasValue)
-        {
-            patientsBloodPressureRange.DiastolicGoodMax = bloodPressureRangeInputModel.DiastolicGoodMax.Value;
-        }
-
+        UpdateEntity(bloodPressureRangeInputModel, patientsBloodPressureRange);
     }
 
     private void BloodSugarRangeHelper(BloodSugarRangeInputModel bloodSugarRangeInputModel, BloodSugarRange patientsBloodSugarRange)
     {
-        if (bloodSugarRangeInputModel.BloodSugarCriticalMax.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarCriticalMax = bloodSugarRangeInputModel.BloodSugarCriticalMax.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarCriticalMin.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarCriticalMin = bloodSugarRangeInputModel.BloodSugarCriticalMin.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarNotOkMax.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarNotOkMax = bloodSugarRangeInputModel.BloodSugarNotOkMax.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarNotOkMin.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarNotOkMin = bloodSugarRangeInputModel.BloodSugarNotOkMin.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarGoodMax.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarGoodMax = bloodSugarRangeInputModel.BloodSugarGoodMax.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarGoodMin.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarGoodMin = bloodSugarRangeInputModel.BloodSugarGoodMin.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarlowMax.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarlowMax = bloodSugarRangeInputModel.BloodSugarlowMax.Value;
-        }
-        if (bloodSugarRangeInputModel.BloodSugarlowMin.HasValue)
-        {
-            patientsBloodSugarRange.BloodSugarlowMin = bloodSugarRangeInputModel.BloodSugarlowMin.Value;
-        }
+        UpdateEntity(bloodSugarRangeInputModel, patientsBloodSugarRange);
         
     }
 
     private void OxygenSaturationRangeHelper(OxygenSaturationRangeInputModel oxygenSaturationRangeInputModel, OxygenSaturationRange patientsOxygenSaturationRange)
-    {
-        if (oxygenSaturationRangeInputModel.OxygenSaturationCriticalMax.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationCriticalMax = oxygenSaturationRangeInputModel.OxygenSaturationCriticalMax.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationCriticalMin.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationCriticalMin = oxygenSaturationRangeInputModel.OxygenSaturationCriticalMin.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationNotOkMax.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationNotOkMax = oxygenSaturationRangeInputModel.OxygenSaturationNotOkMax.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationNotOkMin.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationNotOkMin = oxygenSaturationRangeInputModel.OxygenSaturationNotOkMin.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationGood.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationGood = oxygenSaturationRangeInputModel.OxygenSaturationGood.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationOkMin.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationOkMin = oxygenSaturationRangeInputModel.OxygenSaturationOkMin.Value;
-        }
-        if (oxygenSaturationRangeInputModel.OxygenSaturationOkMax.HasValue)
-        {
-            patientsOxygenSaturationRange.OxygenSaturationOkMax = oxygenSaturationRangeInputModel.OxygenSaturationOkMax.Value;
-        }
+    {   
+        UpdateEntity(oxygenSaturationRangeInputModel, patientsOxygenSaturationRange);
     }
 }

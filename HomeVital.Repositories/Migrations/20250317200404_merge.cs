@@ -5,7 +5,7 @@
 namespace HomeVital.Repositories.Migrations
 {
     /// <inheritdoc />
-    public partial class merge : Migration
+    public partial class Merge : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
