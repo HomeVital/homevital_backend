@@ -27,7 +27,7 @@ public class VitalRangeRepository : IVitalRangeRepository
         // patient has a body temperature range
         if (patientsBodyTemperatureRange != null)
         {
-            BodyTempRangesHelper(bodyTemperatureRangeInputModel, patientsBodyTemperatureRange);
+            UpdateEntity(bodyTemperatureRangeInputModel, patientsBodyTemperatureRange);
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
@@ -44,7 +44,7 @@ public class VitalRangeRepository : IVitalRangeRepository
         // patient has a body weight range
         if (patientsBodyWeightRange != null)
         {
-            BodyWeightHelpter(bodyWeightRangeInputModel, patientsBodyWeightRange);
+            UpdateEntity(bodyWeightRangeInputModel, patientsBodyWeightRange);
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
@@ -61,7 +61,7 @@ public class VitalRangeRepository : IVitalRangeRepository
         // patient has a blood pressure range
         if (patientsBloodPressureRange != null)
         {
-            BloodPressureRangeHelpger(bloodPressureRangeInputModel, patientsBloodPressureRange);
+            UpdateEntity(bloodPressureRangeInputModel, patientsBloodPressureRange);
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
@@ -78,7 +78,7 @@ public class VitalRangeRepository : IVitalRangeRepository
         // patient has a blood sugar range
         if (patientsBloodSugarRange != null)
         {
-            BloodSugarRangeHelper(bloodSugarRangeInputModel, patientsBloodSugarRange);
+            UpdateEntity(bloodSugarRangeInputModel, patientsBloodSugarRange);
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
@@ -95,7 +95,7 @@ public class VitalRangeRepository : IVitalRangeRepository
         // patient has a oxygen saturation range
         if (patientsOxygenSaturationRange != null)
         {
-            OxygenSaturationRangeHelper(oxygenSaturationRangeInputModel, patientsOxygenSaturationRange);
+            UpdateEntity(oxygenSaturationRangeInputModel, patientsOxygenSaturationRange);
             // save the changes
             await _dbContext.SaveChangesAsync();
         }
@@ -147,31 +147,5 @@ public class VitalRangeRepository : IVitalRangeRepository
                 }
             }
         }
-    }
-    private void BodyTempRangesHelper(BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel, BodyTemperatureRange patientsBodyTemperatureRange)
-    {
-        UpdateEntity(bodyTemperatureRangeInputModel, patientsBodyTemperatureRange);
-    }
-
-    private void BodyWeightHelpter(BodyWeightRangeInputModel bodyWeightRangeInputModel, BodyWeightRange patientsBodyWeightRange)
-    {
-        UpdateEntity(bodyWeightRangeInputModel, patientsBodyWeightRange);
-      
-    }
-
-    private void BloodPressureRangeHelpger(BloodPressureRangeInputModel bloodPressureRangeInputModel, BloodPressureRange patientsBloodPressureRange)
-    {
-        UpdateEntity(bloodPressureRangeInputModel, patientsBloodPressureRange);
-    }
-
-    private void BloodSugarRangeHelper(BloodSugarRangeInputModel bloodSugarRangeInputModel, BloodSugarRange patientsBloodSugarRange)
-    {
-        UpdateEntity(bloodSugarRangeInputModel, patientsBloodSugarRange);
-        
-    }
-
-    private void OxygenSaturationRangeHelper(OxygenSaturationRangeInputModel oxygenSaturationRangeInputModel, OxygenSaturationRange patientsOxygenSaturationRange)
-    {   
-        UpdateEntity(oxygenSaturationRangeInputModel, patientsOxygenSaturationRange);
     }
 }
