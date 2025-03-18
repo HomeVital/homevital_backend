@@ -139,10 +139,7 @@ public class VitalRangeRepository : IVitalRangeRepository
             if (inputValue != null)
             {
                 var entityProperty = entityProperties.FirstOrDefault(p => p.Name == inputProperty.Name);
-                if (entityProperty != null)
-                {
-                    entityProperty.SetValue(entity, inputValue);
-                }
+                entityProperty?.SetValue(entity, inputValue);
             }
         }
     }
