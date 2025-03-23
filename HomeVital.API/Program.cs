@@ -10,6 +10,10 @@ using HomeVital.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication;
 using HomeVital.Services;
 using HomeVital.Repositories;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,7 @@ builder.Services.AddTransient<IOxygenSaturationRepository, OxygenSaturationRepos
 builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
 builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
 
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
 
@@ -58,12 +63,46 @@ builder.Services.AddDbContext<HomeVitalDbContext>(options =>
 
 });
 
-builder.Services.AddControllers();
-// Register TimeProvider
-builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
-builder.Services.AddAuthentication("BasicAuthentication")
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
+// Add services to the container.
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+
+// var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+var keyString = jwtSettings["Key"];
+byte[] key;
+if (keyString != null)
+{
+    key = Encoding.ASCII.GetBytes(keyString);
+    // Continue processing with 'key'
+}
+else
+{
+    // Handle the null case, e.g., log an error or throw an exception
+    throw new ArgumentNullException("jwtSettings[\"Key\"]", "The JWT key setting cannot be null.");
+}
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
+
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
