@@ -25,19 +25,21 @@ namespace HomeVital.Services.Implementations
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Kennitala),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             if (user.PatientID.HasValue)
             {
                 claims.Add(new Claim(ClaimTypes.Role, Roles.Patient));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.PatientID.Value.ToString()));
+
                 System.Console.WriteLine($"Role added: {Roles.Patient}");
             }
 
             if (user.HealthcareWorkerID.HasValue)
             {
                 claims.Add(new Claim(ClaimTypes.Role, Roles.HealthcareWorker));
+                        claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.HealthcareWorkerID.Value.ToString()));
                 System.Console.WriteLine($"Role added: {Roles.HealthcareWorker}");
             }
 
