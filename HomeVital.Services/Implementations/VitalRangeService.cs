@@ -60,6 +60,15 @@ public class VitalRangeService: IVitalRangeService
             throw new ArgumentException("Blood sugar values cannot be less than 0");
         }
 
+        // check for gaps or overlaps between the ranges
+        if (bloodSugarRangeInputModel.BloodSugarGoodMax >= bloodSugarRangeInputModel.BloodSugarNotOkMin ||
+            bloodSugarRangeInputModel.BloodSugarNotOkMax >= bloodSugarRangeInputModel.BloodSugarCriticalMin ||
+            bloodSugarRangeInputModel.BloodSugarlowMax <= bloodSugarRangeInputModel.BloodSugarGoodMin)
+        {
+            throw new ArgumentException("Blood sugar ranges are not aligned properly");
+        }
+
+
         return await _vitalRangeRepository.UpdateBloodSugarRangeAsync(patientId, bloodSugarRangeInputModel);
     }
 

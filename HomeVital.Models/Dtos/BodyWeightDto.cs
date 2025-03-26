@@ -7,5 +7,6 @@ namespace HomeVital.Models.Dtos
         public int PatientID { get; set; }
         public double Weight { get; set; }
         public DateTime Date { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

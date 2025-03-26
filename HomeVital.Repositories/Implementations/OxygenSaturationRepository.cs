@@ -5,7 +5,7 @@ using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
-
+using HomeVital.Models.Enums;
 namespace HomeVital.Repositories.Implementations
 {
     public class OxygenSaturationRepository : IOxygenSaturationRepository
@@ -31,6 +31,19 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<OxygenSaturationDto> CreateOxygenSaturation(int patientId, OxygenSaturationInputModel oxygenSaturationInputModel)
         {
+            // check oxygen saturation range
+
+            var oxygenSaturationRange = await _dbContext.OxygenSaturationRanges
+                .FirstOrDefaultAsync(b => b.PatientID == patientId);
+
+            if (oxygenSaturationRange == null)
+            {
+                throw new System.ArgumentException("OxygenSaturation range not found");
+            }
+
+            oxygenSaturationInputModel.Status = CheckOxygenSaturationRange(oxygenSaturationInputModel, oxygenSaturationRange);
+
+
             var oxygenSaturation = _mapper.Map<OxygenSaturation>(oxygenSaturationInputModel);
             oxygenSaturation.PatientID = patientId;
             oxygenSaturation.Date = DateTime.UtcNow;
@@ -77,6 +90,36 @@ namespace HomeVital.Repositories.Implementations
                 .FirstOrDefaultAsync(b => b.ID == id);
 
             return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
+        }
+
+
+        private static string CheckOxygenSaturationRange(OxygenSaturationInputModel oxygenSaturationInputModel, OxygenSaturationRange oxygenSaturationRange)
+        {
+            // check oxygen saturation range
+
+            if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationOkMin
+                && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationOkMax)
+            {
+                return VitalStatus.Raised.ToString();
+            }
+            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationNotOkMin
+                && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationNotOkMax)
+            {
+                return VitalStatus.High.ToString();
+            }
+            else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationCriticalMax)
+            {
+                return VitalStatus.Critical.ToString();
+            }
+            else
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+            
         }
     }
 }

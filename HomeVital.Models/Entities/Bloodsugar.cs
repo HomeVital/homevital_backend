@@ -6,6 +6,6 @@ namespace HomeVital.Models.Entities
         public int PatientID { get; set; } 
         public float BloodsugarLevel { get; set; } = 0;
         public DateTime Date { get; set; } = new DateTime();
-        // public string Status { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }
