@@ -49,6 +49,7 @@ namespace HomeVital.Models.Dtos
         // if type is oxygen saturation
         public int OxygenSaturation { get; set; } = 0;
         // 
+        public string Status { get; set; } = string.Empty;
 
     }
 }

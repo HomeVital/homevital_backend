@@ -18,10 +18,10 @@ public class VitalRangeService: IVitalRangeService
     public async Task<BodyTemperatureRangeDto> UpdateBodyTemperatureRangeAsync(int patientId, BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel)
     {
         // check if any of the input values are less than 0 or 0
-        if (bodyTemperatureRangeInputModel.BodyTemperatureGoodMin <= 0 || bodyTemperatureRangeInputModel.BodyTemperatureGoodMax <= 0 ||
-            bodyTemperatureRangeInputModel.BodyTemperatureUnderAverage <= 0 || bodyTemperatureRangeInputModel.BodyTemperatureNotOkMin <= 0 ||
-            bodyTemperatureRangeInputModel.BodyTemperatureNotOkMax <= 0 || bodyTemperatureRangeInputModel.BodyTemperatureCriticalMin <= 0 ||
-            bodyTemperatureRangeInputModel.BodyTemperatureCriticalMax <= 0)
+        if (bodyTemperatureRangeInputModel.TemperatureGoodMin < 0 || bodyTemperatureRangeInputModel.TemperatureGoodMax < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureUnderAverage < 0 || bodyTemperatureRangeInputModel.TemperatureNotOkMin < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureNotOkMax < 0 || bodyTemperatureRangeInputModel.TemperatureCriticalMin < 0 ||
+            bodyTemperatureRangeInputModel.TemperatureCriticalMax < 0)
         {
             throw new ArgumentException("Body temperature values cannot be less than 0");
         }
@@ -59,6 +59,15 @@ public class VitalRangeService: IVitalRangeService
         {
             throw new ArgumentException("Blood sugar values cannot be less than 0");
         }
+
+        // check for gaps or overlaps between the ranges
+        if (bloodSugarRangeInputModel.BloodSugarGoodMax >= bloodSugarRangeInputModel.BloodSugarNotOkMin ||
+            bloodSugarRangeInputModel.BloodSugarNotOkMax >= bloodSugarRangeInputModel.BloodSugarCriticalMin ||
+            bloodSugarRangeInputModel.BloodSugarlowMax <= bloodSugarRangeInputModel.BloodSugarGoodMin)
+        {
+            throw new ArgumentException("Blood sugar ranges are not aligned properly");
+        }
+
 
         return await _vitalRangeRepository.UpdateBloodSugarRangeAsync(patientId, bloodSugarRangeInputModel);
     }

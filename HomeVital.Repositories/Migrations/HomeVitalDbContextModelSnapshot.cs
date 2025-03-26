@@ -197,6 +197,10 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("ID");
 
                     b.HasIndex("MeasurementID");
@@ -220,6 +224,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Temperature")
                         .HasColumnType("real");
@@ -284,6 +292,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
@@ -380,6 +392,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
