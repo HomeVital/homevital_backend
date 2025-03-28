@@ -52,7 +52,9 @@ namespace HomeVital.Repositories.Implementations
                     Diastolic = bp.Diastolic,
                     BPM = bp.Pulse,
                     MeasureHand = bp.MeasureHand,
-                    BodyPosition = bp.BodyPosition
+                    BodyPosition = bp.BodyPosition,
+                    Status = bp.Status
+
                 },
                 MeasurementDate = bp.Date
             }));
@@ -63,7 +65,8 @@ namespace HomeVital.Repositories.Implementations
                 // MeasurementID = bs.ID,
                 MeasurementValues = new MeasurementValues
                 {
-                    BloodSugar = bs.BloodsugarLevel
+                    BloodSugar = bs.BloodsugarLevel,
+                    Status = bs.Status
                 },
                 
                 MeasurementDate = bs.Date
@@ -75,7 +78,8 @@ namespace HomeVital.Repositories.Implementations
                 // MeasurementID = bw.ID,
                 MeasurementValues = new MeasurementValues
                 {
-                    Weight = bw.Weight
+                    Weight = bw.Weight,
+                    Status = bw.Status
                 }
                 ,
                 MeasurementDate = bw.Date
@@ -88,7 +92,8 @@ namespace HomeVital.Repositories.Implementations
                 MeasurementDate = bt.Date,
                 MeasurementValues = new MeasurementValues
                 {
-                    Temperature = bt.Temperature
+                    Temperature = bt.Temperature,
+                    Status = bt.Status
                 }
                 
             }));
@@ -113,7 +118,8 @@ namespace HomeVital.Repositories.Implementations
                         Diastolic = bp.Diastolic,
                         BPM = bp.Pulse,
                         MeasureHand = bp.MeasureHand,
-                        BodyPosition = bp.BodyPosition
+                        BodyPosition = bp.BodyPosition,
+                        Status = bp.Status
                     },
                     
                 })
@@ -128,7 +134,8 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementDate = bs.Date,
                     MeasurementValues = new MeasurementValues
                     {
-                        BloodSugar = bs.BloodsugarLevel
+                        BloodSugar = bs.BloodsugarLevel,
+                        Status = bs.Status
                     },
                 })
                 .ToListAsync();
@@ -142,7 +149,8 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementDate = bw.Date,
                     MeasurementValues = new MeasurementValues
                     {
-                        Weight = bw.Weight
+                        Weight = bw.Weight,
+                        Status = bw.Status
                     },
                     
                 })
@@ -157,7 +165,8 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementDate = bt.Date,
                     MeasurementValues = new MeasurementValues
                     {
-                        Temperature = bt.Temperature
+                        Temperature = bt.Temperature,
+                        Status = bt.Status
                     },
                 })
                 .ToListAsync();
@@ -171,7 +180,8 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementDate = os.Date,
                     MeasurementValues = new MeasurementValues 
                     {
-                        OxygenSaturation = os.OxygenSaturationValue
+                        OxygenSaturation = os.OxygenSaturationValue,
+                        Status = os.Status
                     },
                 })
                 .ToListAsync();
