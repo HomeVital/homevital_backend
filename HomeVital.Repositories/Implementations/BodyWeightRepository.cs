@@ -66,7 +66,16 @@ namespace HomeVital.Repositories.Implementations{
             if (bodyWeight != null)
             {
                 bodyWeight.Weight = bodyWeightInputModel.Weight;
-                bodyWeight.Date = DateTime.UtcNow;
+                
+                var bodyWeightRange = await _dbContext.BodyWeightRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == bodyWeight.PatientID);
+
+                if (bodyWeightRange != null)
+                {
+                    bodyWeightInputModel.Status = CheckBodyWeightRange(bodyWeight.PatientID, bodyWeightInputModel.Weight, bodyWeightRange);
+                }
+
+                bodyWeight.Status = bodyWeightInputModel.Status;
 
                 await _dbContext.SaveChangesAsync();
             }

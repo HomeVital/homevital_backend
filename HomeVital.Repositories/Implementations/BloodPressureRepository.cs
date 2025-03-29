@@ -65,13 +65,20 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         if (bloodPressure != null)
         {
+            // check blood pressure range using CheckBloodPressureRange
+            var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
+                .FirstOrDefaultAsync(b => b.PatientID == bloodPressure.PatientID);
 
+            if (vitalRangeBloodpressure != null)
+            {
+                bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
+            }
+            
             bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
             bloodPressure.Systolic = bloodPressureInputModel.Systolic;
             bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
             bloodPressure.Pulse = bloodPressureInputModel.Pulse;
             bloodPressure.Status = bloodPressureInputModel.Status;
-            bloodPressure.Date = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();
         }

@@ -62,8 +62,16 @@ namespace HomeVital.Repositories.Implementations
             if (bodyTemperature != null)
             {
                 bodyTemperature.Temperature = bodyTemperatureInputModel.Temperature;
-                bodyTemperature.Date = DateTime.UtcNow;
 
+                var bodyTemperatureRange = await _dbContext.BodyTemperatureRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == bodyTemperature.PatientID);
+
+                if (bodyTemperatureRange != null)
+                {
+                    bodyTemperatureInputModel.Status = CheckBodyTemperatureRange(bodyTemperatureInputModel, bodyTemperatureRange);
+                }
+
+                bodyTemperature.Status = bodyTemperatureInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
 
