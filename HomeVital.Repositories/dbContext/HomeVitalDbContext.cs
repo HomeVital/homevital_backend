@@ -26,6 +26,8 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<OxygenSaturationRange> OxygenSaturationRanges { get; set; }
         public DbSet<Team> Teams { get; set; }
 
+        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

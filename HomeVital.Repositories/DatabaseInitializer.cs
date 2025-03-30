@@ -22,7 +22,8 @@ namespace HomeVital.Repositories
             {
                 context.Teams.AddRange(
                     new Team { Name = "Team A" , WorkerIDs = new List<int> { 1 }, PatientIDs = new List<int> { 1, 2 } },
-                    new Team { Name = "Team B" , WorkerIDs = new List<int> { 2 }, PatientIDs = new List<int> { 3, 4 } }
+                    new Team { Name = "Team B" , WorkerIDs = new List<int> { 2 }, PatientIDs = new List<int> { 3, 4 } },
+                    new Team { Name = "Team C" , WorkerIDs = new List<int> { 1, 2 }, PatientIDs = new List<int> { 5, 6 } }
                 );
                 context.SaveChanges();
             }
@@ -46,11 +47,11 @@ namespace HomeVital.Repositories
             {
                 context.Patients.AddRange(
                     new Patient { Name = "Patient zero", Phone = "123456789", Status = "Active", Address = "123 Main St", TeamID = 1 },
-                    new Patient { Name = "Patient 1", Phone = "987654321", Status = "Inactive", Address = "456 Elm St", TeamID = 2 },
-                    new Patient { Name = "Jakub", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
-                    new Patient { Name = "þorir", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
-                    new Patient { Name = "sindri", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
-                    new Patient { Name = "aron", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 }
+                    new Patient { Name = "Patient 1", Phone = "987654321", Status = "Inactive", Address = "456 Elm St", TeamID = 1 },
+                    new Patient { Name = "Jakub", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
+                    new Patient { Name = "þorir", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
+                    new Patient { Name = "sindri", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 },
+                    new Patient { Name = "aron", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 }
                 );
             }
 
@@ -58,8 +59,8 @@ namespace HomeVital.Repositories
             if (!context.HealthcareWorkers.Any())
             {
                 context.HealthcareWorkers.AddRange(
-                    new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamIDs = new List<int> { 1 } },
-                    new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamIDs = new List<int> { 2 } }
+                    new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
+                    new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamIDs = new List<int> { 2, 3 } }
                 );
             }
 
