@@ -63,7 +63,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         {
             healthcareWorkerToUpdate.Name = healthcareWorker.Name;
             healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
-            healthcareWorkerToUpdate.TeamID = healthcareWorker.TeamID;
+            healthcareWorkerToUpdate.TeamIDs = healthcareWorker.TeamIDs;
             healthcareWorkerToUpdate.Status = healthcareWorker.Status;
             await _dbContext.SaveChangesAsync();
         }
