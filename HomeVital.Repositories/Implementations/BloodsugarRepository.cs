@@ -62,10 +62,19 @@ namespace HomeVital.Repositories.Implementations
             if (bloodsugar != null)
             {
                 bloodsugar.BloodsugarLevel = bloodsugarInputModel.BloodsugarLevel;
-                bloodsugar.Date = DateTime.UtcNow;
+                
+                var vitalRangeBloodsugar = await _dbContext.BloodSugarRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == bloodsugar.PatientID);
 
+                if (vitalRangeBloodsugar != null)
+                {
+                    bloodsugarInputModel.Status = CheckBloodSugarRange(bloodsugarInputModel, vitalRangeBloodsugar);
+                }
+
+                bloodsugar.Status = bloodsugarInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
+
 
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
