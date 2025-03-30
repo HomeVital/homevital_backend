@@ -62,8 +62,15 @@ namespace HomeVital.Repositories.Implementations
             if (oxygenSaturation != null)
             {
                 oxygenSaturation.OxygenSaturationValue = oxygenSaturationInputModel.OxygenSaturationValue;
-                oxygenSaturation.Date = DateTime.UtcNow;
 
+                var oxygenSaturationRange = await _dbContext.OxygenSaturationRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == oxygenSaturation.PatientID);
+
+                if (oxygenSaturationRange != null)
+                {
+                    oxygenSaturationInputModel.Status = CheckOxygenSaturationRange(oxygenSaturationInputModel, oxygenSaturationRange);
+                }
+                oxygenSaturation.Status = oxygenSaturationInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
 

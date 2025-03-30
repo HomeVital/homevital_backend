@@ -54,13 +54,13 @@ namespace HomeVital.Repositories
                     new Patient { Name = "aron", Phone = "123456789", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 }
                 );
             }
-
-
+            
             if (!context.HealthcareWorkers.Any())
             {
                 context.HealthcareWorkers.AddRange(
                     new HealthcareWorker { Name = "John Doe", Phone = "123456789", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
                     new HealthcareWorker { Name = "Jane Smith", Phone = "987654321", Status = "Inactive", TeamIDs = new List<int> { 2, 3 } }
+
                 );
             }
 
@@ -123,68 +123,70 @@ namespace HomeVital.Repositories
             if (!context.Bloodsugars.Any())
             {
                 context.Bloodsugars.AddRange(
-                    new Bloodsugar { PatientID = 1, BloodsugarLevel = 5.5f, Date = DateTime.UtcNow },
-                    new Bloodsugar { PatientID = 2, BloodsugarLevel = 6.2f, Date = DateTime.UtcNow },
-                    new Bloodsugar { PatientID = 3, BloodsugarLevel = 7.5f, Date = DateTime.UtcNow },
-                    new Bloodsugar { PatientID = 4, BloodsugarLevel = 8.2f, Date = DateTime.UtcNow },
-                    new Bloodsugar { PatientID = 5, BloodsugarLevel = 9.5f, Date = DateTime.UtcNow },
-                    new Bloodsugar { PatientID = 6, BloodsugarLevel = 10.2f, Date = DateTime.UtcNow }
+                    new Bloodsugar { PatientID = 1, BloodsugarLevel = 5.5f, Date = DateTime.UtcNow, Status = "Normal" },
+                    new Bloodsugar { PatientID = 2, BloodsugarLevel = 6.2f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new Bloodsugar { PatientID = 3, BloodsugarLevel = 7.5f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new Bloodsugar { PatientID = 4, BloodsugarLevel = 8.2f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new Bloodsugar { PatientID = 5, BloodsugarLevel = 9.5f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new Bloodsugar { PatientID = 6, BloodsugarLevel = 10.2f, Date = DateTime.UtcNow , Status = "Normal"}
                 );
             }
 
             if (!context.BloodPressures.Any())
             {
                 context.BloodPressures.AddRange(
-                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Standing", Pulse = 75},
-                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80},
-                    new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 95, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 85},
-                    new BloodPressure { PatientID = 5, Systolic = 160, Diastolic = 100, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Standing", Pulse = 90 },
-                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95},
-                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Right", BodyPosition = "Standing", Pulse = 75},
-                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80}
+                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 75, Status = "Raised"},
+                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Critical"},
+                    new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 95, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 85, Status = "Critical"},
+                    new BloodPressure { PatientID = 5, Systolic = 160, Diastolic = 100, Date = DateTime.UtcNow, MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 90 , Status = "Critical"},
+                    new BloodPressure { PatientID = 6, Systolic = 170, Diastolic = 105, Date = DateTime.UtcNow, MeasureHand = "Right", BodyPosition = "Laying", Pulse = 95, Status = "Critical"},
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 85, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 75, Status = "Critical"},
+                    new BloodPressure { PatientID = 3, Systolic = 140, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 80, Status = "Critical"}
                 );
             }
 
             if (!context.BodyWeights.Any())
             {
                 context.BodyWeights.AddRange(
-                    new BodyWeight { PatientID = 1, Weight = 70.5f, Date = DateTime.UtcNow },
-                    new BodyWeight { PatientID = 2, Weight = 75.5f, Date = DateTime.UtcNow },
-                    new BodyWeight { PatientID = 3, Weight = 80.5f, Date = DateTime.UtcNow },
-                    new BodyWeight { PatientID = 4, Weight = 85.5f, Date = DateTime.UtcNow },
-                    new BodyWeight { PatientID = 5, Weight = 90.5f, Date = DateTime.UtcNow },
-                    new BodyWeight { PatientID = 6, Weight = 95.5f, Date = DateTime.UtcNow }
+                    new BodyWeight { PatientID = 1, Weight = 70.5f, Date = DateTime.UtcNow, Status = "Normal" },
+                    new BodyWeight { PatientID = 2, Weight = 75.5f, Date = DateTime.UtcNow, Status = "Normal" },
+                    new BodyWeight { PatientID = 3, Weight = 80.5f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new BodyWeight { PatientID = 4, Weight = 85.5f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new BodyWeight { PatientID = 5, Weight = 90.5f, Date = DateTime.UtcNow , Status = "Normal"},
+                    new BodyWeight { PatientID = 6, Weight = 95.5f, Date = DateTime.UtcNow , Status = "Normal"}
                 );
             }
 
             if (!context.BodyTemperatures.Any())
             {
                 context.BodyTemperatures.AddRange(
-                    new BodyTemperature { PatientID = 1, Temperature = 36.5f, Date = DateTime.UtcNow },
-                    new BodyTemperature { PatientID = 2, Temperature = 37.5f, Date = DateTime.UtcNow },
-                    new BodyTemperature { PatientID = 3, Temperature = 38.5f, Date = DateTime.UtcNow },
-                    new BodyTemperature { PatientID = 4, Temperature = 39.5f, Date = DateTime.UtcNow },
-                    new BodyTemperature { PatientID = 5, Temperature = 40.5f, Date = DateTime.UtcNow },
-                    new BodyTemperature { PatientID = 6, Temperature = 41.5f, Date = DateTime.UtcNow }
+                    new BodyTemperature { PatientID = 1, Temperature = 36.5f, Date = DateTime.UtcNow, Status = "Normal" },
+                    new BodyTemperature { PatientID = 2, Temperature = 37.5f, Date = DateTime.UtcNow, Status = "Raised"},
+                    new BodyTemperature { PatientID = 3, Temperature = 38.5f, Date = DateTime.UtcNow, Status = "Critical"},
+                    new BodyTemperature { PatientID = 4, Temperature = 39.5f, Date = DateTime.UtcNow, Status = "Critical"},
+                    new BodyTemperature { PatientID = 5, Temperature = 40.5f, Date = DateTime.UtcNow, Status = "Critical"},
+                    new BodyTemperature { PatientID = 6, Temperature = 41.5f, Date = DateTime.UtcNow, Status = "Critical"}
                 );
             }
 
             if (!context.OxygenSaturations.Any())
             {
                 context.OxygenSaturations.AddRange(
-                    new OxygenSaturation { PatientID = 1, OxygenSaturationValue = 98, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 2, OxygenSaturationValue = 97, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 3, OxygenSaturationValue = 96, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 4, OxygenSaturationValue = 95, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 5, OxygenSaturationValue = 94, Date = DateTime.UtcNow },
-                    new OxygenSaturation { PatientID = 6, OxygenSaturationValue = 93, Date = DateTime.UtcNow }
+                    new OxygenSaturation { PatientID = 1, OxygenSaturationValue = 98, Date = DateTime.UtcNow , Status = "Normal"},
+                    new OxygenSaturation { PatientID = 2, OxygenSaturationValue = 97, Date = DateTime.UtcNow , Status = "Normal"},
+                    new OxygenSaturation { PatientID = 3, OxygenSaturationValue = 95, Date = DateTime.UtcNow , Status = "Normal"},
+                    new OxygenSaturation { PatientID = 4, OxygenSaturationValue = 92, Date = DateTime.UtcNow , Status = "High"},
+                    new OxygenSaturation { PatientID = 5, OxygenSaturationValue = 90, Date = DateTime.UtcNow , Status = "Critical"},
+                    new OxygenSaturation { PatientID = 6, OxygenSaturationValue = 88, Date = DateTime.UtcNow , Status = "Critical"}
                 );
             }
 
-           
             
+
+
+
 
             context.SaveChanges();
         }
