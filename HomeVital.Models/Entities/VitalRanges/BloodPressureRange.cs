@@ -22,15 +22,15 @@ namespace HomeVital.Models.Entities
 
         // 4 Systolic 140 and above and Diastolic 90 and above is critical Stage 2 Hypertension
         public int SystolicCriticalMin { get; set; } = 140;
-        public int SystolicCriticalMax { get; set; } = 1000;
+        public int SystolicCriticalMax { get; set; } = 140;
         public int DiastolicCriticalMin { get; set; } = 90;
-        public int DiastolicCriticalMax { get; set; } = 1000;
+        public int DiastolicCriticalMax { get; set; } = 90;
 
         // 5 Systolic 180 and above and Diastolic 120 and above is critical Stage 3 Hypertensive Crisis
         public int SystolicCriticalStage3Min { get; set; } = 180;
-        public int SystolicCriticalStage3Max { get; set; } = 1000;
+        public int SystolicCriticalStage3Max { get; set; } = 180;
         public int DiastolicCriticalStage3Min { get; set; } = 120;
-        public int DiastolicCriticalStage3Max { get; set; } = 1000;
+        public int DiastolicCriticalStage3Max { get; set; } = 120;
 
     }
 }

@@ -14,7 +14,7 @@ namespace HomeVital.Models.Entities
         public double BloodSugarNotOkMax { get; set; } = 125;
         // 3 over 126  is critical (high)
         public double BloodSugarCriticalMin { get; set; } = 126;
-        public double BloodSugarCriticalMax { get; set; } = 1000;
+        public double BloodSugarCriticalMax { get; set; } = 126;
         // 4 under 80 is not ok (low)
         public double BloodSugarlowMin { get; set; } = 0;
         public double BloodSugarlowMax { get; set; } = 79;
