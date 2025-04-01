@@ -11,5 +11,6 @@ namespace HomeVital.Services.Interfaces
         Task<TeamDto> GetTeamByIdAsync(int id);
         Task<TeamDto> UpdateTeamAsync(int id, TeamInputModel teamInputModel);
         Task DeleteTeamAsync(int id);
+        Task<IEnumerable<TeamDto>> GetAllTeamsAsync();
     }
 }

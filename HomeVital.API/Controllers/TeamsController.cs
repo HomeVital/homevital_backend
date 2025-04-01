@@ -44,6 +44,17 @@ namespace HomeVital.API.Controllers
             return Ok(team);
         }
 
+        [HttpGet] // Get all teams
+        public async Task<ActionResult<IEnumerable<TeamDto>>> GetAllTeamsAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new System.ArgumentException("Invalid input model");
+            }
+            var teams = await _teamService.GetAllTeamsAsync();
+            return Ok(teams);
+        }
+
         [HttpPatch("{id}")] // Update a team by ID
         public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
         {

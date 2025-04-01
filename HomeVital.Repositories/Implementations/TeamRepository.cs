@@ -55,5 +55,10 @@ namespace HomeVital.Repositories.Implementations
             }
         }
 
+        public async Task<IEnumerable<Team>> GetAllTeamsAsync()
+        {
+            return await _dbContext.Teams.ToListAsync();
+        }
+
     }
 }
