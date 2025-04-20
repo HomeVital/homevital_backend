@@ -25,6 +25,7 @@ namespace HomeVital.Repositories.dbContext
         public DbSet<BloodSugarRange> BloodSugarRanges { get; set; }
         public DbSet<OxygenSaturationRange> OxygenSaturationRanges { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<PatientPlan> PatientPlans { get; set; }
 
         
 

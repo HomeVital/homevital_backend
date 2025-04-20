@@ -40,6 +40,8 @@ builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
 builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
 builder.Services.AddTransient<ITeamService, TeamService>();
 builder.Services.AddTransient<ITeamRepository, TeamRepository>();
+builder.Services.AddTransient<IPatientPlanService, PatientPlanService>();
+builder.Services.AddTransient<IPatientPlanRepository, PatientPlanRepository>();
 
 
 var environment = Environment.GetEnvironmentVariable("AZURE_ENV") ?? "LocalDevelopment";
