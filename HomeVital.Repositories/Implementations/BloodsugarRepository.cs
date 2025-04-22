@@ -5,6 +5,7 @@ using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Enums;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -32,6 +33,17 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<BloodsugarDto> CreateBloodsugar(int patientId, BloodsugarInputModel bloodsugarInputModel)
         {
+            var vitalRangeBloodsugar = await _dbContext.BloodSugarRanges
+                .FirstOrDefaultAsync(b => b.PatientID == patientId);
+
+            if (vitalRangeBloodsugar == null)
+            {
+                throw new System.ArgumentException("Bloodsugar range not found");
+            }
+
+            // check blood sugar range
+            bloodsugarInputModel.Status = CheckBloodSugarRange(bloodsugarInputModel, vitalRangeBloodsugar);
+
             var bloodsugar = _mapper.Map<Bloodsugar>(bloodsugarInputModel);
             bloodsugar.PatientID = patientId;
             bloodsugar.Date = DateTime.UtcNow;
@@ -50,10 +62,19 @@ namespace HomeVital.Repositories.Implementations
             if (bloodsugar != null)
             {
                 bloodsugar.BloodsugarLevel = bloodsugarInputModel.BloodsugarLevel;
-                bloodsugar.Date = DateTime.UtcNow;
+                
+                var vitalRangeBloodsugar = await _dbContext.BloodSugarRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == bloodsugar.PatientID);
 
+                if (vitalRangeBloodsugar != null)
+                {
+                    bloodsugarInputModel.Status = CheckBloodSugarRange(bloodsugarInputModel, vitalRangeBloodsugar);
+                }
+
+                bloodsugar.Status = bloodsugarInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
+
 
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
@@ -74,7 +95,36 @@ namespace HomeVital.Repositories.Implementations
             return _mapper.Map<BloodsugarDto>(bloodsugar);
         }
 
-
+        private static string CheckBloodSugarRange(BloodsugarInputModel bloodsugarInputModel, BloodSugarRange vitalRangeBloodsugar)
+        {
+            // check blood sugar range
+            //  1 80 to 100 is good (Good)
+            if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarGoodMin 
+            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarGoodMax)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            // 2 101 to 125 is not ok (elevated)
+            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarNotOkMin 
+            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarNotOkMax)
+            {
+                return VitalStatus.Raised.ToString();
+            }
+            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarCriticalMin 
+            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarCriticalMax)
+            {
+                return VitalStatus.High.ToString();
+            }
+            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarlowMin 
+            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarlowMax)
+            {
+                return VitalStatus.Critical.ToString();
+            }
+            else
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+        }
 
     }
 }

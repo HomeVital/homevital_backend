@@ -4,6 +4,6 @@ namespace HomeVital.Models.InputModels
     {
         public int PatientID { get; set; }
         public float Weight { get; set; }
-        // public DateTime Date { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

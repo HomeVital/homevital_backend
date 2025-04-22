@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    [Migration("20250317200404_merge")]
-    partial class Merge
+    [Migration("20250326222839_Status_Measurements")]
+    partial class Status_Measurements
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,10 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("ID");
 
                     b.HasIndex("MeasurementID");
@@ -223,6 +227,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Temperature")
                         .HasColumnType("real");
@@ -287,6 +295,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
@@ -383,6 +395,10 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 

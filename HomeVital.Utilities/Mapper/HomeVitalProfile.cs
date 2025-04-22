@@ -51,6 +51,8 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<OxygenSaturationRange, OxygenSaturationRangeDto>();
             CreateMap<OxygenSaturationRangeInputModel, OxygenSaturationRange>();
             
+            CreateMap<Team, TeamDto>();
+            CreateMap<TeamInputModel, Team>();
             }
     }
 }

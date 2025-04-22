@@ -42,6 +42,8 @@ builder.Services.AddTransient<IOxygenSaturationService, OxygenSaturationService>
 builder.Services.AddTransient<IOxygenSaturationRepository, OxygenSaturationRepository>();
 builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
 builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
+builder.Services.AddTransient<ITeamService, TeamService>();
+builder.Services.AddTransient<ITeamRepository, TeamRepository>();
 
 builder.Services.AddSingleton<ITokenService, TokenService>();
 

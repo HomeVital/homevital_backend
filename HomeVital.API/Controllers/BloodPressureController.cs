@@ -5,8 +5,6 @@ using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 
 
-
-
 namespace HomeVital.API.Controllers
 {
     // [Authorize]

@@ -6,7 +6,7 @@ using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
-
+using HomeVital.Models.Enums;
 
 
 namespace HomeVital.Repositories.Implementations;
@@ -37,6 +37,16 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
     {
+        var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
+            .FirstOrDefaultAsync(b => b.PatientID == patientId);
+
+        if (vitalRangeBloodpressure == null)
+        {
+            throw new System.ArgumentException("BloodPressure range not found");
+        }
+        // check blood pressure range
+        bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
+
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
         bloodPressure.Date = DateTime.UtcNow;
@@ -55,13 +65,20 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         if (bloodPressure != null)
         {
+            // check blood pressure range using CheckBloodPressureRange
+            var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
+                .FirstOrDefaultAsync(b => b.PatientID == bloodPressure.PatientID);
 
+            if (vitalRangeBloodpressure != null)
+            {
+                bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
+            }
+            
             bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
             bloodPressure.Systolic = bloodPressureInputModel.Systolic;
             bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
             bloodPressure.Pulse = bloodPressureInputModel.Pulse;
             bloodPressure.Status = bloodPressureInputModel.Status;
-            bloodPressure.Date = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();
         }
@@ -93,7 +110,50 @@ public class BloodPressureRepository : IBloodPressureRepository
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
-
+    // private function to check blood pressure range
+    private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange vitalRangeBloodpressure)
+    {
+        // SYS < 120 and DIA < 80
+        if (bloodPressureInputModel.Systolic < vitalRangeBloodpressure.SystolicGoodMax 
+        && bloodPressureInputModel.Diastolic < vitalRangeBloodpressure.DiastolicGoodMax
+        )
+        {
+            return VitalStatus.Normal.ToString();
+        }
+        // SYS 120-129 and DIA < 80
+        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicOkMin 
+        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicOkMax 
+        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicOkMax)
+        {
+            return  VitalStatus.Raised.ToString();
+        }
+        // SYS 130-139 or DIA 80-89
+        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicNotOkMin 
+        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicNotOkMax 
+        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicNotOkMin 
+        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicNotOkMax)
+        {
+            return VitalStatus.High.ToString();
+        }
+        // SYS > 140 - SystolicCriticalStage3Min or DIA > 90 - DiastolicCriticalStage3Min
+        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicCriticalMin
+        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicCriticalStage3Min
+        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicCriticalMin
+        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicCriticalStage3Min)
+        {
+            return VitalStatus.Critical.ToString();
+        }
+        // SYS > 180  or DIA > 120 
+        else if (bloodPressureInputModel.Systolic > vitalRangeBloodpressure.SystolicCriticalStage3Min
+        && bloodPressureInputModel.Diastolic > vitalRangeBloodpressure.DiastolicCriticalStage3Min)
+        {
+            return VitalStatus.CriticalHigh.ToString();
+        }
+        else
+        {
+            return VitalStatus.Invalid.ToString();
+        }
+    }
 
 
 }

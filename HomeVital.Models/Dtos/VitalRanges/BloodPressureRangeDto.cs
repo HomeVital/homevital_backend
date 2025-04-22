@@ -7,8 +7,8 @@ namespace HomeVital.Models.Dtos
 
         // Blood Pressure
         // 1 Systolic less than 120 and Diastolic less than 80 is good
-        public double SystolicGood { get; set; } = 120;
-        public double DiastolicGood { get; set; } = 80;
+        public double SystolicGoodMax { get; set; } = 120;
+        public double DiastolicGoodMax { get; set; } = 80;
         // 2 Systolic 120 - 129 and Diastolic less than 80 is ok
         public double SystolicOkMin { get; set; } = 120;
         public double SystolicOkMax { get; set; } = 129;

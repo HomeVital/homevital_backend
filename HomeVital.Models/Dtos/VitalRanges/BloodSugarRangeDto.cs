@@ -21,3 +21,29 @@ namespace HomeVital.Models.Dtos
 
     }
 }
+
+
+
+// namespace HomeVital.Models.Dtos
+// {
+//     public class BloodSugarRangeDto
+//     {
+//         public int Id { get; set; }
+//         public int PatientID { get; set; }
+
+//         public BloodSugarRange BloodSugar { get; set; } = new BloodSugarRange();
+
+//         public class BloodSugarRange
+//         {
+//             public Range Normal { get; set; } = new Range();
+//             public Range Raised { get; set; } = new Range();
+//             public double High { get; set; }
+
+//             public class Range
+//             {
+//                 public double Min { get; set; }
+//                 public double Max { get; set; }
+//             }
+//         }
+//     }
+// }

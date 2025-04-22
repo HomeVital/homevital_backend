@@ -5,6 +5,7 @@ using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Enums;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -31,6 +32,18 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<BodyTemperatureDto> CreateBodyTemperature(int patientId, BodyTemperatureInputModel bodyTemperatureInputModel)
         {
+            // check body temperature range
+
+            var bodyTemperatureRange = await _dbContext.BodyTemperatureRanges
+                .FirstOrDefaultAsync(b => b.PatientID == patientId);
+
+            if (bodyTemperatureRange == null)
+            {
+                throw new System.ArgumentException("Body temperature range not found");
+            }
+
+            bodyTemperatureInputModel.Status = CheckBodyTemperatureRange(bodyTemperatureInputModel, bodyTemperatureRange); 
+
             var bodyTemperature = _mapper.Map<BodyTemperature>(bodyTemperatureInputModel);
             bodyTemperature.PatientID = patientId;
             bodyTemperature.Date = DateTime.UtcNow;
@@ -49,8 +62,16 @@ namespace HomeVital.Repositories.Implementations
             if (bodyTemperature != null)
             {
                 bodyTemperature.Temperature = bodyTemperatureInputModel.Temperature;
-                bodyTemperature.Date = DateTime.UtcNow;
 
+                var bodyTemperatureRange = await _dbContext.BodyTemperatureRanges
+                    .FirstOrDefaultAsync(b => b.PatientID == bodyTemperature.PatientID);
+
+                if (bodyTemperatureRange != null)
+                {
+                    bodyTemperatureInputModel.Status = CheckBodyTemperatureRange(bodyTemperatureInputModel, bodyTemperatureRange);
+                }
+
+                bodyTemperature.Status = bodyTemperatureInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
 
@@ -69,6 +90,34 @@ namespace HomeVital.Repositories.Implementations
             }
 
             return _mapper.Map<BodyTemperatureDto>(bodyTemperature);
+        }
+
+        private static string CheckBodyTemperatureRange(BodyTemperatureInputModel bodyTemperatureInputModel, BodyTemperatureRange bodyTemperatureRange)
+        {
+            if (bodyTemperatureInputModel.Temperature >= bodyTemperatureRange.TemperatureGoodMin
+                && bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureGoodMax)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            // 
+            else if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureUnderAverage)
+            {
+                return  VitalStatus.Raised.ToString();
+            }
+            else if (bodyTemperatureInputModel.Temperature >= bodyTemperatureRange.TemperatureNotOkMin
+                && bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureNotOkMax)
+            {
+                return VitalStatus.Raised.ToString();
+            }
+            else if (bodyTemperatureInputModel.Temperature > bodyTemperatureRange.TemperatureCriticalMin
+                && bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureCriticalMax)
+            {
+                return VitalStatus.Critical.ToString();
+            }
+            else
+            {
+                return VitalStatus.Raised.ToString();
+            }
         }
     }
 }
