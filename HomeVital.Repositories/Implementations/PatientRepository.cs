@@ -26,6 +26,15 @@ public class PatientRepository : IPatientRepository
         _dbContext.Patients.Add(newPatient);
         await _dbContext.SaveChangesAsync();
 
+        // init UserID for patient
+        var newUser = new User
+        {
+            PatientID = newPatient.ID,
+            Kennitala = patient.Kennitala
+        };
+        _dbContext.Users.Add(newUser);
+        await _dbContext.SaveChangesAsync();
+
         // init patients measurements vital ranges
         var newVitalRangeBodyTemp = new BodyTemperatureRange
         {
