@@ -48,7 +48,14 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         // add date to when the healthcare worker was created???
         // newHealthcareWorker.DateCreated = DateTime.UtcNow;
 
-
+        // init UserID for healthcare worker
+        var newUser = new User
+        {
+            HealthcareWorkerID = newHealthcareWorker.ID,
+            Kennitala = healthcareWorker.Kennitala
+        };
+        _dbContext.Users.Add(newUser);
+        await _dbContext.SaveChangesAsync();
 
         await _dbContext.HealthcareWorkers.AddAsync(newHealthcareWorker);
         await _dbContext.SaveChangesAsync();

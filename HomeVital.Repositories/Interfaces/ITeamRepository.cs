@@ -9,5 +9,6 @@ namespace HomeVital.Repositories.Interfaces
         Task<Team> GetTeamByIdAsync(int id);
         Task<Team> UpdateTeamAsync(Team team);
         Task DeleteTeamAsync(int id);
+        Task<IEnumerable<Team>> GetAllTeamsAsync();
     }
 }

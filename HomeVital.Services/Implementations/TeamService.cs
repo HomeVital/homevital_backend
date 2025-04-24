@@ -127,6 +127,11 @@ namespace HomeVital.Services.Implementations
             await _teamRepository.DeleteTeamAsync(id);
         }
 
+        public async Task<IEnumerable<TeamDto>> GetAllTeamsAsync()
+        {
+            var teams = await _teamRepository.GetAllTeamsAsync();
+            return _mapper.Map<IEnumerable<TeamDto>>(teams);
+        }
 
     }
 }
