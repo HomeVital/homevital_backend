@@ -8,5 +8,6 @@ namespace HomeVital.Models.InputModels
         // TeamID is a list of team ids
         public List<int> TeamIDs { get; set; } = new List<int>();
         public string Status { get; set; } = string.Empty;
+        public string Kennitala { get; set; } = string.Empty;
     }
 }
