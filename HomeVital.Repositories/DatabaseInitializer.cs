@@ -199,24 +199,24 @@ namespace HomeVital.Repositories
             if (!context.BodyWeights.Any())
             {
                 context.BodyWeights.AddRange(
-                    new BodyWeight { PatientID = 1, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-475), Status = "Normal" },
-                    new BodyWeight { PatientID = 1, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-7), Status = "Raised" },
-                    new BodyWeight { PatientID = 1, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-754), Status = "High" },
-                    new BodyWeight { PatientID = 2, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-3475), Status = "Normal" },
-                    new BodyWeight { PatientID = 2, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-277), Status = "Raised" },
-                    new BodyWeight { PatientID = 2, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-775), Status = "High" },
-                    new BodyWeight { PatientID = 3, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-578), Status = "Normal" },
-                    new BodyWeight { PatientID = 3, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-65), Status = "Raised" },
-                    new BodyWeight { PatientID = 3, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-76), Status = "High" },
-                    new BodyWeight { PatientID = 4, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-457), Status = "Normal" },
-                    new BodyWeight { PatientID = 4, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-85), Status = "Raised" },
-                    new BodyWeight { PatientID = 4, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-7), Status = "High" },
-                    new BodyWeight { PatientID = 5, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
-                    new BodyWeight { PatientID = 5, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-66), Status = "Raised" },
-                    new BodyWeight { PatientID = 5, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-46), Status = "High" },
-                    new BodyWeight { PatientID = 6, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
-                    new BodyWeight { PatientID = 6, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-44), Status = "Raised" },
-                    new BodyWeight { PatientID = 6, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-634), Status = "High" }
+                    new BodyWeight { PatientID = 1, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-475), Status = "Normal" },
+                    new BodyWeight { PatientID = 1, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-7), Status = "Raised" },
+                    new BodyWeight { PatientID = 1, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-754), Status = "High" },
+                    new BodyWeight { PatientID = 2, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-3475), Status = "Normal" },
+                    new BodyWeight { PatientID = 2, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-277), Status = "Raised" },
+                    new BodyWeight { PatientID = 2, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-775), Status = "High" },
+                    new BodyWeight { PatientID = 3, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-578), Status = "Normal" },
+                    new BodyWeight { PatientID = 3, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-65), Status = "Raised" },
+                    new BodyWeight { PatientID = 3, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-76), Status = "High" },
+                    new BodyWeight { PatientID = 4, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-457), Status = "Normal" },
+                    new BodyWeight { PatientID = 4, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-85), Status = "Raised" },
+                    new BodyWeight { PatientID = 4, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-7), Status = "High" },
+                    new BodyWeight { PatientID = 5, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
+                    new BodyWeight { PatientID = 5, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-66), Status = "Raised" },
+                    new BodyWeight { PatientID = 5, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-46), Status = "High" },
+                    new BodyWeight { PatientID = 6, Weight = (decimal)70.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
+                    new BodyWeight { PatientID = 6, Weight = (decimal)80.5f, Date = DateTime.UtcNow.AddDays(-44), Status = "Raised" },
+                    new BodyWeight { PatientID = 6, Weight = (decimal)90.5f, Date = DateTime.UtcNow.AddDays(-634), Status = "High" }
                 );
             }
 
