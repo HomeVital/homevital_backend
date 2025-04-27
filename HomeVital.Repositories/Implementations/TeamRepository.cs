@@ -57,7 +57,13 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
-            return await _dbContext.Teams.ToListAsync();
+            // Include related entities if needed, e.g., HealthcareWorkers
+
+            return await _dbContext.Teams
+                .Include(t => t.HealthcareWorkers)
+                .Include(t => t.Patients)
+                .ToListAsync();
+            
         }
 
     }

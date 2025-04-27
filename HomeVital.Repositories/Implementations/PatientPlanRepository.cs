@@ -28,18 +28,10 @@ namespace HomeVital.Repositories.Implementations
                 EndDate = patientPlanInputModel.EndDate,
                 PatientID = patientId,
                 Instructions = patientPlanInputModel.Instructions,
-                Status = MeasurementPlanStatus.Active,
                 CreatedBy = "System", // Replace with actual user ID or name
                 CreatedDate = DateTime.UtcNow,
                 UpdatedBy = "System", // Replace with actual user ID or name
                 UpdatedDate = DateTime.UtcNow,
-
-                MeasurementPlans = patientPlanInputModel.MeasurementPlans.Select(mp => new MeasurementPlan
-                {
-                    MeasurementType = mp.MeasurementType,
-                    MeasurementFrequency = mp.MeasurementFrequency,
-                    MeasurementSchedule = mp.MeasurementSchedule,
-                }).ToList()
 
             };
 

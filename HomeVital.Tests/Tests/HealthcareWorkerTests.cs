@@ -295,7 +295,10 @@ namespace HomeVital.Tests
                 Name = "Test Worker",
                 Phone = "123456789",
                 Status = "Active",
-                TeamID = 1
+                Teams = new List<Team>
+                {
+                    new Team { ID = 1 }
+                }
             };
             var content = new StringContent(JsonConvert.SerializeObject(newWorker), System.Text.Encoding.UTF8, "application/json");
 
@@ -335,7 +338,10 @@ namespace HomeVital.Tests
                 Name = "Updated Worker",
                 Phone = "987654321",
                 Status = "Inactive",
-                TeamID = 2
+                Teams = new List<Team>
+                {
+                    new Team { ID = 2 }
+                }
             };
             var content = new StringContent(JsonConvert.SerializeObject(updatedWorker), System.Text.Encoding.UTF8, "application/json");
 

@@ -20,7 +20,11 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
-        var healthcareWorkers = await _dbContext.HealthcareWorkers.ToListAsync();
+        // get all healthcare workers and their teams
+        var healthcareWorkers = await _dbContext.HealthcareWorkers
+            .Include(h => h.Teams)
+            .ToListAsync();
+
         return _mapper.Map<IEnumerable<HealthcareWorkerDto>>(healthcareWorkers);
     }
 
@@ -70,7 +74,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         {
             healthcareWorkerToUpdate.Name = healthcareWorker.Name;
             healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
-            healthcareWorkerToUpdate.TeamIDs = healthcareWorker.TeamIDs;
+            healthcareWorkerToUpdate.Teams = healthcareWorker.TeamIDs.Select(teamId => new Team { ID = teamId }).ToList();
             healthcareWorkerToUpdate.Status = healthcareWorker.Status;
             await _dbContext.SaveChangesAsync();
         }

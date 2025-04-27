@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250424141356_UpdateMeasurementPlan")]
+    partial class UpdateMeasurementPlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,21 +25,6 @@ namespace HomeVital.Repositories.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("HealthcareWorkerTeam", b =>
-                {
-                    b.Property<int>("HealthcareWorkersID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TeamsID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("HealthcareWorkersID", "TeamsID");
-
-                    b.HasIndex("TeamsID");
-
-                    b.ToTable("HealthcareWorkerTeams", (string)null);
-                });
 
             modelBuilder.Entity("HomeVital.Models.Entities.BloodPressure", b =>
                 {
@@ -60,6 +48,9 @@ namespace HomeVital.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("MeasurementID")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -75,7 +66,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PatientID");
+                    b.HasIndex("MeasurementID");
 
                     b.ToTable("BloodPressures");
                 });
@@ -204,6 +195,9 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("MeasurementID")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -213,7 +207,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PatientID");
+                    b.HasIndex("MeasurementID");
 
                     b.ToTable("Bloodsugars");
                 });
@@ -229,6 +223,9 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("MeasurementID")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -241,7 +238,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PatientID");
+                    b.HasIndex("MeasurementID");
 
                     b.ToTable("BodyTemperatures");
                 });
@@ -294,6 +291,9 @@ namespace HomeVital.Repositories.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("MeasurementID")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PatientID")
                         .HasColumnType("integer");
 
@@ -306,7 +306,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PatientID");
+                    b.HasIndex("MeasurementID");
 
                     b.ToTable("BodyWeights");
                 });
@@ -356,9 +356,31 @@ namespace HomeVital.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<List<int>>("TeamIDs")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
                     b.HasKey("ID");
 
                     b.ToTable("HealthcareWorkers");
+                });
+
+            modelBuilder.Entity("HomeVital.Models.Entities.Measurement", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("PatientID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PatientID");
+
+                    b.ToTable("Measurements");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.MeasurementPlan", b =>
@@ -408,8 +430,6 @@ namespace HomeVital.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PatientID");
 
                     b.ToTable("OxygenSaturations");
                 });
@@ -480,8 +500,6 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TeamID");
-
                     b.ToTable("Patients");
                 });
 
@@ -547,6 +565,14 @@ namespace HomeVital.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<List<int>>("PatientIDs")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
+                    b.Property<List<int>>("WorkerIDs")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
                     b.HasKey("ID");
 
                     b.ToTable("Teams");
@@ -578,58 +604,38 @@ namespace HomeVital.Repositories.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HealthcareWorkerTeam", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.HealthcareWorker", null)
-                        .WithMany()
-                        .HasForeignKey("HealthcareWorkersID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HomeVital.Models.Entities.Team", null)
-                        .WithMany()
-                        .HasForeignKey("TeamsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HomeVital.Models.Entities.BloodPressure", b =>
                 {
-                    b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("BloodPressures")
-                        .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
+                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
+                        .WithMany("BloodPressure")
+                        .HasForeignKey("MeasurementID");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.Bloodsugar", b =>
                 {
-                    b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("Bloodsugars")
-                        .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
+                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
+                        .WithMany("BloodSugar")
+                        .HasForeignKey("MeasurementID");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.BodyTemperature", b =>
                 {
-                    b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("BodyTemperatures")
-                        .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
+                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
+                        .WithMany("BodyTemperature")
+                        .HasForeignKey("MeasurementID");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.BodyWeight", b =>
                 {
+                    b.HasOne("HomeVital.Models.Entities.Measurement", null)
+                        .WithMany("BodyWeight")
+                        .HasForeignKey("MeasurementID");
+                });
+
+            modelBuilder.Entity("HomeVital.Models.Entities.Measurement", b =>
+                {
                     b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("BodyWeights")
+                        .WithMany()
                         .HasForeignKey("PatientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -648,32 +654,10 @@ namespace HomeVital.Repositories.Migrations
                     b.Navigation("PatientPlan");
                 });
 
-            modelBuilder.Entity("HomeVital.Models.Entities.OxygenSaturation", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("OxygenSaturations")
-                        .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.Patient", b =>
-                {
-                    b.HasOne("HomeVital.Models.Entities.Team", "Team")
-                        .WithMany("Patients")
-                        .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("HomeVital.Models.Entities.PatientPlan", b =>
                 {
                     b.HasOne("HomeVital.Models.Entities.Patient", "Patient")
-                        .WithMany("PatientPlans")
+                        .WithMany()
                         .HasForeignKey("PatientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -681,29 +665,20 @@ namespace HomeVital.Repositories.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HomeVital.Models.Entities.Patient", b =>
+            modelBuilder.Entity("HomeVital.Models.Entities.Measurement", b =>
                 {
-                    b.Navigation("BloodPressures");
+                    b.Navigation("BloodPressure");
 
-                    b.Navigation("Bloodsugars");
+                    b.Navigation("BloodSugar");
 
-                    b.Navigation("BodyTemperatures");
+                    b.Navigation("BodyTemperature");
 
-                    b.Navigation("BodyWeights");
-
-                    b.Navigation("OxygenSaturations");
-
-                    b.Navigation("PatientPlans");
+                    b.Navigation("BodyWeight");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.PatientPlan", b =>
                 {
                     b.Navigation("MeasurementPlans");
-                });
-
-            modelBuilder.Entity("HomeVital.Models.Entities.Team", b =>
-                {
-                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

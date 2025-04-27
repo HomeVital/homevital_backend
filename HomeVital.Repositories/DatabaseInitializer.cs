@@ -17,17 +17,16 @@ namespace HomeVital.Repositories
 
             // // Reapply migrations to recreate the tables
             context.Database.Migrate();
-
             if (!context.Teams.Any())
             {
                 context.Teams.AddRange(
-                    new Team { Name = "Team A" , WorkerIDs = new List<int> { 1 }, PatientIDs = new List<int> { 1, 2 } },
-                    new Team { Name = "Team B" , WorkerIDs = new List<int> { 2 }, PatientIDs = new List<int> { 3, 4 } },
-                    new Team { Name = "Team C" , WorkerIDs = new List<int> { 1, 2 }, PatientIDs = new List<int> { 5, 6 } }
+                    new Team { ID = 1, Name = "Team A" },
+                    new Team { ID = 2, Name = "Team B" },
+                    new Team { ID = 3, Name = "Team C" }
                 );
                 context.SaveChanges();
             }
-
+           
             // 1234567890
             // 1234561234
             // 6543214321
@@ -55,25 +54,43 @@ namespace HomeVital.Repositories
             {
                 context.Patients.AddRange(
                     new Patient { Name = "Þórir Gunnar Valgeirsson", Phone = "1234567", Status = "Active", Address = "123 Main St", TeamID = 1 },
-                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "1234567", Status = "Inactive", Address = "456 Elm St", TeamID = 1 },
-                    new Patient { Name = "Aron Ingi Jónsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
-                    new Patient { Name = "Sindri Þór Guðmundsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
-                    new Patient { Name = "Sturla Emil Sturluson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 },
+                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "1234567", Status = "Inactive", Address = "456 Elm St", TeamID = 2 },
+                    new Patient { Name = "Aron Ingi Jónsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 },
+                    new Patient { Name = "Sindri Þór Guðmundsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
+                    new Patient { Name = "Sturla Emil Sturluson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
                     new Patient { Name = "Jón Jónsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 }
                 );
+                context.SaveChanges();
             }
             if (!context.HealthcareWorkers.Any())
             {
-                context.HealthcareWorkers.AddRange(
-                    new HealthcareWorker { Name = "Sigurmundur Davíð", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
-                    new HealthcareWorker { Name = "Freyr Björgvin", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } },
-                    new HealthcareWorker { Name = "Friðleif Eva", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
-                    new HealthcareWorker { Name = "Indiana Sigrún", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } },
-                    new HealthcareWorker { Name = "Sveinveig Guðrún", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
-                    new HealthcareWorker { Name = "Ingvi Ólafur", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } }
+                 // Retrieve teams from the database
+                var teamA = context.Teams.FirstOrDefault(t => t.ID == 1);
+                var teamB = context.Teams.FirstOrDefault(t => t.ID == 2);
+                var teamC = context.Teams.FirstOrDefault(t => t.ID == 3);
 
+                if (teamA == null || teamB == null || teamC == null)
+                {
+                    throw new Exception("Teams must be initialized before adding HealthcareWorkers.");
+                }
+                context.HealthcareWorkers.AddRange(
+                    // new HealthcareWorker { Name = "Sigurmundur Davíð", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
+                    new HealthcareWorker { Name = "Sigurmundur Davíð", Phone = "1234567", Status = "Active", Teams = new List<Team> {teamA, teamC} },
+                    // new HealthcareWorker { Name = "Freyr Björgvin", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } },
+                    new HealthcareWorker { Name = "Freyr Björgvin", Phone = "1234567", Status = "Active",Teams = new List<Team> {teamB, teamC} },
+                    // new HealthcareWorker { Name = "Friðleif Eva", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
+                    new HealthcareWorker { Name = "Friðleif Eva", Phone = "1234567", Status = "Active",Teams = new List<Team> {teamA, teamC}},
+                    // new HealthcareWorker { Name = "Indiana Sigrún", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } },
+                    new HealthcareWorker { Name = "Indiana Sigrún", Phone = "1234567", Status = "Active",Teams = new List<Team> {teamB, teamC} },
+                    // new HealthcareWorker { Name = "Sveinveig Guðrún", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 1, 3 } },
+                    new HealthcareWorker { Name = "Sveinveig Guðrún", Phone = "1234567", Status = "Active",Teams = new List<Team> {teamA, teamC} },
+                    // new HealthcareWorker { Name = "Ingvi Ólafur", Phone = "1234567", Status = "Active", TeamIDs = new List<int> { 2, 3 } },
+                    new HealthcareWorker { Name = "Ingvi Ólafur", Phone = "1234567", Status = "Active",Teams = new List<Team> {teamB, teamC}}
                 );
+                context.SaveChanges();
             }
+            
+
 
             // add the ranges
             if (!context.BloodPressureRanges.Any())
