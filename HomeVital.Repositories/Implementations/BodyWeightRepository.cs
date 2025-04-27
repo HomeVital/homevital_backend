@@ -141,17 +141,17 @@ namespace HomeVital.Repositories.Implementations{
             // Calculate the percentage change
             var percentageChange = (currentWeight - averageWeight) / averageWeight * 100;
 
-            if (percentageChange >= bodyWeightRange.WeightGainPercentageGoodMax)
+            if (percentageChange > bodyWeightRange.WeightGainPercentageGoodMax)
             {
-            return VitalStatus.Critical.ToString();
+                return VitalStatus.Critical.ToString();
             }
-            else if (percentageChange <= bodyWeightRange.WeightLossFluctuationPercentageGood)
+            else if (percentageChange < bodyWeightRange.WeightLossFluctuationPercentageGood)
             {
-            return VitalStatus.Critical.ToString();
+                return VitalStatus.Critical.ToString();
             }
             else
             {
-            return VitalStatus.Normal.ToString();
+                return VitalStatus.Normal.ToString();
             }
         }
 
