@@ -26,6 +26,13 @@ public class PatientRepository : IPatientRepository
         _dbContext.Patients.Add(newPatient);
         await _dbContext.SaveChangesAsync();
 
+        var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patient.TeamID);
+        if (!teamExists)
+        {
+            throw new ArgumentException($"Team with ID {patient.TeamID} does not exist.");
+        }
+
+
         // init UserID for patient
         var newUser = new User
         {
@@ -89,15 +96,43 @@ public class PatientRepository : IPatientRepository
 
     public async Task<PatientDto> DeletePatient(int id)
     {
-        // delete patient
-        var patient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.ID == id);
-        if (patient != null) 
+        // delete patient and all its related data
+
+        var patient = await _dbContext.Patients
+            .Include(p => p.BloodPressures)
+            .Include(p => p.BodyTemperatures)
+            .Include(p => p.Bloodsugars)
+            .Include(p => p.BodyWeights)
+            .Include(p => p.OxygenSaturations)
+            .Include(p => p.PatientPlans)
+            .FirstOrDefaultAsync(p => p.ID == id);
+        if (patient != null)
         {
+            _dbContext.Users.RemoveRange(_dbContext.Users.Where(u => u.PatientID == id));
             _dbContext.Patients.Remove(patient);
+            _dbContext.BodyTemperatures.RemoveRange(_dbContext.BodyTemperatures.Where(bt => bt.PatientID == id));
+            _dbContext.BloodPressures.RemoveRange(_dbContext.BloodPressures.Where(bp => bp.PatientID == id));
+            _dbContext.Bloodsugars.RemoveRange(_dbContext.Bloodsugars.Where(bs => bs.PatientID == id));
+            _dbContext.BodyWeights.RemoveRange(_dbContext.BodyWeights.Where(bw => bw.PatientID == id));
+            _dbContext.OxygenSaturations.RemoveRange(_dbContext.OxygenSaturations.Where(os => os.PatientID == id));
             await _dbContext.SaveChangesAsync();
-        }
-        var patientDto = _mapper.Map<PatientDto>(patient);
-        return patientDto;
+        }   
+
+        // remove all ranges
+        _dbContext.BodyTemperatureRanges.RemoveRange(_dbContext.BodyTemperatureRanges.Where(btr => btr.PatientID == id));
+        
+        _dbContext.BloodPressureRanges.RemoveRange(_dbContext.BloodPressureRanges.Where(bpr => bpr.PatientID == id));
+        _dbContext.BloodSugarRanges.RemoveRange(_dbContext.BloodSugarRanges.Where(bsr => bsr.PatientID == id));
+        _dbContext.BodyWeightRanges.RemoveRange(_dbContext.BodyWeightRanges.Where(bwr => bwr.PatientID == id));
+        _dbContext.OxygenSaturationRanges.RemoveRange(_dbContext.OxygenSaturationRanges.Where(osr => osr.PatientID == id));
+        // remove all plans
+
+        _dbContext.PatientPlans.RemoveRange(_dbContext.PatientPlans.Where(pp => pp.PatientID == id));
+        await _dbContext.SaveChangesAsync();
+
+
+        return _mapper.Map<PatientDto>(patient);
+
     }
 
     public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)

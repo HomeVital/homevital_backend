@@ -36,13 +36,25 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
     {
-        var healthcareWorker = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(x => x.ID == id);
-        if (healthcareWorker != null)
+        // delete healthcare worker by id remove from teams and remove from user
+        var healthcareWorkerToDelete = await _dbContext.HealthcareWorkers
+            .Include(h => h.Teams)
+            .FirstOrDefaultAsync(x => x.ID == id);
+        if (healthcareWorkerToDelete != null)
         {
-            _dbContext.HealthcareWorkers.Remove(healthcareWorker);
+            // remove from teams
+            foreach (var team in healthcareWorkerToDelete.Teams)
+            {
+                team.HealthcareWorkers.Remove(healthcareWorkerToDelete);
+            }
+
+            _dbContext.Users.RemoveRange(_dbContext.Users.Where(u => u.HealthcareWorkerID == id));
+
+            _dbContext.HealthcareWorkers.Remove(healthcareWorkerToDelete);
             await _dbContext.SaveChangesAsync();
         }
-        return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
+
+        return _mapper.Map<HealthcareWorkerDto>(healthcareWorkerToDelete);
     }
 
     public async Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker)

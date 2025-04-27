@@ -124,14 +124,14 @@ namespace HomeVital.Repositories.Implementations{
         {
             // Get the last 30 body weights of the patient
             var bodyWeights = _dbContext.BodyWeights
-            .Where(b => b.PatientID == id)
-            .OrderByDescending(b => b.Date)
-            .Take(30)
-            .ToList();
+                .Where(b => b.PatientID == id)
+                .OrderByDescending(b => b.Date)
+                .Take(30)
+                .ToList();
 
             if (bodyWeights.Count == 0)
             {
-            return VitalStatus.Normal.ToString();
+                return VitalStatus.Normal.ToString();
             }
 
             // Calculate the average weight
@@ -139,19 +139,20 @@ namespace HomeVital.Repositories.Implementations{
             var averageWeight = totalWeight / bodyWeights.Count;
 
             // Calculate the percentage change
-            var percentageChange = (currentWeight - averageWeight) / averageWeight * 100;
+            var percentageChange = ((currentWeight - averageWeight) / averageWeight) * 100;
+        
 
             if (percentageChange >= bodyWeightRange.WeightGainPercentageGoodMax)
             {
-            return VitalStatus.Critical.ToString();
+                return VitalStatus.Critical.ToString();
             }
             else if (percentageChange <= bodyWeightRange.WeightLossFluctuationPercentageGood)
             {
-            return VitalStatus.Critical.ToString();
+                return VitalStatus.Critical.ToString();
             }
             else
             {
-            return VitalStatus.Normal.ToString();
+                return VitalStatus.Normal.ToString();
             }
         }
 

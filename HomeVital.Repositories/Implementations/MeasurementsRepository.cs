@@ -78,7 +78,7 @@ namespace HomeVital.Repositories.Implementations
                 // MeasurementID = bw.ID,
                 MeasurementValues = new MeasurementValues
                 {
-                    Weight = bw.Weight,
+                    Weight = (float?)bw.Weight,
                     Status = bw.Status
                 }
                 ,
@@ -149,7 +149,7 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementDate = bw.Date,
                     MeasurementValues = new MeasurementValues
                     {
-                        Weight = bw.Weight,
+                        Weight = (float?)bw.Weight,
                         Status = bw.Status
                     },
                     
@@ -198,7 +198,7 @@ namespace HomeVital.Repositories.Implementations
             measurements = measurements.OrderByDescending(m => m.MeasurementDate).ToList();
 
             // Assign sequential UIDs
-            for (int i = 0; i < measurements.Count; i++)
+            for (int i = 0; i < measurements.Count(); i++)
             {
                 measurements[i].UID = i + 1;
             }
