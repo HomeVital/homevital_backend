@@ -134,18 +134,42 @@ namespace HomeVital.Repositories.Implementations{
             return VitalStatus.Normal.ToString();
             }
 
-            // Calculate the average weight
-            var totalWeight = bodyWeights.Sum(b => b.Weight);
-            var averageWeight = totalWeight / bodyWeights.Count;
+            // // Calculate the average weight
+            // var totalWeight = bodyWeights.Sum(b => b.Weight);
+            // var averageWeight = totalWeight / bodyWeights.Count;
 
-            // Calculate the percentage change
-            var percentageChange = (currentWeight - averageWeight) / averageWeight * 100;
+            // // Calculate the percentage change
+            // var percentageChange = (currentWeight - averageWeight) / averageWeight * 100;
 
-            if (percentageChange > bodyWeightRange.WeightGainPercentageGoodMax)
+            // calclate the percentage change based on the measured weight 30 days ago
+            var lastBodyWeight = bodyWeights.LastOrDefault();
+            if (lastBodyWeight == null)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            var mostreRecentBodyWeight = bodyWeights.FirstOrDefault();
+            if (mostreRecentBodyWeight == null)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            var percentageChange30day = (currentWeight - lastBodyWeight.Weight) / lastBodyWeight.Weight * 100;
+            var percentageChangerecent = (currentWeight - mostreRecentBodyWeight.Weight) / mostreRecentBodyWeight.Weight * 100;
+
+            // Check if the percentage change is within the range of 5% increase or decrease
+
+            if (percentageChange30day > bodyWeightRange.WeightGainPercentageGoodMax)
             {
                 return VitalStatus.Critical.ToString();
             }
-            else if (percentageChange < bodyWeightRange.WeightLossFluctuationPercentageGood)
+            else if (percentageChange30day < bodyWeightRange.WeightLossFluctuationPercentageGood)
+            {
+                return VitalStatus.Critical.ToString();
+            }
+            else if (percentageChangerecent > bodyWeightRange.WeightGainPercentageGoodMax)
+            {
+                return VitalStatus.Critical.ToString();
+            }
+            else if (percentageChangerecent < bodyWeightRange.WeightLossFluctuationPercentageGood)
             {
                 return VitalStatus.Critical.ToString();
             }
@@ -153,6 +177,7 @@ namespace HomeVital.Repositories.Implementations{
             {
                 return VitalStatus.Normal.ToString();
             }
+            
         }
 
     }
