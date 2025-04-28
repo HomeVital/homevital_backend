@@ -22,7 +22,7 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<PatientPlanDto>> CreatePatientPlanAsync(PatientPlanInputModel patientPlanInputModel)
         {
             var createdPlan = await _patientPlanService.CreatePatientPlanAsync(patientPlanInputModel.PatientID, patientPlanInputModel);
-            return CreatedAtAction(nameof(GetPatientPlanByIdAsync), new { id = createdPlan.ID }, createdPlan);
+            return Ok(createdPlan);
         }
 
         [HttpGet("{id}")]

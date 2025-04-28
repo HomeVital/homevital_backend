@@ -59,7 +59,6 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<PatientPlan, PatientPlanDto>();
             CreateMap<PatientPlanInputModel, PatientPlan>();
             CreateMap<PatientPlanDto, PatientPlan>();
-
             
             }
     }

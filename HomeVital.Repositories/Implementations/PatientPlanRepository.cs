@@ -28,12 +28,14 @@ namespace HomeVital.Repositories.Implementations
                 EndDate = patientPlanInputModel.EndDate,
                 PatientID = patientId,
                 Instructions = patientPlanInputModel.Instructions,
-                CreatedBy = "System", // Replace with actual user ID or name
-                CreatedDate = DateTime.UtcNow,
-                UpdatedBy = "System", // Replace with actual user ID or name
-                UpdatedDate = DateTime.UtcNow,
-
+                WeightMeasurementFrequency = patientPlanInputModel.WeightMeasurementFrequency,
+                BloodSugarMeasurementFrequency = patientPlanInputModel.BloodSugarMeasurementFrequency,
+                BloodPressureMeasurementFrequency = patientPlanInputModel.BloodPressureMeasurementFrequency,
+                OxygenSaturationMeasurementFrequency = patientPlanInputModel.OxygenSaturationMeasurementFrequency,
+                BodyTemperatureMeasurementFrequency = patientPlanInputModel.BodyTemperatureMeasurementFrequency
             };
+
+            
 
             _dbContext.PatientPlans.Add(patientPlan);
             await _dbContext.SaveChangesAsync();
@@ -45,7 +47,6 @@ namespace HomeVital.Repositories.Implementations
         {
             var patientPlan = await _dbContext.PatientPlans
                 .Include(p => p.Patient)
-                .Include(p => p.MeasurementPlans)
                 .FirstOrDefaultAsync(p => p.ID == id);
 
             if (patientPlan == null)
@@ -59,7 +60,6 @@ namespace HomeVital.Repositories.Implementations
         {
             var patientPlans = await _dbContext.PatientPlans
                 .Include(p => p.Patient)
-                .Include(p => p.MeasurementPlans)
                 .Where(p => p.PatientID == patientId)
                 .ToListAsync();
 

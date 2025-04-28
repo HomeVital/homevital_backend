@@ -10,30 +10,13 @@ namespace HomeVital.Models.Entities
         public Patient Patient { get; set; } = null!;
         public string Instructions { get; set; } = string.Empty;
 
-        public List<MeasurementPlan> MeasurementPlans { get; set; } = new List<MeasurementPlan>();
-        public string Status { get; set; } = string.Empty; // e.g., Active, Inactive, Completed
-        public string CreatedBy { get; set; } = string.Empty;
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-        public string UpdatedBy { get; set; } = string.Empty;
-        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
-    }
+        public bool IsActive => EndDate == null || EndDate > DateTime.UtcNow;
 
-    public class MeasurementPlan
-    {
-        public int ID { get; set; }
-        public int TimesPerWeek { get; set; }
-        public int PatientPlanID { get; set; }
-        public PatientPlan PatientPlan { get; set; } = null!;
-        // list of measurement types
-        public List<string> MeasurementTypes { get; set; } = new List<string>();
-    }
-
-    public static class MeasurementTypes
-    {
-        public const string OxygenSaturation = "OxygenSaturation";
-        public const string BloodSugar = "BloodSugar";
-        public const string BloodPressure = "BloodPressure";
-        public const string BodyTemperature = "BodyTemperature";
-        public const string Weight = "Weight";
+        // boolean property if the measurement Weight is in the plan
+        public int WeightMeasurementFrequency { get; set; } // Number of times Weight is measured per week
+        public int BloodSugarMeasurementFrequency { get; set; } // Number of times Blood Sugar is measured per week
+        public int BloodPressureMeasurementFrequency { get; set; } // Number of times Blood Pressure is measured per week
+        public int OxygenSaturationMeasurementFrequency { get; set; } // Number of times Oxygen Saturation is measured per week
+        public int BodyTemperatureMeasurementFrequency { get; set; } // Number of times Body Temperature is measured per week
     }
 }
