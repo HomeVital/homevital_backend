@@ -456,6 +456,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasIndex("TeamID");
 
+
                     b.ToTable("Patients");
                 });
 
@@ -495,7 +496,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
-
+                    
                     b.Property<int>("TeamID")
                         .HasColumnType("integer");
 
@@ -506,9 +507,9 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasIndex("PatientID");
 
-                    b.HasIndex("TeamID");
-
                     b.ToTable("PatientPlans");
+
+                    b.HasIndex("TeamID");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.Team", b =>
