@@ -52,6 +52,9 @@ namespace HomeVital.Repositories.Implementations{
             bodyWeight.PatientID = patientId;
             bodyWeight.Date = DateTime.UtcNow;
 
+            
+            
+
             _dbContext.BodyWeights.Add(bodyWeight);
             await _dbContext.SaveChangesAsync();
 
@@ -120,18 +123,18 @@ namespace HomeVital.Repositories.Implementations{
         /// <param name="currentWeight">The current body weight</param>
         /// <param name="bodyWeightRange">The body weight range</param>
         /// <returns>The status of the body weight</returns>
-        private string CheckBodyWeightRange(int id, double currentWeight, BodyWeightRange bodyWeightRange)
+        private string CheckBodyWeightRange(int id, float currentWeight, BodyWeightRange bodyWeightRange)
         {
             // Get the last 30 body weights of the patient
             var bodyWeights = _dbContext.BodyWeights
-            .Where(b => b.PatientID == id)
-            .OrderByDescending(b => b.Date)
-            .Take(30)
-            .ToList();
+                .Where(b => b.PatientID == id)
+                .OrderByDescending(b => b.Date)
+                .Take(30)
+                .ToList();
 
             if (bodyWeights.Count == 0)
             {
-            return VitalStatus.Normal.ToString();
+                return VitalStatus.Normal.ToString();
             }
 
             // // Calculate the average weight

@@ -22,15 +22,16 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<Bloodsugar, BloodsugarDto>();
             CreateMap<Patient, PatientDto>();
             CreateMap<PatientInputModel, Patient>();
-            CreateMap<HealthcareWorker, HealthcareWorkerDto>();
+            CreateMap<HealthcareWorker, HealthcareWorkerDto>()
+                .ForMember(dest => dest.TeamIDs, opt => opt.MapFrom(src => src.Teams.Select(t => t.ID).ToList()));
             CreateMap<HealthcareWorkerInputModel, HealthcareWorker>();
             CreateMap<BloodPressureInputModel, BloodPressure>();
             CreateMap<BloodsugarInputModel, Bloodsugar>();
-            CreateMap<MeasurementDto, Measurement>();
-            CreateMap<Measurement, MeasurementDto>();
+            // CreateMap<MeasurementDto, Measurement>();
+            // CreateMap<Measurement, MeasurementDto>();
             CreateMap<BloodPressure, MeasurementDto>();
             CreateMap<Bloodsugar, MeasurementDto>();
-            CreateMap<Measurement, MeasurementDto>();
+            // CreateMap<Measurement, MeasurementDto>();
 
             CreateMap<BodyWeight, BodyWeightDto>();
             CreateMap<BodyWeightInputModel, BodyWeight>();
@@ -53,6 +54,12 @@ namespace HomeVital.Utilities.Mapper
             
             CreateMap<Team, TeamDto>();
             CreateMap<TeamInputModel, Team>();
+            CreateMap<TeamDto, Team>();
+        
+            CreateMap<PatientPlan, PatientPlanDto>();
+            CreateMap<PatientPlanInputModel, PatientPlan>();
+            CreateMap<PatientPlanDto, PatientPlan>();
+            
             }
     }
 }

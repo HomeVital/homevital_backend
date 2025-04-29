@@ -8,5 +8,14 @@ namespace HomeVital.Models.Entities
         public string Status { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public int TeamID { get; set; } = 0;
+        public Team Team { get; set; } = null!; // Navigation property
+
+        public ICollection<Bloodsugar> Bloodsugars {get; set; } = new List<Bloodsugar>();
+        public ICollection<BloodPressure> BloodPressures {get; set; } = new List<BloodPressure>();
+        public ICollection<OxygenSaturation> OxygenSaturations {get; set; } = new List<OxygenSaturation>();
+        public ICollection<BodyWeight> BodyWeights {get; set; } = new List<BodyWeight>();
+        public ICollection<BodyTemperature> BodyTemperatures {get; set; } = new List<BodyTemperature>();
+        public ICollection<PatientPlan> PatientPlans { get; set; } = new List<PatientPlan>();
+
     }
 }

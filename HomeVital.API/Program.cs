@@ -44,6 +44,8 @@ builder.Services.AddTransient<IVitalRangeService, VitalRangeService>();
 builder.Services.AddTransient<IVitalRangeRepository, VitalRangeRepository>();
 builder.Services.AddTransient<ITeamService, TeamService>();
 builder.Services.AddTransient<ITeamRepository, TeamRepository>();
+builder.Services.AddTransient<IPatientPlanService, PatientPlanService>();
+builder.Services.AddTransient<IPatientPlanRepository, PatientPlanRepository>();
 
 builder.Services.AddSingleton<ITokenService, TokenService>();
 
@@ -104,7 +106,11 @@ builder.Services.AddAuthentication(options =>
 });
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
