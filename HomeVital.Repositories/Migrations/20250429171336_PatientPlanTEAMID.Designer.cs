@@ -3,6 +3,7 @@ using System;
 using HomeVital.Repositories.dbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeVital.Repositories.Migrations
 {
     [DbContext(typeof(HomeVitalDbContext))]
-    partial class HomeVitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250429171336_PatientPlanTEAMID")]
+    partial class PatientPlanTEAMID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,7 +459,6 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasIndex("TeamID");
 
-
                     b.ToTable("Patients");
                 });
 
@@ -496,7 +498,7 @@ namespace HomeVital.Repositories.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
-                    
+
                     b.Property<int>("TeamID")
                         .HasColumnType("integer");
 
@@ -507,9 +509,9 @@ namespace HomeVital.Repositories.Migrations
 
                     b.HasIndex("PatientID");
 
-                    b.ToTable("PatientPlans");
-
                     b.HasIndex("TeamID");
+
+                    b.ToTable("PatientPlans");
                 });
 
             modelBuilder.Entity("HomeVital.Models.Entities.Team", b =>

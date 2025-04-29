@@ -7,6 +7,7 @@ namespace HomeVital.Models.InputModels
         public DateTime? EndDate { get; set; }
         public int PatientID { get; set; }
         public string Instructions { get; set; } = string.Empty;
+        public int TeamID { get; set; } = 0; // Team ID for the plan
 
         public int WeightMeasurementFrequency { get; set; } // Number of times Weight is measured per week
         public int BloodSugarMeasurementFrequency { get; set; } // Number of times Blood Sugar is measured per week
