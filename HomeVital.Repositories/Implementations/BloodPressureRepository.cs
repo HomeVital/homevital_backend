@@ -74,15 +74,30 @@ public class BloodPressureRepository : IBloodPressureRepository
                 bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
             }
             
-            bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
-            bloodPressure.Systolic = bloodPressureInputModel.Systolic;
-            bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
-            bloodPressure.Pulse = bloodPressureInputModel.Pulse;
-            bloodPressure.Status = bloodPressureInputModel.Status;
+                // Update only non-default values
+            if (!string.IsNullOrEmpty(bloodPressureInputModel.MeasureHand))
+            {
+                bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
+            }
+            if (bloodPressureInputModel.Systolic > 0)
+            {
+                bloodPressure.Systolic = bloodPressureInputModel.Systolic;
+            }
+            if (bloodPressureInputModel.Diastolic > 0)
+            {
+                bloodPressure.Diastolic = bloodPressureInputModel.Diastolic;
+            }
+            if (bloodPressureInputModel.Pulse > 0)
+            {
+                bloodPressure.Pulse = bloodPressureInputModel.Pulse;
+            }
+            if (!string.IsNullOrEmpty(bloodPressureInputModel.Status))
+            {
+                bloodPressure.Status = bloodPressureInputModel.Status;
+            }
 
             await _dbContext.SaveChangesAsync();
         }
-
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 

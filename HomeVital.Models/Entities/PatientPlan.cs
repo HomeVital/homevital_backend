@@ -9,6 +9,9 @@ namespace HomeVital.Models.Entities
         public int PatientID { get; set; }
         public Patient Patient { get; set; } = null!;
         public string Instructions { get; set; } = string.Empty;
+        // Team
+        public int TeamID { get; set; } = 0;
+        public Team Team { get; set; } = null!; // Navigation property
 
         public bool IsActive => EndDate == null || EndDate > DateTime.UtcNow;
 
