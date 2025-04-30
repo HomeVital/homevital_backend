@@ -1,4 +1,5 @@
 using HomeVital.Models.Dtos;
+using HomeVital.Models.Entities;
 using HomeVital.Models.InputModels;
 
 namespace HomeVital.Repositories.Interfaces
@@ -15,5 +16,6 @@ namespace HomeVital.Repositories.Interfaces
         Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker);
         // UpdateHealthcareWorker
         Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker);
+        Task<List<HealthcareWorker>> GetHealthcareWorkersByIdsAsync(IEnumerable<int> ids);
     }
 }

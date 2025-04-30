@@ -20,9 +20,9 @@ namespace HomeVital.Repositories
             if (!context.Teams.Any())
             {
                 context.Teams.AddRange(
-                    new Team { ID = 1, Name = "Team A" },
-                    new Team { ID = 2, Name = "Team B" },
-                    new Team { ID = 3, Name = "Team C" }
+                    new Team { Name = "Team A" },
+                    new Team { Name = "Team B" },
+                    new Team { Name = "Team C" }
                 );
                 context.SaveChanges();
             }
@@ -268,6 +268,18 @@ namespace HomeVital.Repositories
                 );
             }
 
+            // create the plans
+            if (!context.PatientPlans.Any())
+            {
+                context.PatientPlans.AddRange(
+                    new PatientPlan { PatientID = 1, TeamID = 1, Name = "Plan A", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 1, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 2, TeamID = 2, Name = "Plan B", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 1, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 1, 1, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 3, TeamID = 3, Name = "Plan C", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 1 }, BloodSugarMeasurementDays = new int[] { 1, 0, 1, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 1, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 1 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 4, TeamID = 1, Name = "Plan D", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 1, 0, 1 }, BodyTemperatureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 5, TeamID = 2, Name = "Plan E", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 1, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 0, 0, 1, 0 }, BloodPressureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 1, 0 }, BodyTemperatureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 6, TeamID = 3, Name = "Plan F", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 1, 0, 0, 1 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 1, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 } }
+                );
+            }
             
 
 

@@ -28,13 +28,19 @@ namespace HomeVital.Repositories.Implementations
                 EndDate = patientPlanInputModel.EndDate,
                 PatientID = patientId,
                 Instructions = patientPlanInputModel.Instructions,
-                WeightMeasurementFrequency = patientPlanInputModel.WeightMeasurementFrequency,
-                BloodSugarMeasurementFrequency = patientPlanInputModel.BloodSugarMeasurementFrequency,
-                BloodPressureMeasurementFrequency = patientPlanInputModel.BloodPressureMeasurementFrequency,
-                OxygenSaturationMeasurementFrequency = patientPlanInputModel.OxygenSaturationMeasurementFrequency,
-                BodyTemperatureMeasurementFrequency = patientPlanInputModel.BodyTemperatureMeasurementFrequency
+                TeamID = patientPlanInputModel.TeamID,
+                WeightMeasurementDays = patientPlanInputModel.WeightMeasurementDays,
+                BloodPressureMeasurementDays = patientPlanInputModel.BloodPressureMeasurementDays,
+                BloodSugarMeasurementDays = patientPlanInputModel.BloodSugarMeasurementDays,
+                OxygenSaturationMeasurementDays = patientPlanInputModel.OxygenSaturationMeasurementDays,
+                BodyTemperatureMeasurementDays = patientPlanInputModel.BodyTemperatureMeasurementDays
             };
 
+            var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientPlanInputModel.TeamID);
+            if (!teamExists)
+            {
+                throw new ArgumentException("Invalid TeamID provided.");
+            }
             
 
             _dbContext.PatientPlans.Add(patientPlan);

@@ -11,13 +11,16 @@ namespace HomeVital.Models.Dtos
         public DateTime? EndDate { get; set; }
         public int PatientID { get; set; }
         public string Instructions { get; set; } = string.Empty;
+        public int TeamID { get; set; } // ID of the team assigned to the patient plan
 
         public bool IsActive => EndDate == null || EndDate > DateTime.UtcNow;
-        public int WeightMeasurementFrequency { get; set; } // Number of times Weight is measured per week
-        public int BloodSugarMeasurementFrequency { get; set; } // Number of times Blood Sugar is measured per week
-        public int BloodPressureMeasurementFrequency { get; set; } // Number of times Blood Pressure is measured per week
-        public int OxygenSaturationMeasurementFrequency { get; set; } // Number of times Oxygen Saturation is measured per week
-        public int BodyTemperatureMeasurementFrequency { get; set; } // Number of times Body Temperature is measured per week
+
+        public int[] WeightMeasurementDays { get; set; } = new int[7]; // 0 = no measurement, 1 = measurement
+        public int[] BloodSugarMeasurementDays { get; set; } = new int[7]; // 0 = no measurement, 1 = measurement
+        public int[] BloodPressureMeasurementDays { get; set; } = new int[7]; // 0 = no measurement, 1 = measurement
+        public int[] OxygenSaturationMeasurementDays { get; set; } = new int[7]; // 0 = no measurement, 1 = measurement
+        public int[] BodyTemperatureMeasurementDays { get; set; } = new int[7]; // 0 = no measurement, 1 = measurement
+        
         
         }
 

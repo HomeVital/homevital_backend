@@ -22,9 +22,11 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<Bloodsugar, BloodsugarDto>();
             CreateMap<Patient, PatientDto>();
             CreateMap<PatientInputModel, Patient>();
+            CreateMap<PatientDto, Patient>();
             CreateMap<HealthcareWorker, HealthcareWorkerDto>()
                 .ForMember(dest => dest.TeamIDs, opt => opt.MapFrom(src => src.Teams.Select(t => t.ID).ToList()));
             CreateMap<HealthcareWorkerInputModel, HealthcareWorker>();
+            CreateMap<HealthcareWorkerDto, HealthcareWorker>();
             CreateMap<BloodPressureInputModel, BloodPressure>();
             CreateMap<BloodsugarInputModel, Bloodsugar>();
             // CreateMap<MeasurementDto, Measurement>();
@@ -53,9 +55,16 @@ namespace HomeVital.Utilities.Mapper
             CreateMap<OxygenSaturationRangeInputModel, OxygenSaturationRange>();
             
             CreateMap<Team, TeamDto>();
-            CreateMap<TeamInputModel, Team>();
             CreateMap<TeamDto, Team>();
-        
+            // CreateMap<TeamInputModel, Team>()
+            // .ForMember(dest => dest.WorkerIDs, opt => opt.MapFrom(src => (src.WorkerIDs ?? Enumerable.Empty<int>()).ToList()))
+            // .ForMember(dest => dest.Patients, opt => opt.Ignore()) // Adjust as needed
+            // .ForMember(dest => dest.HealthcareWorkers, opt => opt.Ignore()); // Adjust as needed
+            CreateMap<TeamInputModel, Team>()
+                .ForMember(dest => dest.WorkerIDs, opt => opt.Ignore()) // Ignore computed property
+                .ForMember(dest => dest.PatientIDs, opt => opt.Ignore()) // Ignore computed property
+                .ForMember(dest => dest.HealthcareWorkers, opt => opt.Ignore()) // Explicitly ignore navigation property
+                .ForMember(dest => dest.Patients, opt => opt.Ignore());  
             CreateMap<PatientPlan, PatientPlanDto>();
             CreateMap<PatientPlanInputModel, PatientPlan>();
             CreateMap<PatientPlanDto, PatientPlan>();

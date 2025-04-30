@@ -18,6 +18,12 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         _mapper = mapper;
     }
 
+    public async Task<List<HealthcareWorker>> GetHealthcareWorkersByIdsAsync(IEnumerable<int> ids)
+    {
+        return await _dbContext.HealthcareWorkers
+            .Where(hw => ids.Contains(hw.ID))
+            .ToListAsync();
+    }
     public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
         // get all healthcare workers and their teams

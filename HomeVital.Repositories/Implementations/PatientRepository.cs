@@ -85,14 +85,16 @@ public class PatientRepository : IPatientRepository
     public async Task<PatientDto> GetPatientById(int id)
     {
         var patient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.ID == id);
-
-        
-
         var patientDto = _mapper.Map<PatientDto>(patient); 
-
-
         return patientDto; 
     }
+    
+    public async Task<List<Patient>> GetPatientsByIdsAsync(IEnumerable<int> ids)
+    {
+        return await _dbContext.Patients
+            .Where(p => ids.Contains(p.ID))
+            .ToListAsync();
+    }   
 
     public async Task<PatientDto> DeletePatient(int id)
     {
