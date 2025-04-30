@@ -7,7 +7,7 @@ namespace HomeVital.Models.Entities
         public string Phone { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-        public int TeamID { get; set; } = 0;
+        public int? TeamID { get; set; } = 0;
         public Team Team { get; set; } = null!; // Navigation property
 
         public ICollection<Bloodsugar> Bloodsugars {get; set; } = new List<Bloodsugar>();

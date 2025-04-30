@@ -10,5 +10,6 @@ namespace HomeVital.Repositories.Interfaces
         Task<Team> UpdateTeamAsync(Team team);
         Task DeleteTeamAsync(int id);
         Task<IEnumerable<Team>> GetAllTeamsAsync();
+        Task<Team> GetTeamWithRelationsAsync(int id);
     }
 }

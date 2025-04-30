@@ -21,6 +21,7 @@ namespace HomeVital.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PatientPlanDto>> CreatePatientPlanAsync(PatientPlanInputModel patientPlanInputModel)
         {
+            
             var createdPlan = await _patientPlanService.CreatePatientPlanAsync(patientPlanInputModel.PatientID, patientPlanInputModel);
             return Ok(createdPlan);
         }

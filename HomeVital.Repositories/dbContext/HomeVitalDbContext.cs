@@ -79,6 +79,13 @@ namespace HomeVital.Repositories.dbContext
                 .HasMany(t => t.Patients)
                 .WithOne(p => p.Team)
                 .HasForeignKey(p => p.TeamID);
+
+            // modelBuilder.Entity<Team>()
+            //     .HasKey(t => t.ID);
+
+            // modelBuilder.Entity<Team>()
+            //     .Property(t => t.ID)
+            //     .ValueGeneratedOnAdd();
             
         }
         

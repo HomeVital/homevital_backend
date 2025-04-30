@@ -19,12 +19,24 @@ namespace HomeVital.Repositories.Implementations
             _dbContext = dbContext;
             _mapper = mapper;
         }
-       
-
         public async Task<Team> CreateTeamAsync(Team team)
         {
             _dbContext.Teams.Add(team);
             await _dbContext.SaveChangesAsync();
+            return team;
+        }
+        public async Task<Team> GetTeamWithRelationsAsync(int id)
+        {
+            var team = await _dbContext.Teams
+                .Include(t => t.HealthcareWorkers)
+                .Include(t => t.Patients)
+                .FirstOrDefaultAsync(t => t.ID == id);
+
+            if (team == null)
+            {
+                throw new KeyNotFoundException($"Team with ID {id} not found.");
+            }
+
             return team;
         }
 
@@ -45,25 +57,53 @@ namespace HomeVital.Repositories.Implementations
             return team;
         }
 
+        // public async Task DeleteTeamAsync(int id)
+        // {
+        //     var team = await _dbContext.Teams.FindAsync(id);
+        //     if (team != null)
+        //     {
+        //         _dbContext.Teams.Remove(team);
+        //         await _dbContext.SaveChangesAsync();
+        //     }
+        // }
         public async Task DeleteTeamAsync(int id)
         {
-            var team = await _dbContext.Teams.FindAsync(id);
-            if (team != null)
+            var team = await _dbContext.Teams
+                .Include(t => t.Patients)
+                .Include(t => t.HealthcareWorkers)
+                .FirstOrDefaultAsync(t => t.ID == id);
+
+            if (team == null)
             {
-                _dbContext.Teams.Remove(team);
-                await _dbContext.SaveChangesAsync();
+                throw new KeyNotFoundException($"Team with ID {id} not found.");
             }
+
+            // Remove relationships with patients
+            foreach (var patient in team.Patients)
+            {
+                patient.TeamID = null; // Set TeamID to null to break the relationship
+            }
+
+            // Remove relationships with healthcare workers
+            foreach (var worker in team.HealthcareWorkers)
+            {
+                worker.Teams.Remove(team); // Remove the team from the healthcare worker's list of teams
+            }
+
+            // Save changes to update the relationships
+            await _dbContext.SaveChangesAsync();
+
+            // Now delete the team
+            _dbContext.Teams.Remove(team);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
-            // Include related entities if needed, e.g., HealthcareWorkers
-
             return await _dbContext.Teams
                 .Include(t => t.HealthcareWorkers)
                 .Include(t => t.Patients)
-                .ToListAsync();
-            
+                .ToListAsync();   
         }
 
     }
