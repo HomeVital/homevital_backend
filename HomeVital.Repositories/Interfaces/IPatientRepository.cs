@@ -14,7 +14,7 @@ namespace HomeVital.Repositories.Interfaces
         // DeletePatient
         Task<PatientDto> DeletePatient(int id);
         // UpdatePatient
-        Task<PatientDto> UpdatePatient(int id, PatientInputModel patient);
+        Task<Patient> UpdatePatient(int id, PatientInputModel patient);
         // GetPatientsByIds
         Task<List<Patient>> GetPatientsByIdsAsync(IEnumerable<int> ids);
     }

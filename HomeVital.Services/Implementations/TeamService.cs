@@ -259,9 +259,7 @@ namespace HomeVital.Services.Implementations
                 {
                     var patientInputModel = new PatientInputModel
                     {
-                        // populate the input model with necessary properties
                         TeamID = teamID
-                        // add other properties as needed
                     };
                     await _patientRepository.UpdatePatient(patientID, patientInputModel);
                 }
