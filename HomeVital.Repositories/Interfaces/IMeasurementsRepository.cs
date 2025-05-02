@@ -11,7 +11,7 @@ namespace HomeVital.Repositories.Interfaces
         // Task<MeasurementDto> GetMeasurementsByPatientId(int id);
         Task<List<Measurements>> GetMeasurementsByPatientId(int id);
         Task<List<Measurements>> GetXMeasurementsByPatientId(int patientId, int count);
-        Task<List<Measurements>> GetMeasurementsWithWarnings(string status);
+        Task<List<Measurements>> GetMeasurementsWithWarnings();
         Task<List<Measurements>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true);
         Task<bool> AcknowledgeMeasurement(MeasurementAckInputModel input);
     }

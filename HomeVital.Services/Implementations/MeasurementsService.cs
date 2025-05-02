@@ -28,9 +28,9 @@ namespace HomeVital.Services.Implementations
         {
             return await _measurementsRepository.GetXMeasurementsByPatientId(patientId, count);
         }
-        public async Task<List<Measurements>> GetMeasurementsWithWarnings(string status)
+        public async Task<List<Measurements>> GetMeasurementsWithWarnings()
         {
-            return await _measurementsRepository.GetMeasurementsWithWarnings(status);
+            return await _measurementsRepository.GetMeasurementsWithWarnings();
         }
 
         public async Task<List<Measurements>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)

@@ -33,9 +33,9 @@ namespace HomeVital.API.Controllers
         }
 
         [HttpGet("warnings")]
-        public async Task<ActionResult<List<Measurements>>> GetMeasurementsWithWarnings(string status)
+        public async Task<ActionResult<List<Measurements>>> GetMeasurementsWithWarnings()
         {
-            var measurements = await _measurementService.GetMeasurementsWithWarnings(status);
+            var measurements = await _measurementService.GetMeasurementsWithWarnings();
             return Ok(measurements);
         }
 

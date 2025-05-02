@@ -219,15 +219,14 @@ namespace HomeVital.Repositories.Implementations
             return _mapper.Map<List<Measurements>>(measurements);
         }
 
-        public async Task<List<Measurements>> GetMeasurementsWithWarnings(string status)
+        public async Task<List<Measurements>> GetMeasurementsWithWarnings()
         {
             // Start with empty lists
             List<Measurements> results = new List<Measurements>();
             
             // Filter statuses that indicate warnings (not "Normal" or empty)
             var bloodPressures = await _dbContext.BloodPressures
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
-                    (status == null || m.Status == status))
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bp => new Measurements
                 {
                     ID = bp.ID,
@@ -254,8 +253,7 @@ namespace HomeVital.Repositories.Implementations
             // Do the same for other measurement types
             // ...
             var bloodSugars = await _dbContext.Bloodsugars
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
-                    (status == null || m.Status == status))
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bs => new Measurements
                 {
                     ID = bs.ID,
@@ -276,8 +274,7 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bloodSugars);
 
             var bodyWeights = await _dbContext.BodyWeights
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
-                    (status == null || m.Status == status))
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bw => new Measurements
                 {
                     ID = bw.ID,
@@ -298,8 +295,7 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bodyWeights);
 
             var bodyTemperatures = await _dbContext.BodyTemperatures
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
-                    (status == null || m.Status == status))
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bt => new Measurements
                 {
                     ID = bt.ID,
@@ -320,8 +316,7 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bodyTemperatures);
 
             var oxygenSaturations = await _dbContext.OxygenSaturations
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
-                    (status == null || m.Status == status))
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(os => new Measurements
                 {
                     ID = os.ID,
