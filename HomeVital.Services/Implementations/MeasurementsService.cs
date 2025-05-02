@@ -1,6 +1,7 @@
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Services.Interfaces;
+using HomeVital.Models.InputModels;
 
 namespace HomeVital.Services.Implementations
 {
@@ -26,6 +27,20 @@ namespace HomeVital.Services.Implementations
         public async Task<List<Measurements>> GetXMeasurementsByPatientId(int patientId, int count)
         {
             return await _measurementsRepository.GetXMeasurementsByPatientId(patientId, count);
+        }
+        public async Task<List<Measurements>> GetMeasurementsWithWarnings()
+        {
+            return await _measurementsRepository.GetMeasurementsWithWarnings();
+        }
+
+        public async Task<List<Measurements>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
+        {
+            return await _measurementsRepository.GetPatientWarnings(patientId, onlyUnacknowledged);
+        }
+
+        public async Task<bool> AcknowledgeMeasurement(MeasurementAckInputModel input)
+        {
+            return await _measurementsRepository.AcknowledgeMeasurement(input);
         }
     }
 }

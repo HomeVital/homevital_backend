@@ -1,6 +1,7 @@
 
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using HomeVital.Models.InputModels;
 using Microsoft.AspNetCore.Mvc;
 namespace HomeVital.API.Controllers
 {
@@ -29,6 +30,31 @@ namespace HomeVital.API.Controllers
         {
             var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);
             return Ok(measurements);
+        }
+
+        [HttpGet("warnings")]
+        public async Task<ActionResult<List<Measurements>>> GetMeasurementsWithWarnings()
+        {
+            var measurements = await _measurementService.GetMeasurementsWithWarnings();
+            return Ok(measurements);
+        }
+
+        // Get unacknowledged warnings for a specific patient
+        [HttpGet("patient/{patientId}/warnings")]
+        public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
+        {
+            var measurements = await _measurementService.GetPatientWarnings(patientId, onlyUnacknowledged);
+            return Ok(measurements);
+        }
+
+        [HttpPost("acknowledge")]
+        public async Task<ActionResult> AcknowledgeMeasurement(MeasurementAckInputModel input)
+        {
+            var result = await _measurementService.AcknowledgeMeasurement(input);
+            if (!result)
+                return NotFound("Measurement not found");
+                
+            return Ok();
         }
     }
 }

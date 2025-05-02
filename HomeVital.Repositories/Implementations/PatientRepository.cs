@@ -136,21 +136,53 @@ public class PatientRepository : IPatientRepository
         return _mapper.Map<PatientDto>(patient);
 
     }
-
-    public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
+    public async Task<Patient> UpdatePatient(int id, PatientInputModel patientInput)
     {
-        var existingPatient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.ID == id);
-        if (existingPatient != null) 
+        // First, verify that the patient exists
+        var existingPatient = await _dbContext.Patients.FindAsync(id);
+        if (existingPatient == null)
         {
-            existingPatient.Name = patient.Name;
-            existingPatient.Phone = patient.Phone;
-            existingPatient.Status = patient.Status;
-            existingPatient.Address = patient.Address;
-            existingPatient.TeamID = patient.TeamID;
-            await _dbContext.SaveChangesAsync();
+            throw new KeyNotFoundException($"Patient with ID {id} not found");
         }
-        var patientDto = _mapper.Map<PatientDto>(existingPatient); 
-        return patientDto; 
-    }
+        
+        // Verify that the team exists if TeamID is specified and different from current
+        if (patientInput.TeamID != 0 && patientInput.TeamID != existingPatient.TeamID)
+        {
+            var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientInput.TeamID);
+            if (!teamExists)
+            {
+                throw new ArgumentException($"Team with ID {patientInput.TeamID} does not exist.");
+            }
+            // Only update TeamID if a valid team ID was provided
+            existingPatient.TeamID = patientInput.TeamID;
+        }
+        // If TeamID is 0 and we want to clear the association, we need to make sure it's allowed by the database
+        else if (patientInput.TeamID == 0 && existingPatient.TeamID != 0)
+        {
+            
+        }
+        if (!string.IsNullOrEmpty(patientInput.Address))
+        {
+            existingPatient.Address = patientInput.Address;
+        }
+        if (!string.IsNullOrEmpty(patientInput.Phone))
+        {
+            existingPatient.Phone = patientInput.Phone;
+        }
+        if (!string.IsNullOrEmpty(patientInput.Status))
+        {
+            existingPatient.Status = patientInput.Status;
+        }
+        if (!string.IsNullOrEmpty(patientInput.Name))
+        {
+            existingPatient.Name = patientInput.Name;
+        }
 
+        // Save changes
+        await _dbContext.SaveChangesAsync();
+        
+        return existingPatient;
+    }
 }
+
+

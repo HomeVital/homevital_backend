@@ -55,17 +55,17 @@ namespace HomeVital.API.Controllers
             return Ok(teams);
         }
 
-        [HttpPatch("{id}")] // Update a team by ID
-        public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new System.ArgumentException("Invalid input model");
-            }
+        // [HttpPatch("{id}")] // Update a team by ID
+        // public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         throw new System.ArgumentException("Invalid input model");
+        //     }
 
-            var updatedTeam = await _teamService.UpdateTeamAsync(id, teamInputModel);
-            return Ok(updatedTeam);
-        }
+        //     var updatedTeam = await _teamService.UpdateTeamAsync(id, teamInputModel);
+        //     return Ok(updatedTeam);
+        // }
 
         [HttpDelete("{id}")] // Delete a team by ID
         public async Task<ActionResult> DeleteTeamAsync(int id)
