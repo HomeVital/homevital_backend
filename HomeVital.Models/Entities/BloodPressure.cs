@@ -12,5 +12,11 @@ namespace HomeVital.Models.Entities
         public DateTime Date { get; set; } = new DateTime();
         public string Status { get; set; } = string.Empty;
         public int Pulse { get; set; } = 0;
+
+        // ACK
+        public bool IsAcknowledged { get; set; } = false;
+        public int? AcknowledgedByWorkerID { get; set; }
+        public DateTime? AcknowledgedDate { get; set; }
+        public string ResolutionNotes { get; set; } = string.Empty;
     }
 }

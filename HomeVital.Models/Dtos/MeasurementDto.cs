@@ -51,5 +51,13 @@ namespace HomeVital.Models.Dtos
         // 
         public string? Status { get; set; } = string.Empty;
 
+        // ACK
+        // properties for resolution tracking
+        public bool IsAcknowledged { get; set; } = false;
+        public int? AcknowledgedByWorkerID { get; set; }
+        public string? AcknowledgedByWorkerName { get; set; } = string.Empty;
+        public DateTime? AcknowledgedDate { get; set; }
+        public string? ResolutionNotes { get; set; } = string.Empty;
+
     }
 }

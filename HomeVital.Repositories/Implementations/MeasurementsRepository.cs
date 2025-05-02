@@ -1,6 +1,7 @@
 using AutoMapper;
 using HomeVital.Repositories.dbContext;
 using HomeVital.Models.Dtos;
+using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -217,5 +218,251 @@ namespace HomeVital.Repositories.Implementations
 
             return _mapper.Map<List<Measurements>>(measurements);
         }
+
+        public async Task<List<Measurements>> GetMeasurementsWithWarnings(string status)
+        {
+            // Start with empty lists
+            List<Measurements> results = new List<Measurements>();
+            
+            // Filter statuses that indicate warnings (not "Normal" or empty)
+            var bloodPressures = await _dbContext.BloodPressures
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
+                    (status == null || m.Status == status))
+                .Select(bp => new Measurements
+                {
+                    ID = bp.ID,
+                    MeasurementType = "BloodPressure",
+                    MeasurementDate = bp.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Systolic = bp.Systolic,
+                        Diastolic = bp.Diastolic,
+                        BPM = bp.Pulse,
+                        MeasureHand = bp.MeasureHand,
+                        BodyPosition = bp.BodyPosition,
+                        Status = bp.Status,
+                        IsAcknowledged = bp.IsAcknowledged,
+                        AcknowledgedByWorkerID = bp.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bp.AcknowledgedDate,
+                        ResolutionNotes = bp.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+            
+            results.AddRange(bloodPressures);
+            
+            // Do the same for other measurement types
+            // ...
+            var bloodSugars = await _dbContext.Bloodsugars
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
+                    (status == null || m.Status == status))
+                .Select(bs => new Measurements
+                {
+                    ID = bs.ID,
+                    MeasurementType = "BloodSugar",
+                    MeasurementDate = bs.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        BloodSugar = bs.BloodsugarLevel,
+                        Status = bs.Status,
+                        IsAcknowledged = bs.IsAcknowledged,
+                        AcknowledgedByWorkerID = bs.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bs.AcknowledgedDate,
+                        ResolutionNotes = bs.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bloodSugars);
+
+            var bodyWeights = await _dbContext.BodyWeights
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
+                    (status == null || m.Status == status))
+                .Select(bw => new Measurements
+                {
+                    ID = bw.ID,
+                    MeasurementType = "BodyWeight",
+                    MeasurementDate = bw.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Weight = (float?)bw.Weight,
+                        Status = bw.Status,
+                        IsAcknowledged = bw.IsAcknowledged,
+                        AcknowledgedByWorkerID = bw.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bw.AcknowledgedDate,
+                        ResolutionNotes = bw.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bodyWeights);
+
+            var bodyTemperatures = await _dbContext.BodyTemperatures
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
+                    (status == null || m.Status == status))
+                .Select(bt => new Measurements
+                {
+                    ID = bt.ID,
+                    MeasurementType = "BodyTemperature",
+                    MeasurementDate = bt.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Temperature = bt.Temperature,
+                        Status = bt.Status,
+                        IsAcknowledged = bt.IsAcknowledged,
+                        AcknowledgedByWorkerID = bt.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bt.AcknowledgedDate,
+                        ResolutionNotes = bt.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bodyTemperatures);
+
+            var oxygenSaturations = await _dbContext.OxygenSaturations
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" &&
+                    (status == null || m.Status == status))
+                .Select(os => new Measurements
+                {
+                    ID = os.ID,
+                    MeasurementType = "OxygenSaturation",
+                    MeasurementDate = os.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        OxygenSaturation = os.OxygenSaturationValue,
+                        Status = os.Status,
+                        IsAcknowledged = os.IsAcknowledged,
+                        AcknowledgedByWorkerID = os.AcknowledgedByWorkerID,
+                        AcknowledgedDate = os.AcknowledgedDate,
+                        ResolutionNotes = os.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(oxygenSaturations);
+            
+            // Sort by date (newest first)
+            results = results.OrderByDescending(m => m.MeasurementDate).ToList();
+            
+            // Assign sequential UIDs
+            for (int i = 0; i < results.Count; i++)
+            {
+                results[i].UID = i + 1;
+            }
+            
+            return results;
+        }
+
+        public async Task<List<Measurements>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
+        {
+            // Start with empty lists
+            List<Measurements> results = new List<Measurements>();
+            
+            // Get blood pressure warnings for this patient
+            var bloodPressures = await _dbContext.BloodPressures
+                .Where(m => m.PatientID == patientId && 
+                    !string.IsNullOrEmpty(m.Status) && 
+                    m.Status != "Normal" &&
+                    (!onlyUnacknowledged || !m.IsAcknowledged))
+                .Select(bp => new Measurements
+                {
+                    ID = bp.ID,
+                    MeasurementType = "BloodPressure",
+                    MeasurementDate = bp.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Systolic = bp.Systolic,
+                        Diastolic = bp.Diastolic,
+                        BPM = bp.Pulse,
+                        MeasureHand = bp.MeasureHand,
+                        BodyPosition = bp.BodyPosition,
+                        Status = bp.Status,
+                        IsAcknowledged = bp.IsAcknowledged,
+                        AcknowledgedByWorkerID = bp.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bp.AcknowledgedDate,
+                        ResolutionNotes = bp.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+            
+            results.AddRange(bloodPressures);
+            
+            // Do the same for other measurement types
+            // ...
+            
+            // Sort by date (newest first)
+            results = results.OrderByDescending(m => m.MeasurementDate).ToList();
+            
+            // Assign sequential UIDs
+            for (int i = 0; i < results.Count; i++)
+            {
+                results[i].UID = i + 1;
+            }
+            
+            return results;
+        }
+
+        public async Task<bool> AcknowledgeMeasurement(MeasurementAckInputModel input)
+        {
+            switch (input.MeasurementType.ToLower())
+            {
+                case "bloodpressure":
+                    var bp = await _dbContext.BloodPressures.FindAsync(input.MeasurementID);
+                    if (bp == null) return false;
+                    
+                    bp.IsAcknowledged = true;
+                    bp.AcknowledgedByWorkerID = input.WorkerID;
+                    bp.AcknowledgedDate = DateTime.UtcNow;
+                    bp.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                case "bloodsugar":
+                    var bs = await _dbContext.Bloodsugars.FindAsync(input.MeasurementID);
+                    if (bs == null) return false;
+                    
+                    bs.IsAcknowledged = true;
+                    bs.AcknowledgedByWorkerID = input.WorkerID;
+                    bs.AcknowledgedDate = DateTime.UtcNow;
+                    bs.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                case "bodytemperature":
+                    var bt = await _dbContext.BodyTemperatures.FindAsync(input.MeasurementID);
+                    if (bt == null) return false;
+                    
+                    bt.IsAcknowledged = true;
+                    bt.AcknowledgedByWorkerID = input.WorkerID;
+                    bt.AcknowledgedDate = DateTime.UtcNow;
+                    bt.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                case "bodyweight":
+                    var bw = await _dbContext.BodyWeights.FindAsync(input.MeasurementID);
+                    if (bw == null) return false;
+                    
+                    bw.IsAcknowledged = true;
+                    bw.AcknowledgedByWorkerID = input.WorkerID;
+                    bw.AcknowledgedDate = DateTime.UtcNow;
+                    bw.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                case "oxygensaturation":
+                    var os = await _dbContext.OxygenSaturations.FindAsync(input.MeasurementID);
+                    if (os == null) return false;
+                    
+                    os.IsAcknowledged = true;
+                    os.AcknowledgedByWorkerID = input.WorkerID;
+                    os.AcknowledgedDate = DateTime.UtcNow;
+                    os.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                default:
+                    return false;
+            }
+            
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
     }
 }
