@@ -230,6 +230,7 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bp => new Measurements
                 {
                     ID = bp.ID,
+                    PatientID = bp.PatientID,
                     MeasurementType = "BloodPressure",
                     MeasurementDate = bp.Date,
                     MeasurementValues = new MeasurementValues
@@ -257,6 +258,7 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bs => new Measurements
                 {
                     ID = bs.ID,
+                    PatientID = bs.PatientID,
                     MeasurementType = "BloodSugar",
                     MeasurementDate = bs.Date,
                     MeasurementValues = new MeasurementValues
@@ -278,6 +280,7 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bw => new Measurements
                 {
                     ID = bw.ID,
+                    PatientID = bw.PatientID,
                     MeasurementType = "BodyWeight",
                     MeasurementDate = bw.Date,
                     MeasurementValues = new MeasurementValues
@@ -299,6 +302,7 @@ namespace HomeVital.Repositories.Implementations
                 .Select(bt => new Measurements
                 {
                     ID = bt.ID,
+                    PatientID = bt.PatientID,
                     MeasurementType = "BodyTemperature",
                     MeasurementDate = bt.Date,
                     MeasurementValues = new MeasurementValues
@@ -320,6 +324,7 @@ namespace HomeVital.Repositories.Implementations
                 .Select(os => new Measurements
                 {
                     ID = os.ID,
+                    PatientID = os.PatientID,
                     MeasurementType = "OxygenSaturation",
                     MeasurementDate = os.Date,
                     MeasurementValues = new MeasurementValues

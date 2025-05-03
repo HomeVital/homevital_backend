@@ -23,6 +23,7 @@ namespace HomeVital.Models.Dtos
     {
         public int UID { get; set; }
         public int ID { get; set; }
+        public int PatientID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
         public DateTime MeasurementDate { get; set; }
         public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
@@ -60,4 +61,5 @@ namespace HomeVital.Models.Dtos
         public string? ResolutionNotes { get; set; } = string.Empty;
 
     }
+    // class for patient ID 
 }
