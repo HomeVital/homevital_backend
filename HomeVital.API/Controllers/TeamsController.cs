@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/teams")]
 
