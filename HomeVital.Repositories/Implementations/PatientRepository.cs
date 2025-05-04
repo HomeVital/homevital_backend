@@ -70,6 +70,9 @@ public class PatientRepository : IPatientRepository
         _dbContext.BodyWeightRanges.Add(newVitalRangeBodyWeight);
         _dbContext.OxygenSaturationRanges.Add(newVitalRangeOxygenSaturation);
 
+        // set status to patient
+        newPatient.UpdateStatusBasedOnPlans();
+
         await _dbContext.SaveChangesAsync();
         var patientDto = _mapper.Map<PatientDto>(newPatient); 
         return patientDto; 

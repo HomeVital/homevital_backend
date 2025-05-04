@@ -41,9 +41,20 @@ namespace HomeVital.Repositories.Implementations
             {
                 throw new ArgumentException("Invalid TeamID provided.");
             }
+
+            var patient = await _dbContext.Patients
+                .Include(p => p.PatientPlans)
+                .FirstOrDefaultAsync(p => p.ID == patientId);
+            if (patient == null)
+            {
+                throw new ArgumentException($"Patient with ID {patientId} does not exist.");
+            }
             
 
             _dbContext.PatientPlans.Add(patientPlan);
+
+            patient.UpdateStatusBasedOnPlans();
+
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<PatientPlanDto>(patientPlan);

@@ -1,3 +1,5 @@
+// using HomeVital.Models.Enums;
+
 namespace HomeVital.Models.Dtos
 {
     public class BloodPressureDto

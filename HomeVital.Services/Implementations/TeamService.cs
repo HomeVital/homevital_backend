@@ -214,8 +214,8 @@ namespace HomeVital.Services.Implementations
             var workerIDs = new List<int>();
             var patientIDs = new List<int>();
 
-            workerIDs = teamInputModel.WorkerIDs;
-            patientIDs = teamInputModel.PatientIDs;
+            // workerIDs = teamInputModel.WorkerIDs;
+            // patientIDs = teamInputModel.PatientIDs;
 
             var team = _mapper.Map<Team>(teamInputModel);
             var createdTeam = await _teamRepository.CreateTeamAsync(team);
@@ -290,105 +290,68 @@ namespace HomeVital.Services.Implementations
             }
 
             // Update HealthcareWorkers
-            if (teamInputModel.WorkerIDs != null)
-            {
-                foreach (var workerID in teamInputModel.WorkerIDs)
-                {
-                    var worker = await _healthcareWorkerRepository.GetHealthcareWorkerById(workerID);
-                    if (worker == null)
-                    {
-                        throw new KeyNotFoundException($"Worker with ID {workerID} not found");
-                    }
+            // if (teamInputModel.WorkerIDs != null)
+            // {
+            //     foreach (var workerID in teamInputModel.WorkerIDs)
+            //     {
+            //         var worker = await _healthcareWorkerRepository.GetHealthcareWorkerById(workerID);
+            //         if (worker == null)
+            //         {
+            //             throw new KeyNotFoundException($"Worker with ID {workerID} not found");
+            //         }
 
-                    // Check if the worker is already in the team
-                    var existingWorker = team.HealthcareWorkers.FirstOrDefault(hw => hw.ID == workerID);
-                    if (existingWorker != null)
-                    {
-                        // Remove the worker from the team
-                        team.HealthcareWorkers.Remove(existingWorker);
-                    }
-                    else
-                    {
-                        // Add the worker to the team
-                        team.HealthcareWorkers.Add(_mapper.Map<HealthcareWorker>(worker));
-                    }
-                }
-            }
+            //         // Check if the worker is already in the team
+            //         var existingWorker = team.HealthcareWorkers.FirstOrDefault(hw => hw.ID == workerID);
+            //         if (existingWorker != null)
+            //         {
+            //             // Remove the worker from the team
+            //             team.HealthcareWorkers.Remove(existingWorker);
+            //         }
+            //         else
+            //         {
+            //             // Add the worker to the team
+            //             team.HealthcareWorkers.Add(_mapper.Map<HealthcareWorker>(worker));
+            //         }
+            //     }
+            // }
 
-            // Update Patients
-            if (teamInputModel.PatientIDs != null)
-            {
-                foreach (var patientID in teamInputModel.PatientIDs)
-                {
-                    var patient = await _patientRepository.GetPatientById(patientID);
-                    if (patient == null)
-                    {
-                        throw new KeyNotFoundException($"Patient with ID {patientID} not found");
-                    }
+            // // Update Patients
+            // if (teamInputModel.PatientIDs != null)
+            // {
+            //     foreach (var patientID in teamInputModel.PatientIDs)
+            //     {
+            //         var patient = await _patientRepository.GetPatientById(patientID);
+            //         if (patient == null)
+            //         {
+            //             throw new KeyNotFoundException($"Patient with ID {patientID} not found");
+            //         }
 
-                    // Check if the patient is already in the team
-                    var existingPatient = team.Patients.FirstOrDefault(p => p.ID == patientID);
-                    if (existingPatient != null)
-                    {
-                        // Remove the patient from the team
-                        team.Patients.Remove(existingPatient);
-                    }
-                    else
-                    {
-                        // Ensure the patient is not already assigned to another team
-                        if (patient.TeamID != null && patient.TeamID != 0)
-                        {
-                            throw new InvalidOperationException($"Patient with ID {patientID} is already assigned to another team");
-                        }
+            //         // Check if the patient is already in the team
+            //         var existingPatient = team.Patients.FirstOrDefault(p => p.ID == patientID);
+            //         if (existingPatient != null)
+            //         {
+            //             // Remove the patient from the team
+            //             team.Patients.Remove(existingPatient);
+            //         }
+            //         else
+            //         {
+            //             // Ensure the patient is not already assigned to another team
+            //             if (patient.TeamID != null && patient.TeamID != 0)
+            //             {
+            //                 throw new InvalidOperationException($"Patient with ID {patientID} is already assigned to another team");
+            //             }
 
-                        // Add the patient to the team
-                        team.Patients.Add(_mapper.Map<Patient>(patient));
-                    }
-                }
-            }
+            //             // Add the patient to the team
+                        // team.Patients.Add(_mapper.Map<Patient>(patient));
+                    // }
+                // }
+            // }
 
             // Save changes
             var updatedTeam = await _teamRepository.UpdateTeamAsync(team);
             return _mapper.Map<TeamDto>(updatedTeam);
         }
-
-        // public async Task<TeamDto> UpdateTeamAsync(int id, TeamInputModel teamInputModel)
-        // {
-        //     var team = await _teamRepository.GetTeamByIdAsync(id);
-        //     if (team == null)
-        //     {
-        //         throw new KeyNotFoundException("Team not found");
-        //     }
-
-        //     // Update only the fields that are provided in the input model
-        //     if (!string.IsNullOrEmpty(teamInputModel.Name))
-        //     {
-        //         team.Name = teamInputModel.Name;
-        //     }
-        //     if (teamInputModel.WorkerIDs != null && teamInputModel.WorkerIDs.Any())
-        //     {
-        //         // var newWorkerIDs = teamInputModel.WorkerIDs.Except(team.WorkerIDs).ToList();
-        //         // team.WorkerIDs.AddRange(newWorkerIDs);
-        //         var newWorkerIDs = teamInputModel.WorkerIDs.Except(team.WorkerIDs);
-        //         team.HealthcareWorkers = team.HealthcareWorkers
-        //             .Concat(newWorkerIDs.Select(id => new HealthcareWorker { ID = id }))
-        //             .ToList(); // Convert back to a list if necessary for EF Core
-        //     }
-
-        //     if (teamInputModel.PatientIDs != null && teamInputModel.PatientIDs.Any())
-        //     {
-        //         // var newPatientIDs = teamInputModel.PatientIDs.Except(team.PatientIDs).ToList();
-        //         // team.PatientIDs.AddRange(newPatientIDs);
-        //         var newPatientIDs = teamInputModel.PatientIDs.Except(team.PatientIDs);
-        //         team.Patients = team.Patients
-        //             .Concat(newPatientIDs.Select(id => new Patient { ID = id }))
-        //             .ToList(); // Convert back to a list if necessary for EF Core
-        //     }
-
-        //     var updatedTeam = await _teamRepository.UpdateTeamAsync(team);
-        //     return _mapper.Map<TeamDto>(updatedTeam); 
-        // }
-
+      
         public async Task DeleteTeamAsync(int id)
         {
             await _teamRepository.DeleteTeamAsync(id);

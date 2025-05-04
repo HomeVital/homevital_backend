@@ -1,3 +1,4 @@
+
 namespace HomeVital.Models.Entities
 {
     public class BloodPressure

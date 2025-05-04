@@ -1,3 +1,4 @@
+using HomeVital.Models.Enums;
 namespace HomeVital.Models.Entities
 {
     public class PatientPlan
