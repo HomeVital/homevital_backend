@@ -75,10 +75,11 @@ public class BloodPressureRepository : IBloodPressureRepository
             }
             
                 // Update only non-default values
-            if (!string.IsNullOrEmpty(bloodPressureInputModel.MeasureHand))
-            {
-                bloodPressure.MeasureHand = bloodPressureInputModel.MeasureHand;
-            }
+            // Convert enum to string when setting the MeasureHand property
+            bloodPressure.MeasureHand = bloodPressureInputModel.MeasuredHand.ToString();
+            
+            // Convert enum to string when setting the BodyPosition property
+            bloodPressure.BodyPosition = bloodPressureInputModel.BodyPosition.ToString();
             if (bloodPressureInputModel.Systolic > 0)
             {
                 bloodPressure.Systolic = bloodPressureInputModel.Systolic;
