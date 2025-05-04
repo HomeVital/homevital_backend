@@ -53,12 +53,12 @@ namespace HomeVital.Repositories
             if (!context.Patients.Any())
             {
                 context.Patients.AddRange(
-                    new Patient { Name = "Þórir Gunnar Valgeirsson", Phone = "1234567", Status = "Active", Address = "123 Main St", TeamID = 1 },
-                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "1234567", Status = "Inactive", Address = "456 Elm St", TeamID = 2 },
-                    new Patient { Name = "Aron Ingi Jónsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 },
-                    new Patient { Name = "Sindri Þór Guðmundsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 1 },
-                    new Patient { Name = "Sturla Emil Sturluson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 2 },
-                    new Patient { Name = "Jón Jónsson", Phone = "1234567", Status = "Active", Address = "123 Main Reykjavik", TeamID = 3 }
+                    new Patient { Name = "Þórir Gunnar Valgeirsson", Phone = "1234567", Address = "123 Main St", TeamID = 1 },
+                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "1234567", Address = "456 Elm St", TeamID = 2 },
+                    new Patient { Name = "Aron Ingi Jónsson", Phone = "1234567", Address = "123 Main Reykjavik", TeamID = 3 },
+                    new Patient { Name = "Sindri Þór Guðmundsson", Phone = "1234567", Address = "123 Main Reykjavik", TeamID = 1 },
+                    new Patient { Name = "Sturla Emil Sturluson", Phone = "1234567", Address = "123 Main Reykjavik", TeamID = 2 },
+                    new Patient { Name = "Jón Jónsson", Phone = "1234567", Address = "123 Main Reykjavik", TeamID = 3 }
                 );
                 context.SaveChanges();
             }
@@ -272,7 +272,7 @@ namespace HomeVital.Repositories
             if (!context.PatientPlans.Any())
             {
                 context.PatientPlans.AddRange(
-                    new PatientPlan { PatientID = 1, TeamID = 1, Name = "Plan A", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 1, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
+                    new PatientPlan { PatientID = 1, TeamID = 1, Name = "Plan A", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddMinutes(5), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 1, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
                     new PatientPlan { PatientID = 2, TeamID = 2, Name = "Plan B", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 1, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 1, 1, 0, 0, 0, 0 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
                     new PatientPlan { PatientID = 3, TeamID = 3, Name = "Plan C", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 1 }, BloodSugarMeasurementDays = new int[] { 1, 0, 1, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 1, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 1 }, BodyTemperatureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 } },
                     new PatientPlan { PatientID = 4, TeamID = 1, Name = "Plan D", StartDate = DateTime.UtcNow.AddDays(-365), EndDate = DateTime.UtcNow.AddDays(30), Instructions = "Take medication daily", WeightMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodSugarMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, BloodPressureMeasurementDays = new int[] { 1, 0, 0, 0, 0, 0, 0 }, OxygenSaturationMeasurementDays = new int[] { 1, 0, 0, 0, 1, 0, 1 }, BodyTemperatureMeasurementDays = new int[] { 0, 0, 0, 0, 0, 0, 0 } },

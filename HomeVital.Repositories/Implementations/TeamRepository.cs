@@ -57,15 +57,7 @@ namespace HomeVital.Repositories.Implementations
             return team;
         }
 
-        // public async Task DeleteTeamAsync(int id)
-        // {
-        //     var team = await _dbContext.Teams.FindAsync(id);
-        //     if (team != null)
-        //     {
-        //         _dbContext.Teams.Remove(team);
-        //         await _dbContext.SaveChangesAsync();
-        //     }
-        // }
+       
         public async Task DeleteTeamAsync(int id)
         {
             var team = await _dbContext.Teams

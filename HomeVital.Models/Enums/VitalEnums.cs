@@ -19,4 +19,8 @@ namespace HomeVital.Models.Enums
         CriticalHigh, // 4 // a critical high range of vital signs
         Invalid // 5 // an invalid range of vital signs
     }
+
+    
+
+
 }
