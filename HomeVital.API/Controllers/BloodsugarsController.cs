@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/bloodsugar")]
     public class BloodsugarsController : ControllerBase
@@ -26,6 +28,7 @@ namespace HomeVital.API.Controllers
             }
 
             // Create a new bloodsugar record for a patient
+            [Authorize(Roles = "Patient")]
             [HttpPost("{patientId}")]
             public async Task<ActionResult<BloodsugarDto>> CreateBloodsugarAsync(int patientId, BloodsugarInputModel bloodsugarInputModel)
             {
