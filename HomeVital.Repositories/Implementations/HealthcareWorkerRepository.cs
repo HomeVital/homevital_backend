@@ -36,7 +36,9 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id)
     {
-        var healthcareWorker = await _dbContext.HealthcareWorkers.FirstOrDefaultAsync(x => x.ID == id);
+        var healthcareWorker = await _dbContext.HealthcareWorkers
+            .Include(h => h.Teams)
+            .FirstOrDefaultAsync(x => x.ID == id);
         return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
     }
 
