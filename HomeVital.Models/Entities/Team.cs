@@ -4,6 +4,9 @@ namespace HomeVital.Models.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; } = string.Empty;
+        public int? TeamLeaderID { get; set; }
+        public string? TeamLeaderName { get; set; } = string.Empty;
+
         public ICollection<HealthcareWorker> HealthcareWorkers { get; set; } = new List<HealthcareWorker>();
         public ICollection<Patient> Patients { get; set; } = new List<Patient>();
 

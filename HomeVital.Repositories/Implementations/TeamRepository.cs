@@ -5,6 +5,7 @@ using HomeVital.Repositories.dbContext;
 using HomeVital.Models.Entities;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Dtos;
 
 
 namespace HomeVital.Repositories.Implementations
@@ -42,7 +43,14 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<Team> GetTeamByIdAsync(int id)
         {
-            var team = await _dbContext.Teams.FindAsync(id);
+            // var team = await _dbContext.Teams.FindAsync(id);
+            var team = await _dbContext.Teams
+                .Include(t => t.HealthcareWorkers)
+                .Include(t => t.Patients)
+                .FirstOrDefaultAsync(t => t.ID == id);
+
+
+
             if (team == null)
             {
                 throw new KeyNotFoundException();
@@ -92,10 +100,21 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
-            return await _dbContext.Teams
+            // return await _dbContext.Teams
+            //     .Include(t => t.HealthcareWorkers)
+            //     .Include(t => t.Patients)
+            //     .ToListAsync();   
+
+
+            var teams = await _dbContext.Teams
                 .Include(t => t.HealthcareWorkers)
                 .Include(t => t.Patients)
-                .ToListAsync();   
+                .ToListAsync();
+            if (teams == null)
+            {
+                throw new KeyNotFoundException("No teams found.");
+            }
+            return teams;
         }
 
     }

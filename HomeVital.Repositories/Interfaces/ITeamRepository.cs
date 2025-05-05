@@ -1,6 +1,7 @@
 
 using HomeVital.Models.Entities;
 
+
 namespace HomeVital.Repositories.Interfaces
 {
     public interface ITeamRepository

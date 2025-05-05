@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/teams")]
 
@@ -57,7 +57,7 @@ namespace HomeVital.API.Controllers
             return Ok(teams);
         }
 
-        [Authorize(Roles = "HealthcareWorker")]
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a team by ID
         public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
         {
