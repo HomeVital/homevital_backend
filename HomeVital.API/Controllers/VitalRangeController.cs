@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using HomeVital.API.Extensions;
 
 
 
@@ -25,6 +26,7 @@ namespace HomeVital.API.Controllers
         
 
         // Update a BodyTempVitalRange record for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("bodytemperature/{patientId}")]
         public async Task<ActionResult<BodyTemperatureRangeDto>> UpdateBodyTemperatureRangeAsync(int patientId, BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel)
         {
@@ -33,6 +35,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a BloodPressureVitalRange record for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("bloodpressure/{patientId}")]
         public async Task<ActionResult<BloodPressureRangeDto>> UpdateBloodPressureRangeAsync(int patientId, BloodPressureRangeInputModel bloodPressureRangeInputModel)
         {
@@ -41,6 +44,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a BloodSugarVitalRange record for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("bloodsugar/{patientId}")]
         public async Task<ActionResult<BloodSugarRangeDto>> UpdateBloodSugarRangeAsync(int patientId, BloodSugarRangeInputModel bloodSugarRangeInputModel)
         {
@@ -49,6 +53,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a OxygenSaturationVitalRange record for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("oxygensaturation/{patientId}")]
         public async Task<ActionResult<OxygenSaturationRangeDto>> UpdateOxygenSaturationRangeAsync(int patientId, OxygenSaturationRangeInputModel oxygenSaturationRangeInputModel)
         {
@@ -57,18 +62,31 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a BodyWeightVitalRange record for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("bodyweight/{patientId}")]
         public async Task<ActionResult<BodyWeightRangeDto>> UpdateBodyWeightRangeAsync(int patientId, BodyWeightRangeInputModel bodyWeightRangeInputModel)
         {
             var bodyWeightRangeDto = await _vitalRangeService.UpdateBodyWeightRangeAsync(patientId, bodyWeightRangeInputModel);
+
+            if (bodyWeightRangeDto == null)
+            {
+                return NotFound("No body weight range records found for this patient.");
+            }
+
             return Ok(bodyWeightRangeDto);
         }
 
         // Get vital range records for a patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<VitalRangeDto>> GetVitalRangeAsync(int patientId)
         {
             var vitalRangeDto = await _vitalRangeService.GetVitalRangeAsync(patientId);
+            if (vitalRangeDto == null)
+            {
+                return NotFound("No vital range records found for this patient.");
+            }
+
             return Ok(vitalRangeDto);
         }
     

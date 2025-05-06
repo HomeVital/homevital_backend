@@ -13,5 +13,7 @@ namespace HomeVital.Services.Interfaces
         Task<OxygenSaturationDto> UpdateOxygenSaturation(int id, OxygenSaturationInputModel oxygenSaturationInputModel);
         // DeleteOxygenSaturation
         Task<OxygenSaturationDto> DeleteOxygenSaturation(int id);
+        // GetOxygenSaturationById
+        Task<OxygenSaturationDto> GetOxygenSaturationById(int id);
     }
 }

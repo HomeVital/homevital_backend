@@ -77,7 +77,7 @@ namespace HomeVital.API.Controllers
         }
 
         [HttpGet("GetHealthcareWorkerData")]
-        [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker, Patient")]
         public IActionResult GetUserData()
         {
             // Only accessible by users with the "User" role

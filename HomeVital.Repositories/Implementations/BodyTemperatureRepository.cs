@@ -37,10 +37,10 @@ namespace HomeVital.Repositories.Implementations
             var bodyTemperatureRange = await _dbContext.BodyTemperatureRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            if (bodyTemperatureRange == null)
-            {
-                throw new System.ArgumentException("Body temperature range not found");
-            }
+            // if (bodyTemperatureRange == null)
+            // {
+            //     throw new System.ArgumentException("Body temperature range not found");
+            // }
 
             bodyTemperatureInputModel.Status = CheckBodyTemperatureRange(bodyTemperatureInputModel, bodyTemperatureRange); 
 

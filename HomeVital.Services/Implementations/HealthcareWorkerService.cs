@@ -31,7 +31,10 @@ namespace HomeVital.Services
 
         public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
         {
-            return await _healthcareWorkerRepository.DeleteHealthcareWorker(id);
+            var healthcareWorker = await _healthcareWorkerRepository.GetHealthcareWorkerById(id);
+            await _healthcareWorkerRepository.DeleteHealthcareWorker(id);
+            return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
+
         }
 
         public async Task<HealthcareWorkerDto> CreateHealthcareWorker(HealthcareWorkerInputModel healthcareWorker)

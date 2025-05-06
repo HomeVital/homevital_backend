@@ -23,7 +23,8 @@ public class VitalRangeService: IVitalRangeService
             bodyTemperatureRangeInputModel.TemperatureNotOkMax < 0 || bodyTemperatureRangeInputModel.TemperatureCriticalMin < 0 ||
             bodyTemperatureRangeInputModel.TemperatureCriticalMax < 0)
         {
-            throw new ArgumentException("Body temperature values cannot be less than 0");
+            // throw new ArgumentException("Body temperature values cannot be less than 0");
+            return null;
         }
 
         return await _vitalRangeRepository.UpdateBodyTemperatureRangeAsync(patientId, bodyTemperatureRangeInputModel);
@@ -43,7 +44,8 @@ public class VitalRangeService: IVitalRangeService
             bloodPressureRangeInputModel.SystolicOkMax < 0 || bloodPressureRangeInputModel.SystolicOkMin < 0)
         {
             // return with error message
-            throw new ArgumentException("Blood pressure values cannot be less than 0");
+            // throw new ArgumentException("Blood pressure values cannot be less than 0");
+            return null;
         }
 
         return await _vitalRangeRepository.UpdateBloodPressureRangeAsync(patientId, bloodPressureRangeInputModel);
@@ -57,7 +59,8 @@ public class VitalRangeService: IVitalRangeService
             bloodSugarRangeInputModel.BloodSugarlowMax < 0 || bloodSugarRangeInputModel.BloodSugarlowMin < 0 ||
             bloodSugarRangeInputModel.BloodSugarNotOkMax < 0 || bloodSugarRangeInputModel.BloodSugarNotOkMin < 0)
         {
-            throw new ArgumentException("Blood sugar values cannot be less than 0");
+            // throw new ArgumentException("Blood sugar values cannot be less than 0");
+            return null;
         }
 
         // check for gaps or overlaps between the ranges
@@ -65,7 +68,8 @@ public class VitalRangeService: IVitalRangeService
             bloodSugarRangeInputModel.BloodSugarNotOkMax >= bloodSugarRangeInputModel.BloodSugarCriticalMin ||
             bloodSugarRangeInputModel.BloodSugarlowMax <= bloodSugarRangeInputModel.BloodSugarGoodMin)
         {
-            throw new ArgumentException("Blood sugar ranges are not aligned properly");
+            // throw new ArgumentException("Blood sugar ranges are not aligned properly");
+            return null;
         }
 
 
@@ -78,7 +82,8 @@ public class VitalRangeService: IVitalRangeService
         if (bodyWeightRangeInputModel.WeightGainFluctuationPercentageGood < 0 || bodyWeightRangeInputModel.WeightGainPercentageGoodMax < 0 ||
             bodyWeightRangeInputModel.WeightLossFluctuationPercentageGood < 0 )
         {
-            throw new ArgumentException("Body weight values cannot be less than 0");
+            // throw new ArgumentException("Body weight values cannot be less than 0");
+            return null;
         }
 
         return await _vitalRangeRepository.UpdateBodyWeightRangeAsync(patientId, bodyWeightRangeInputModel);
@@ -92,7 +97,8 @@ public class VitalRangeService: IVitalRangeService
             oxygenSaturationRangeInputModel.OxygenSaturationOkMin < 0 || oxygenSaturationRangeInputModel.OxygenSaturationNotOkMax < 0 ||
             oxygenSaturationRangeInputModel.OxygenSaturationNotOkMin < 0)
         {
-            throw new ArgumentException("Oxygen saturation values cannot be less than 0");
+            // throw new ArgumentException("Oxygen saturation values cannot be less than 0");
+            return null;
         }
 
         return await _vitalRangeRepository.UpdateOxygenSaturationRangeAsync(patientId, oxygenSaturationRangeInputModel);

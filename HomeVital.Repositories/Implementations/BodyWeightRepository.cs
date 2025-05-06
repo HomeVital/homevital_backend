@@ -39,10 +39,10 @@ namespace HomeVital.Repositories.Implementations{
             var bodyWeightRange = await _dbContext.BodyWeightRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            if (bodyWeightRange == null)
-            {
-                throw new System.ArgumentException("BodyWeight range not found");
-            }
+            // if (bodyWeightRange == null)
+            // {
+            //     throw new System.ArgumentException("BodyWeight range not found");
+            // }
 
             // check body weight range
             bodyWeightInputModel.Status = CheckBodyWeightRange(patientId, bodyWeightInputModel.Weight, bodyWeightRange);
@@ -107,7 +107,7 @@ namespace HomeVital.Repositories.Implementations{
         
             if (bodyWeight == null)
             {
-                throw new KeyNotFoundException($"BodyWeight with ID {id} not found.");
+                return null;
             }
         
             return _mapper.Map<BodyWeightDto>(bodyWeight);

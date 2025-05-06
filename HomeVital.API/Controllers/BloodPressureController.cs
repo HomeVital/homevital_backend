@@ -21,6 +21,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Get all bloodpressures by patient ID
+        // [Authorize(Roles = "Patient")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<IEnumerable<BloodPressureDto>>> GetBloodPressuresByPatientIdAsync(int patientId)
         {
@@ -29,6 +30,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Create a new bloodpressure record for a patient
+        // [Authorize(Roles = "Patient")]
         [HttpPost("{patientId}")]
         public async Task<ActionResult<BloodPressureDto>> CreateBloodPressureAsync(int patientId, BloodPressureInputModel bloodpressureInputModel)
         {
@@ -42,6 +44,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a bloodpressure record by ID
+        // [Authorize(Roles = "Patient")]
         [HttpPatch("{id}")]
         public async Task<ActionResult<BloodPressureDto>> UpdateBloodPressureAsync(int id, BloodPressureInputModel bloodpressureInputModel)
         {
@@ -55,6 +58,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Delete a bloodpressure record by ID
+        // [Authorize(Roles = "Patient")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<BloodPressureDto>> DeleteBloodPressureAsync(int id)
         {

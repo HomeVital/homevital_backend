@@ -36,10 +36,10 @@ namespace HomeVital.Repositories.Implementations
             var vitalRangeBloodsugar = await _dbContext.BloodSugarRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            if (vitalRangeBloodsugar == null)
-            {
-                throw new System.ArgumentException("Bloodsugar range not found");
-            }
+            // if (vitalRangeBloodsugar == null)
+            // {
+            //     throw new System.ArgumentException("Bloodsugar range not found");
+            // }
 
             // check blood sugar range
             bloodsugarInputModel.Status = CheckBloodSugarRange(bloodsugarInputModel, vitalRangeBloodsugar);
@@ -86,7 +86,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (bloodsugar == null)
             {
-                throw new System.ArgumentException("Bloodsugar record not found");
+                return null;
             }
 
             _dbContext.Bloodsugars.Remove(bloodsugar);

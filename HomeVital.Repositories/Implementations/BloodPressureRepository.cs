@@ -40,10 +40,10 @@ public class BloodPressureRepository : IBloodPressureRepository
         var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
             .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-        if (vitalRangeBloodpressure == null)
-        {
-            throw new System.ArgumentException("BloodPressure range not found");
-        }
+        // if (vitalRangeBloodpressure == null)
+        // {
+        //     return null;
+        // }
         // check blood pressure range
         bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
 
@@ -109,7 +109,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         if (bloodPressure == null)
         {
-            throw new System.ArgumentException("BloodPressure record not found");
+            return null;
         }
 
         _dbContext.BloodPressures.Remove(bloodPressure);

@@ -5,6 +5,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using HomeVital.API.Extensions;
 
 
 
@@ -23,6 +24,7 @@ namespace HomeVital.API.Controllers
             _teamService = teamService;
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPost] // Create a new team
         public async Task<ActionResult<TeamDto>> CreateTeamAsync(TeamInputModel teamInputModel)
         {
@@ -35,6 +37,7 @@ namespace HomeVital.API.Controllers
             return Ok(newTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker, Patient")]
         [HttpGet("{id}")] // Get a team by ID
         public async Task<ActionResult<TeamDto>> GetTeamByIdAsync(int id)
         {
@@ -42,10 +45,17 @@ namespace HomeVital.API.Controllers
             {
                 throw new System.ArgumentException("Invalid input model");
             }
-            var team = await _teamService.GetTeamByIdAsync(id);
-            return Ok(team);
+
+            // Check if the team exists
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
+            }
+            return Ok(existingTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet] // Get all teams
         public async Task<ActionResult<IEnumerable<TeamDto>>> GetAllTeamsAsync()
         {
@@ -57,7 +67,7 @@ namespace HomeVital.API.Controllers
             return Ok(teams);
         }
 
-        [Authorize(Roles = "HealthcareWorker")]
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a team by ID
         public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
         {
@@ -65,20 +75,37 @@ namespace HomeVital.API.Controllers
             {
                 throw new System.ArgumentException("Invalid input model");
             }
+            // Check if the team exists
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
+            }
 
             var updatedTeam = await _teamService.UpdateTeamAsync(id, teamInputModel);
             return Ok(updatedTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpDelete("{id}")] // Delete a team by ID
         public async Task<ActionResult> DeleteTeamAsync(int id)
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("Input model is not valid");
             }
+            // Check if the team exists before attempting to delete
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
+            }
+
+            // Call the service to delete the team and retrieve the deleted team's info
             await _teamService.DeleteTeamAsync(id);
-            return Ok();
+            // Return the deleted team's info
+            // Note: You might want to return a specific response or the deleted team info
+            return Ok(existingTeam);
         }
     }
 }

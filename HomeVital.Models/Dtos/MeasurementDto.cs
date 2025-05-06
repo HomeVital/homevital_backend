@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-
 namespace HomeVital.Models.Dtos
 // Dto for getting all measurements for a patient
 // Measurement:
@@ -8,7 +6,6 @@ namespace HomeVital.Models.Dtos
 // Oxygen saturation
 // Temperature
 // Weight 
-// 
 {
     public class MeasurementDto
     {

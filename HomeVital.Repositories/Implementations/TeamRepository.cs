@@ -5,6 +5,7 @@ using HomeVital.Repositories.dbContext;
 using HomeVital.Models.Entities;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Dtos;
 
 
 namespace HomeVital.Repositories.Implementations
@@ -34,7 +35,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                throw new KeyNotFoundException($"Team with ID {id} not found.");
+                return null;
             }
 
             return team;
@@ -42,10 +43,15 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<Team> GetTeamByIdAsync(int id)
         {
-            var team = await _dbContext.Teams.FindAsync(id);
+            // var team = await _dbContext.Teams.FindAsync(id);
+            var team = await _dbContext.Teams
+                .Include(t => t.HealthcareWorkers)
+                .Include(t => t.Patients)
+                .FirstOrDefaultAsync(t => t.ID == id);
+                
             if (team == null)
             {
-                throw new KeyNotFoundException();
+                return null;
             }
             return team;
         }
@@ -67,7 +73,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                throw new KeyNotFoundException($"Team with ID {id} not found.");
+                return ; // Team not found
             }
 
             // Remove relationships with patients
@@ -92,10 +98,15 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
-            return await _dbContext.Teams
+            var teams = await _dbContext.Teams
                 .Include(t => t.HealthcareWorkers)
                 .Include(t => t.Patients)
-                .ToListAsync();   
+                .ToListAsync();
+            if (teams == null)
+            {
+                return null; // No teams found
+            }
+            return teams;
         }
 
     }

@@ -37,7 +37,8 @@ namespace HomeVital.Services
             // if the blood pressure record is not found, throw an exception
             if (bloodPressure == null)
             {
-                throw new ArgumentException("Blood pressure record not found");
+                // throw new ArgumentException("Blood pressure record not found");
+                return null;
             }
             
             return await _bloodPressureRepository.UpdateBloodPressure(id, bloodPressureInputModel);

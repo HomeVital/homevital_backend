@@ -6,7 +6,7 @@ namespace HomeVital.Repositories.Interfaces
     public interface IMeasurementsRepository
     {
         // GetAllMeasurements
-        Task<MeasurementDto> GetMeasurementsById(int id);
+        // Task<MeasurementDto> GetMeasurementsById(int id);
         // GetMeasurementBypatientId
         // Task<MeasurementDto> GetMeasurementsByPatientId(int id);
         Task<List<Measurements>> GetMeasurementsByPatientId(int id);

@@ -39,15 +39,16 @@ namespace HomeVital.Repositories.Implementations
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientPlanInputModel.TeamID);
             if (!teamExists)
             {
-                throw new ArgumentException("Invalid TeamID provided.");
+                return null;
             }
 
             var patient = await _dbContext.Patients
                 .Include(p => p.PatientPlans)
                 .FirstOrDefaultAsync(p => p.ID == patientId);
+                
             if (patient == null)
             {
-                throw new ArgumentException($"Patient with ID {patientId} does not exist.");
+                return null;
             }
             
 
@@ -68,7 +69,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (patientPlan == null)
             {
-                throw new KeyNotFoundException($"Patient plan with ID {id} was not found.");
+                return null;
             }
 
             return _mapper.Map<PatientPlanDto>(patientPlan);
