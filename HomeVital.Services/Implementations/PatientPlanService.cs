@@ -5,6 +5,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
 using System.Threading.Tasks;
 using AutoMapper;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Services
 {
@@ -12,16 +13,66 @@ namespace HomeVital.Services
     {
         private readonly IPatientPlanRepository _patientPlanRepository;
         private readonly IMapper _mapper;
+        private readonly IPatientRepository _patientRepository;
 
-        public PatientPlanService(IPatientPlanRepository patientPlanRepository, IMapper mapper)
+        public PatientPlanService(IPatientPlanRepository patientPlanRepository, IMapper mapper, IPatientRepository patientRepository)
         {
+            _patientRepository = patientRepository;
             _patientPlanRepository = patientPlanRepository;
             _mapper = mapper;
         }
 
         public async Task<PatientPlanDto> CreatePatientPlanAsync( int patientId, PatientPlanInputModel patientPlanInputModel)
         {
-            return await _patientPlanRepository.CreatePatientPlanAsync(patientPlanInputModel, patientId);
+            // Create a new patient plan
+
+            // check if the patient exists
+            var patient = await _patientRepository.GetPatientById(patientId);
+            if (patient == null)
+            {
+                return null;
+                // throw new NotFoundException("Patient not found");
+            }
+            // check if the team exists
+            var team = await _patientPlanRepository.GetPatientPlanByIdAsync(patientId);
+            if (team == null)
+            {
+                return null;
+                // throw new NotFoundException("Team not found");
+            }
+
+            // check if the patient has an active plan
+            var hasActivePlan = await _patientPlanRepository.GetPatientPlansByPatientIdAsync(patientId);
+            if (hasActivePlan != null && hasActivePlan.Any(p => p.IsActive))
+            {
+                return null;
+                // throw new ArgumentException("Patient already has an active plan");
+            }
+            
+            var patientPlan = await _patientPlanRepository.CreatePatientPlanAsync(patientPlanInputModel, patientId);
+
+            if (patientPlan == null)
+            {
+                return null;
+                // throw new ArgumentException("Failed to create patient plan");
+            }
+
+            // if the patient plan is created successfully and the plan is active, update the patient status to active
+            if (patientPlan.IsActive)
+            {
+                var existingPatient = await _patientRepository.GetPatientById(patientId);
+                if (existingPatient != null)
+                {
+                    patient.Status = "Active";
+                    var patientInputModel = new PatientInputModel
+                    {
+                        Status = existingPatient.Status
+                    };
+                    await _patientRepository.UpdatePatient(patientId, patientInputModel);
+                }
+            }
+
+            return patientPlan;
         }
     
 

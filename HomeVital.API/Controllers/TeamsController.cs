@@ -24,6 +24,7 @@ namespace HomeVital.API.Controllers
             _teamService = teamService;
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPost] // Create a new team
         public async Task<ActionResult<TeamDto>> CreateTeamAsync(TeamInputModel teamInputModel)
         {
@@ -36,6 +37,7 @@ namespace HomeVital.API.Controllers
             return Ok(newTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker, Patient")]
         [HttpGet("{id}")] // Get a team by ID
         public async Task<ActionResult<TeamDto>> GetTeamByIdAsync(int id)
         {
@@ -53,6 +55,7 @@ namespace HomeVital.API.Controllers
             return Ok(existingTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet] // Get all teams
         public async Task<ActionResult<IEnumerable<TeamDto>>> GetAllTeamsAsync()
         {
@@ -64,7 +67,7 @@ namespace HomeVital.API.Controllers
             return Ok(teams);
         }
 
-        [Authorize(Roles = "HealthcareWorker")]
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a team by ID
         public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
         {
@@ -83,6 +86,7 @@ namespace HomeVital.API.Controllers
             return Ok(updatedTeam);
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpDelete("{id}")] // Delete a team by ID
         public async Task<ActionResult> DeleteTeamAsync(int id)
         {

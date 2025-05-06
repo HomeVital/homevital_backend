@@ -5,6 +5,7 @@ using HomeVital.Models.InputModels;
 using Microsoft.AspNetCore.Mvc;
 namespace HomeVital.API.Controllers
 {
+    // [Authorize]
     [ApiController]
     [Route("api/measurements")]
     public class MeasurementsController : ControllerBase
@@ -19,6 +20,7 @@ namespace HomeVital.API.Controllers
         }
 
         // get X number of measurements for a patient by patient id
+        // [Authorize(Roles = "HealthcareWorker, Patient")]
         [HttpGet("{patientId}/latest/{count}")]
         public async Task<ActionResult<IEnumerable<Measurements>>> GetXMeasurementsByPatientId(int patientId, int count)
         {
@@ -32,6 +34,7 @@ namespace HomeVital.API.Controllers
             return Ok(measurements);
         }
         
+        // [Authorize(Roles = "HealthcareWorker, Patient")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<Envelope<List<MeasurementDto>>>> GetMeasurementsByPatientId(
             int patientId,
@@ -71,6 +74,7 @@ namespace HomeVital.API.Controllers
             return Ok(envelope);
         }
         
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("warnings")]
         public async Task<ActionResult<Envelope<List<MeasurementDto>>>> GetMeasurementsWithWarnings(
             [FromQuery] int pageSize = 25,
@@ -103,6 +107,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Get unacknowledged warnings for a specific patient
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("patient/{patientId}/warnings")]
         public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
         {
@@ -116,6 +121,7 @@ namespace HomeVital.API.Controllers
             return Ok(measurements);
         }
 
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpPost("acknowledge")]
         public async Task<ActionResult> AcknowledgeMeasurement(MeasurementAckInputModel input)
         {
