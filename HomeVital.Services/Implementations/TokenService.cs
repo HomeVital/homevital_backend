@@ -42,7 +42,7 @@ namespace HomeVital.Services.Implementations
                         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.HealthcareWorkerID.Value.ToString()));
                 System.Console.WriteLine($"Role added: {Roles.HealthcareWorker}");
             }
-            var expireMinutes = _configuration.GetValue<int>("Jwt:ExpireMinutes", 60);
+            var expireMinutes = _configuration.GetValue<int>("Jwt:ExpireMinutes", 4);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
