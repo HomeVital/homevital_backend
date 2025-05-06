@@ -35,7 +35,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                throw new KeyNotFoundException($"Team with ID {id} not found.");
+                return null;
             }
 
             return team;
@@ -48,12 +48,10 @@ namespace HomeVital.Repositories.Implementations
                 .Include(t => t.HealthcareWorkers)
                 .Include(t => t.Patients)
                 .FirstOrDefaultAsync(t => t.ID == id);
-
-
-
+                
             if (team == null)
             {
-                throw new KeyNotFoundException();
+                return null;
             }
             return team;
         }
@@ -75,7 +73,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                throw new KeyNotFoundException($"Team with ID {id} not found.");
+                return ; // Team not found
             }
 
             // Remove relationships with patients
@@ -100,19 +98,13 @@ namespace HomeVital.Repositories.Implementations
 
         public async Task<IEnumerable<Team>> GetAllTeamsAsync()
         {
-            // return await _dbContext.Teams
-            //     .Include(t => t.HealthcareWorkers)
-            //     .Include(t => t.Patients)
-            //     .ToListAsync();   
-
-
             var teams = await _dbContext.Teams
                 .Include(t => t.HealthcareWorkers)
                 .Include(t => t.Patients)
                 .ToListAsync();
             if (teams == null)
             {
-                throw new KeyNotFoundException("No teams found.");
+                return null; // No teams found
             }
             return teams;
         }

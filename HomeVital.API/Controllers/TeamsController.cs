@@ -5,12 +5,13 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using HomeVital.API.Extensions;
 
 
 
 namespace HomeVital.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/teams")]
 
@@ -42,8 +43,14 @@ namespace HomeVital.API.Controllers
             {
                 throw new System.ArgumentException("Invalid input model");
             }
-            var team = await _teamService.GetTeamByIdAsync(id);
-            return Ok(team);
+
+            // Check if the team exists
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
+            }
+            return Ok(existingTeam);
         }
 
         [HttpGet] // Get all teams
@@ -57,13 +64,19 @@ namespace HomeVital.API.Controllers
             return Ok(teams);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a team by ID
         public async Task<ActionResult<TeamDto>> UpdateTeamAsync(int id, [FromBody] TeamInputModel teamInputModel)
         {
             if (!ModelState.IsValid)
             {
                 throw new System.ArgumentException("Invalid input model");
+            }
+            // Check if the team exists
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
             }
 
             var updatedTeam = await _teamService.UpdateTeamAsync(id, teamInputModel);
@@ -75,10 +88,20 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                return BadRequest("Input model is not valid");
             }
+            // Check if the team exists before attempting to delete
+            var existingTeam = await _teamService.GetTeamByIdAsync(id);
+            if (existingTeam == null)
+            {
+                return NotFound();
+            }
+
+            // Call the service to delete the team and retrieve the deleted team's info
             await _teamService.DeleteTeamAsync(id);
-            return Ok();
+            // Return the deleted team's info
+            // Note: You might want to return a specific response or the deleted team info
+            return Ok(existingTeam);
         }
     }
 }

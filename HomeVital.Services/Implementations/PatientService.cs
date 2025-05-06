@@ -41,53 +41,15 @@ namespace HomeVital.Services
         {
             return await _patientRepository.DeletePatient(id);
         }
-
-        // public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
-        // {
-        //     // Check if the patient exists before updating
-        //     var existingPatient = await _patientRepository.GetPatientById(id);
-        //     if (existingPatient == null)
-        //     {
-        //         throw new KeyNotFoundException($"Patient with ID {id} not found.");
-        //     }
-
-        //     // Update the patient details
-        //     if (!string.IsNullOrEmpty(patient.Name))
-        //     {
-        //         existingPatient.Name = patient.Name;
-        //     }
-        //     if (!string.IsNullOrEmpty(patient.Kennitala))
-        //     {
-        //         existingPatient.Kennitala = patient.Kennitala;
-        //     }
-        //     if (patient.TeamID != 0)
-        //     {
-        //         existingPatient.TeamID = patient.TeamID;
-        //     }
-        //     if (!string.IsNullOrEmpty(patient.Phone))
-        //     {
-        //         existingPatient.Phone = patient.Phone;
-        //     }
-        //     if (!string.IsNullOrEmpty(patient.Address))
-        //     {
-        //         existingPatient.Address = patient.Address;
-        //     }
-        //     if (!string.IsNullOrEmpty(patient.Status))
-        //     {
-        //         existingPatient.Status = patient.Status;
-        //     }
-
-        //     var updatedPatient = _mapper.Map<Patient>(existingPatient);
-        //     return await _patientRepository.UpdatePatient(id, updatedPatient);
-
-                // }
+        
        public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
         {
             // Retrieve the existing patient from the database
-            var existingPatientDto = await _patientRepository.GetPatientById(id);
-            if (existingPatientDto == null)
+            var existingPatient = await _patientRepository.GetPatientById(id);
+            if (existingPatient == null)
             {
-                throw new KeyNotFoundException($"Patient with ID {id} not found.");
+                // throw new KeyNotFoundException($"Patient with ID {id} not found.");
+                return null;
             }
 
             // Create an update model with only the fields that need to be updated
@@ -115,7 +77,8 @@ namespace HomeVital.Services
                 var teamExists = await _teamRepository.GetTeamByIdAsync(patient.TeamID) != null;
                 if (!teamExists)
                 {
-                    throw new KeyNotFoundException($"Team with ID {patient.TeamID} not found.");
+                    // throw new KeyNotFoundException($"Team with ID {patient.TeamID} not found.");
+                    return null;
                 }
                 updateModel.TeamID = patient.TeamID;
             }

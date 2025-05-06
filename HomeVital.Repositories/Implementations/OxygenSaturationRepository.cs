@@ -36,10 +36,10 @@ namespace HomeVital.Repositories.Implementations
             var oxygenSaturationRange = await _dbContext.OxygenSaturationRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            if (oxygenSaturationRange == null)
-            {
-                throw new System.ArgumentException("OxygenSaturation range not found");
-            }
+            // if (oxygenSaturationRange == null)
+            // {
+            //     throw new System.ArgumentException("OxygenSaturation range not found");
+            // }
 
             oxygenSaturationInputModel.Status = CheckOxygenSaturationRange(oxygenSaturationInputModel, oxygenSaturationRange);
 

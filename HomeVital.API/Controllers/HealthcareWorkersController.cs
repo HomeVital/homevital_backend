@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
+using HomeVital.Models.Exceptions;
+
 
 namespace HomeVital.API.Controllers
 {
@@ -18,10 +20,35 @@ namespace HomeVital.API.Controllers
         }
 
         [HttpGet] // Get all healthcare workers
-        public async Task<ActionResult<IEnumerable<HealthcareWorkerDto>>> GetHealthcareWorkersAsync()
+        public async Task<ActionResult<Envelope<IEnumerable<HealthcareWorkerDto>>>> GetHealthcareWorkersAsync(
+            [FromQuery] int pageSize = 25,
+            [FromQuery] int pageNumber = 1
+        )
         {
             var healthcareWorkers = await _healthcareWorkerService.GetHealthcareWorkers();
-            return Ok(healthcareWorkers);
+            
+            if (healthcareWorkers == null || !healthcareWorkers.Any())
+            {
+                throw new NotFoundException("No healthcare workers found.");
+            }
+
+            // Pagination logic
+            var totalCount = healthcareWorkers.Count();
+            var paginatedData = healthcareWorkers
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            // Wrap in envelope
+            var envelope = new Envelope<IEnumerable<HealthcareWorkerDto>>(
+                paginatedData,
+                totalCount,
+                pageSize,
+                pageNumber
+            );
+            // Return the paginated data
+            return Ok(envelope);
+
+            // return Ok(healthcareWorkers);
         }
 
         [HttpGet("{id}")] // Get a healthcare worker by ID

@@ -23,6 +23,15 @@ namespace HomeVital.API.Controllers
         {
             
             var createdPlan = await _patientPlanService.CreatePatientPlanAsync(patientPlanInputModel.PatientID, patientPlanInputModel);
+            if (createdPlan == null)
+            {
+                return BadRequest("Failed to create patient plan.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("input model is not valid");
+            }
+            
             return Ok(createdPlan);
         }
 
@@ -30,6 +39,10 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<PatientPlanDto>> GetPatientPlanByIdAsync(int id)
         {
             var plan = await _patientPlanService.GetPatientPlanByIdAsync(id);
+            if (plan == null)
+            {
+                return NotFound();
+            }
             return Ok(plan);
         }
 
@@ -37,6 +50,10 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<List<PatientPlanDto>>> GetPatientPlansByPatientIdAsync(int patientId)
         {
             var plans = await _patientPlanService.GetPatientPlansByPatientIdAsync(patientId);
+            if (plans == null || plans.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(plans);
         }
     }

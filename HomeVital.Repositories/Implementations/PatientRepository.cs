@@ -29,7 +29,8 @@ public class PatientRepository : IPatientRepository
         var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patient.TeamID);
         if (!teamExists)
         {
-            throw new ArgumentException($"Team with ID {patient.TeamID} does not exist.");
+            // throw new ArgumentException($"Team with ID {patient.TeamID} does not exist."
+            return null;
         }
 
 
@@ -145,7 +146,8 @@ public class PatientRepository : IPatientRepository
         var existingPatient = await _dbContext.Patients.FindAsync(id);
         if (existingPatient == null)
         {
-            throw new KeyNotFoundException($"Patient with ID {id} not found");
+            // throw new KeyNotFoundException($"Patient with ID {id} not found");
+            return null;
         }
         
         // Verify that the team exists if TeamID is specified and different from current
@@ -154,7 +156,8 @@ public class PatientRepository : IPatientRepository
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientInput.TeamID);
             if (!teamExists)
             {
-                throw new ArgumentException($"Team with ID {patientInput.TeamID} does not exist.");
+                // throw new ArgumentException($"Team with ID {patientInput.TeamID} does not exist.");
+                return null;
             }
             // Only update TeamID if a valid team ID was provided
             existingPatient.TeamID = patientInput.TeamID;

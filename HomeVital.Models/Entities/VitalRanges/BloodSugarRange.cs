@@ -5,18 +5,18 @@ namespace HomeVital.Models.Entities
         public int Id { get; set; }
         public int PatientID { get; set; }
 
-        // blood sugar
-        // 1 80 to 100 is good (Good)
-        public double BloodSugarGoodMin { get; set; } = 80;
-        public double BloodSugarGoodMax { get; set; } = 100;
-        // 2 101 to 125 is not ok (elevated)
-        public double BloodSugarNotOkMin { get; set; } = 101;
-        public double BloodSugarNotOkMax { get; set; } = 125;
-        // 3 over 126  is critical (high)
-        public double BloodSugarCriticalMin { get; set; } = 126;
-        public double BloodSugarCriticalMax { get; set; } = 126;
-        // 4 under 80 is not ok (low)
-        public double BloodSugarlowMin { get; set; } = 0;
-        public double BloodSugarlowMax { get; set; } = 79;
+        // Blood Sugar in mmol/L
+        // 1 4.0 to 6.0 is good (normal)
+        public double BloodSugarGoodMin { get; set; }
+        public double BloodSugarGoodMax { get; set; }
+        // 2 6.1 to 7.9 is not ok (raised)
+        public double BloodSugarNotOkMin { get; set; }
+        public double BloodSugarNotOkMax { get; set; }
+        // 3 8.0 to 10.0 is not ok (high)
+        public double BloodSugarCriticalMin { get; set; } 
+        public double BloodSugarCriticalMax { get; set; } 
+        // 4 2 to 3.9 is not ok (too low, high)
+        public double BloodSugarlowMin { get; set; }
+        public double BloodSugarlowMax { get; set; }
     }
 }

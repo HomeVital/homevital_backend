@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using HomeVital.API.Extensions;
 
 
 
@@ -61,6 +62,12 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<BodyWeightRangeDto>> UpdateBodyWeightRangeAsync(int patientId, BodyWeightRangeInputModel bodyWeightRangeInputModel)
         {
             var bodyWeightRangeDto = await _vitalRangeService.UpdateBodyWeightRangeAsync(patientId, bodyWeightRangeInputModel);
+
+            if (bodyWeightRangeDto == null)
+            {
+                return NotFound("No body weight range records found for this patient.");
+            }
+
             return Ok(bodyWeightRangeDto);
         }
 
@@ -69,6 +76,11 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<VitalRangeDto>> GetVitalRangeAsync(int patientId)
         {
             var vitalRangeDto = await _vitalRangeService.GetVitalRangeAsync(patientId);
+            if (vitalRangeDto == null)
+            {
+                return NotFound("No vital range records found for this patient.");
+            }
+
             return Ok(vitalRangeDto);
         }
     

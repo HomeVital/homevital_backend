@@ -16,12 +16,51 @@ namespace HomeVital.API.Controllers
             _patientService = patientService;
         }
 
+        // [HttpGet] // Get all patients
+        // public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientsAsync()
+        // {
+        //     var patients = await _patientService.GetPatients();
+
+        //     if (patients == null || patients.Count() == 0)
+        //     {
+        //         return NotFound("No patients found.");
+        //     }
+            
+        //     return Ok(patients);
+        // }
+
         [HttpGet] // Get all patients
-        public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientsAsync()
+        public async Task<ActionResult<Envelope<IEnumerable<PatientDto>>>> GetPatientsAsync(
+            [FromQuery] int pageSize = 25,
+            [FromQuery] int pageNumber = 1
+        )
         {
+            // Get all patients
             var patients = await _patientService.GetPatients();
-            return Ok(patients);
+
+            if (patients == null || !patients.Any())
+            {
+                return NotFound("No patients found.");
+            }
+
+            // Pagination logic
+            var totalCount = patients.Count();
+            var paginatedData = patients
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Wrap in envelope
+            var envelope = new Envelope<IEnumerable<PatientDto>>(
+                paginatedData,
+                totalCount,
+                pageSize,
+                pageNumber
+            );
+
+            return Ok(envelope);
         }
+        
 
         [HttpGet("{id}")] // Get a patient by ID
         public async Task<ActionResult<PatientDto>> GetPatientByIdAsync(int id)
@@ -73,6 +112,13 @@ namespace HomeVital.API.Controllers
             {
                 return BadRequest("input model is not valid");
             }
+            // Check if the patient exists
+            var existingPatient = await _patientService.GetPatientById(id);
+            if (existingPatient == null)
+            {
+                return NotFound();
+            }
+
             var updatedPatient = await _patientService.UpdatePatient(id, patientInputModel);
             return Ok(updatedPatient);
         }        

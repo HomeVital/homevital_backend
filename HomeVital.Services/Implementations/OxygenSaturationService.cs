@@ -35,7 +35,8 @@ namespace HomeVital.Services
 
             if (oxygenSaturation == null)
             {
-                throw new ArgumentException("Oxygen saturation record not found");
+                // throw new ArgumentException("Oxygen saturation record not found");
+                return null;
             }
             return await _oxygenSaturationRepository.UpdateOxygenSaturation(id, oxygenSaturationInputModel);
         }
@@ -43,6 +44,16 @@ namespace HomeVital.Services
         public async Task<OxygenSaturationDto> DeleteOxygenSaturation(int id)
         {
             return await _oxygenSaturationRepository.DeleteOxygenSaturation(id);
+        }
+
+        public async Task<OxygenSaturationDto> GetOxygenSaturationById(int id)
+        {
+            var oxygenSaturation = await _oxygenSaturationRepository.GetOxygenSaturationById(id);
+            if (oxygenSaturation == null)
+            {
+                return null;
+            }
+            return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }
     }
 }
