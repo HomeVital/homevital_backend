@@ -107,7 +107,7 @@ namespace HomeVital.Repositories
                     new Patient { Name = "Gunnar Gunnarsson", Phone = "8766134", Address = "Glerárgata 32, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Elín Elínardóttir", Phone = "8257583", Address = "Aðalstræti 60, 600 Akureyri", TeamID = 3 },
                     new Patient { Name = "Sigurður Sigurðsson", Phone = "8108364", Address = "Strandgata 1, 600 Akureyri", TeamID = 1 },
-                    new Patient { Name = "Kolbrún Guðmundsdóttir", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 },
+                    new Patient { Name = "Kolbrún Guðmundsdóttir", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 }
                 );
                 context.SaveChanges();
             }
@@ -120,7 +120,7 @@ namespace HomeVital.Repositories
                 var Krabbameinsteymi = context.Teams.FirstOrDefault(t => t.ID == 4);
                 var Parkinsonsteymi = context.Teams.FirstOrDefault(t => t.ID == 5);
 
-                if (teamA == null || teamB == null || teamC == null || teamD == null || teamE == null)
+                if (Sárateymi == null || Lungnateymi == null || Insulinteymi == null || Krabbameinsteymi == null || Parkinsonsteymi == null)
                 {
                     throw new Exception("Teams must be initialized before adding HealthcareWorkers.");
                 }
@@ -144,7 +144,7 @@ namespace HomeVital.Repositories
                     new HealthcareWorker { Name = "Unnar Sturluson", Phone = "1234567", Status = "Active",Teams = new List<Team> {Sárateymi, Insulinteymi} },
                     new HealthcareWorker { Name = "Brynjar Már Halldórsson", Phone = "1234567", Status = "Active",Teams = new List<Team> {Parkinsonsteymi, Krabbameinsteymi} },
                     new HealthcareWorker { Name = "Jón Hafsteinn Einarsson", Phone = "1234567", Status = "Active",Teams = new List<Team> {Sárateymi, Insulinteymi} },
-                    new HealthcareWorker { Name = "Kári Gautason", Phone = "1234567", Status = "Active",Teams = new List<Team> {Lungnateymi, Parkinsonsteymi} },
+                    new HealthcareWorker { Name = "Kári Gautason", Phone = "1234567", Status = "Active",Teams = new List<Team> {Lungnateymi, Parkinsonsteymi} }
                 );
                 context.SaveChanges();
             }
@@ -401,7 +401,7 @@ namespace HomeVital.Repositories
 
                     new Bloodsugar { PatientID = 20, BloodsugarLevel = 5.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
                     new Bloodsugar { PatientID = 20, BloodsugarLevel = 6.5f, Date = DateTime.UtcNow.AddDays(-2), Status = "Raised" },
-                    new Bloodsugar { PatientID = 20, BloodsugarLevel = 8.5f, Date = DateTime.UtcNow.AddDays(-6), Status = "High" },
+                    new Bloodsugar { PatientID = 20, BloodsugarLevel = 8.5f, Date = DateTime.UtcNow.AddDays(-6), Status = "High" }
                 );
             }
 
@@ -479,7 +479,7 @@ namespace HomeVital.Repositories
 
                     new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
                     new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},,
+                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
 
                     new BloodPressure { PatientID = 8, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
                     new BloodPressure { PatientID = 8, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
@@ -784,7 +784,7 @@ namespace HomeVital.Repositories
 
                     new BodyTemperature { PatientID = 20, Temperature = 36.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
                     new BodyTemperature { PatientID = 20, Temperature = 36.5f, Date = DateTime.UtcNow.AddDays(-2), Status = "Normal" },
-                    new BodyTemperature { PatientID = 20, Temperature = 36.5f, Date = DateTime.UtcNow.AddDays(-1), Status = "Normal" },
+                    new BodyTemperature { PatientID = 20, Temperature = 36.5f, Date = DateTime.UtcNow.AddDays(-1), Status = "Normal" }
 
                 );
             }
