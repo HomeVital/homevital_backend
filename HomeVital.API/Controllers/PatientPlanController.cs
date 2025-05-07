@@ -57,7 +57,7 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<List<PatientPlanDto>>> GetPatientPlansByPatientIdAsync(int patientId)
         {
             var plans = await _patientPlanService.GetPatientPlansByPatientIdAsync(patientId);
-            if (plans == null || plans.Count == 0)
+            if (plans == null)
             {
                 return NotFound();
             }

@@ -33,7 +33,9 @@ namespace HomeVital.API.Controllers
         {
 
             // check if the patien exists
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 return NotFound("Patient does not exist.");

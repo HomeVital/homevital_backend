@@ -25,7 +25,9 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<IEnumerable<Measurements>>> GetXMeasurementsByPatientId(int patientId, int count)
         {
             // check if the patient exists
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 return NotFound("Patient does not exist.");
@@ -43,7 +45,9 @@ namespace HomeVital.API.Controllers
         )
         {
             // Check if the patient exists
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 return NotFound("Patient does not exist.");
@@ -51,10 +55,10 @@ namespace HomeVital.API.Controllers
 
             // Get measurements for the patient
             var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);
-            if (measurements == null || !measurements.Any())
-            {
-                return NotFound("No measurements found for this patient.");
-            }
+            // if (measurements == null)
+            // {
+                
+            // }
 
             // Pagination logic
             var totalCount = measurements.Count();
@@ -112,7 +116,9 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
         {
             // check if the patient exists
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 return NotFound("Patient does not exist.");
