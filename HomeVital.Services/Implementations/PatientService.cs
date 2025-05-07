@@ -25,12 +25,25 @@ namespace HomeVital.Services
             _patientPlanRepository = patientPlanRepository;
         }
 
-        public async Task<PatientDto> CreatePatient(PatientInputModel patient)
+        public async Task<PatientDto?> CreatePatient(PatientInputModel patient)
         {
+            // check if the teamID is 0
+            if (patient.TeamID == 0)
+            {
+                // throw new BadRequestException("TeamID cannot be 0");
+                return null;
+            }
+            // check if the team exists
+            var teamExists = await _teamRepository.GetTeamByIdAsync(patient.TeamID) != null;
+            if (!teamExists)
+            {
+                // throw new NotFoundException($"Team with ID {patient.TeamID} not found.");
+                return null;
+            }
             return await _patientRepository.CreatePatient(patient);
         }
 
-        public async Task<IEnumerable<PatientDto>> GetPatients()
+        public async Task<IEnumerable<PatientDto?>> GetPatients()
         {
             // return await _patientRepository.GetPatients();
 
@@ -70,7 +83,7 @@ namespace HomeVital.Services
 
         }
 
-        public async Task<PatientDto> GetPatientById(int id)
+        public async Task<PatientDto?> GetPatientById(int id)
         {
             // return await _patientRepository.GetPatientById(id);
 
@@ -106,7 +119,7 @@ namespace HomeVital.Services
             return await _patientRepository.DeletePatient(id);
         }
         
-       public async Task<PatientDto> UpdatePatient(int id, PatientInputModel patient)
+       public async Task<PatientDto?> UpdatePatient(int id, PatientInputModel patient)
         {
             // Retrieve the existing patient from the database
             var existingPatient = await _patientRepository.GetPatientById(id);

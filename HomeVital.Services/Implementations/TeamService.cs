@@ -168,6 +168,14 @@ namespace HomeVital.Services.Implementations
       
         public async Task DeleteTeamAsync(int id)
         {
+            // Check if the team exists
+            var team = await _teamRepository.GetTeamByIdAsync(id);
+            if (team == null)
+            {
+                // throw new KeyNotFoundException("Team not found");
+                return;
+            }
+
             await _teamRepository.DeleteTeamAsync(id);
         }
 

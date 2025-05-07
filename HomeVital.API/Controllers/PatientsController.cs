@@ -71,7 +71,9 @@ namespace HomeVital.API.Controllers
             {
                 return BadRequest("input model is not valid");
             }
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 return NotFound();
@@ -106,6 +108,11 @@ namespace HomeVital.API.Controllers
             }
 
             var newPatient = await _patientService.CreatePatient(patientInputModel);
+            if (newPatient == null)
+            {
+                return BadRequest("Failed to create patient");
+            }
+
             return Ok(newPatient);
         }
 
@@ -119,7 +126,9 @@ namespace HomeVital.API.Controllers
                 return BadRequest("input model is not valid");
             }
             // Check if the patient exists
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var existingPatient = await _patientService.GetPatientById(id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (existingPatient == null)
             {
                 return NotFound();

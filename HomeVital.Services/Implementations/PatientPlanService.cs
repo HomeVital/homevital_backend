@@ -41,13 +41,6 @@ namespace HomeVital.Services
                 // throw new NotFoundException("Team not found");
             }
 
-            // check if the patient has an active plan
-            var hasActivePlan = await _patientPlanRepository.GetPatientPlansByPatientIdAsync(patientId);
-            if (hasActivePlan != null && hasActivePlan.Any(p => p.IsActive))
-            {
-                return null;
-                // throw new ArgumentException("Patient already has an active plan");
-            }
             
             var patientPlan = await _patientPlanRepository.CreatePatientPlanAsync(patientPlanInputModel, patientId);
 
