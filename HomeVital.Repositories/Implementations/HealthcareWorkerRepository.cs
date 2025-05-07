@@ -89,7 +89,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
             Kennitala = healthcareWorker.Kennitala
         };
         
-        _dbContext.Users.Add(newUser);
+        await _dbContext.Users.AddAsync(newUser);
         await _dbContext.HealthcareWorkers.AddAsync(newHealthcareWorker);
         await _dbContext.SaveChangesAsync();
         
