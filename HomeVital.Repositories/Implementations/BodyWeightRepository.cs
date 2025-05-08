@@ -163,11 +163,11 @@ namespace HomeVital.Repositories.Implementations{
                 // Check if the percentage change is within the range of 5% decrease
                 if (percentageChange30day > bodyWeightRange.WeightLossFluctuationPercentageGood)
                 {
-                    return VitalStatus.Critical.ToString();
+                    return VitalStatus.High.ToString();
                 }
                 else if (percentageChangerecent > bodyWeightRange.WeightLossFluctuationPercentageGood)
                 {
-                    return VitalStatus.Critical.ToString();
+                    return VitalStatus.High.ToString();
                 }
             }
             else if (mostreRecentBodyWeight.Weight > currentWeight)
@@ -175,11 +175,11 @@ namespace HomeVital.Repositories.Implementations{
                 // Check if the percentage change is within the range of 5% increase
                 if (percentageChange30day > bodyWeightRange.WeightGainPercentageGoodMax)
                 {
-                    return VitalStatus.Critical.ToString();
+                    return VitalStatus.High.ToString();
                 }
                 else if (percentageChangerecent > bodyWeightRange.WeightGainPercentageGoodMax)
                 {
-                    return VitalStatus.Critical.ToString();
+                    return VitalStatus.High.ToString();
                 }
 
                 return VitalStatus.Normal.ToString();

@@ -94,29 +94,26 @@ namespace HomeVital.Repositories.Implementations
 
         private static string CheckBodyTemperatureRange(BodyTemperatureInputModel bodyTemperatureInputModel, BodyTemperatureRange bodyTemperatureRange)
         {
-            if (bodyTemperatureInputModel.Temperature >= bodyTemperatureRange.TemperatureGoodMin
-                && bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureGoodMax)
+            // Check if the body temperature is within the range
+            if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureUnderAverage)
+            {
+                return VitalStatus.High.ToString();
+            }
+            else if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureGood)
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+            else if (bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureNotOk)
             {
                 return VitalStatus.Normal.ToString();
             }
-            // 
-            else if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureUnderAverage)
-            {
-                return  VitalStatus.Raised.ToString();
-            }
-            else if (bodyTemperatureInputModel.Temperature >= bodyTemperatureRange.TemperatureNotOkMin
-                && bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureNotOkMax)
+            else if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureCritical)
             {
                 return VitalStatus.Raised.ToString();
-            }
-            else if (bodyTemperatureInputModel.Temperature > bodyTemperatureRange.TemperatureCriticalMin
-                && bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureCriticalMax)
-            {
-                return VitalStatus.Critical.ToString();
             }
             else
             {
-                return VitalStatus.Raised.ToString();
+                return VitalStatus.High.ToString();
             }
         }
     }

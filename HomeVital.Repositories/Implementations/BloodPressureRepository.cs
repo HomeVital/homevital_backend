@@ -130,45 +130,45 @@ public class BloodPressureRepository : IBloodPressureRepository
     private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange vitalRangeBloodpressure)
     {
         // SYS < 120 and DIA < 80
-        if (bloodPressureInputModel.Systolic < vitalRangeBloodpressure.SystolicGoodMax 
-        && bloodPressureInputModel.Diastolic < vitalRangeBloodpressure.DiastolicGoodMax
-        )
-        {
-            return VitalStatus.Normal.ToString();
-        }
-        // SYS 120-129 and DIA < 80
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicOkMin 
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicOkMax 
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicOkMax)
-        {
-            return  VitalStatus.Raised.ToString();
-        }
-        // SYS 130-139 or DIA 80-89
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicNotOkMin 
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicNotOkMax 
-        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicNotOkMin 
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicNotOkMax)
-        {
-            return VitalStatus.High.ToString();
-        }
-        // SYS > 140 - SystolicCriticalStage3Min or DIA > 90 - DiastolicCriticalStage3Min
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicCriticalMin
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicCriticalStage3Min
-        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicCriticalMin
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicCriticalStage3Min)
-        {
-            return VitalStatus.Critical.ToString();
-        }
-        // SYS > 180  or DIA > 120 
-        else if (bloodPressureInputModel.Systolic > vitalRangeBloodpressure.SystolicCriticalStage3Min
-        && bloodPressureInputModel.Diastolic > vitalRangeBloodpressure.DiastolicCriticalStage3Min)
-        {
-            return VitalStatus.CriticalHigh.ToString();
-        }
-        else
-        {
-            return VitalStatus.Invalid.ToString();
-        }
+        // if (bloodPressureInputModel.Systolic < vitalRangeBloodpressure.SystolicGoodMax 
+        // && bloodPressureInputModel.Diastolic < vitalRangeBloodpressure.DiastolicGoodMax
+        // )
+        // {
+        //     return VitalStatus.Normal.ToString();
+        // }
+        // // SYS 120-129 and DIA < 80
+        // else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicOkMin 
+        // && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicOkMax 
+        // && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicOkMax)
+        // {
+        //     return  VitalStatus.Raised.ToString();
+        // }
+        // // SYS 130-139 or DIA 80-89
+        // else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicNotOkMin 
+        // && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicNotOkMax 
+        // && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicNotOkMin 
+        // && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicNotOkMax)
+        // {
+        //     return VitalStatus.High.ToString();
+        // }
+        // // SYS > 140 - SystolicCriticalStage3Min or DIA > 90 - DiastolicCriticalStage3Min
+        // else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicCriticalMin
+        // && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicCriticalStage3Min
+        // && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicCriticalMin
+        // && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicCriticalStage3Min)
+        // {
+        //     return VitalStatus.Critical.ToString();
+        // }
+        // // SYS > 180  or DIA > 120 
+        // else if (bloodPressureInputModel.Systolic > vitalRangeBloodpressure.SystolicCriticalStage3Min
+        // && bloodPressureInputModel.Diastolic > vitalRangeBloodpressure.DiastolicCriticalStage3Min)
+        // {
+        //     return VitalStatus.CriticalHigh.ToString();
+        // }
+        // else
+        // {
+        return VitalStatus.Invalid.ToString();
+        // }
     }
 
 

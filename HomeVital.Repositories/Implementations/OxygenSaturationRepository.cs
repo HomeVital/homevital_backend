@@ -104,29 +104,53 @@ namespace HomeVital.Repositories.Implementations
         {
             // check oxygen saturation range
 
+            // if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
+            // {
+            //     return VitalStatus.Normal.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationOkMin
+            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationOkMax)
+            // {
+            //     return VitalStatus.Raised.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationNotOkMin
+            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationNotOkMax)
+            // {
+            //     return VitalStatus.High.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationCriticalMax)
+            // {
+            //     return VitalStatus.Critical.ToString();
+            // }
+            // else
+            // {
+            //     return VitalStatus.Invalid.ToString();
+            // }
+
+
+            // check oxygen saturation range with the 3 ranges
+
             if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
             {
                 return VitalStatus.Normal.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationOkMin
-                && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationOkMax)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationRaised)
             {
                 return VitalStatus.Raised.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationNotOkMin
-                && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationNotOkMax)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationHigh)
             {
                 return VitalStatus.High.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationCriticalMax)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue < 0)
             {
-                return VitalStatus.Critical.ToString();
+                return VitalStatus.High.ToString();
             }
             else
             {
                 return VitalStatus.Invalid.ToString();
-            }
             
+            }
         }
     }
 }

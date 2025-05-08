@@ -99,31 +99,33 @@ namespace HomeVital.Repositories.Implementations
         {
             // check blood sugar range
             //  1 80 to 100 is good (Good)
-            if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarGoodMin 
-            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarGoodMax)
-            {
-                return VitalStatus.Normal.ToString();
-            }
-            // 2 101 to 125 is not ok (elevated)
-            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarNotOkMin 
-            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarNotOkMax)
-            {
-                return VitalStatus.Raised.ToString();
-            }
-            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarCriticalMin 
-            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarCriticalMax)
-            {
-                return VitalStatus.High.ToString();
-            }
-            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarlowMin 
-            && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarlowMax)
-            {
-                return VitalStatus.Critical.ToString();
-            }
-            else
-            {
-                return VitalStatus.Invalid.ToString();
-            }
+            // if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarGoodMin 
+            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarGoodMax)
+            // {
+            //     return VitalStatus.Normal.ToString();
+            // }
+            // // 2 101 to 125 is not ok (elevated)
+            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarNotOkMin 
+            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarNotOkMax)
+            // {
+            //     return VitalStatus.Raised.ToString();
+            // }
+            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarCriticalMin 
+            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarCriticalMax)
+            // {
+            //     return VitalStatus.High.ToString();
+            // }
+            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarlowMin 
+            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarlowMax)
+            // {
+            //     return VitalStatus.Critical.ToString();
+            // }
+            // else
+            // {
+            //     return VitalStatus.Invalid.ToString();
+            // }
+
+            return VitalStatus.Invalid.ToString();
         }
 
     }
