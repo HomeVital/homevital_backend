@@ -6,7 +6,7 @@ namespace HomeVital.Models.Entities
         public int ID { get; set; }
         public int PatientID { get; set; }
         public Patient Patient { get; set; } = null!; // Navigation property
-        public string MeasureHand { get; set; } = string.Empty;
+        public string MeasuredHand { get; set; } = string.Empty;
         public string BodyPosition { get; set; } = string.Empty;
         public int Systolic { get; set; } = 0;
         public int Diastolic { get; set; } = 0;

@@ -2,14 +2,14 @@ namespace HomeVital.Models.Enums
 {
     public enum BodyPosition
     {
-        Sitting,
-        Lying
+        Sitting, // 0
+        Laying  // 1
     }
 
     public enum MeasuredHand
     {
-        Left,
-        Right
+        Left, // 0
+        Right // 1
     }
 
     public enum ActivityStatus

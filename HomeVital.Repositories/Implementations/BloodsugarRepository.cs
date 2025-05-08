@@ -97,35 +97,28 @@ namespace HomeVital.Repositories.Implementations
 
         private static string CheckBloodSugarRange(BloodsugarInputModel bloodsugarInputModel, BloodSugarRange vitalRangeBloodsugar)
         {
-            // check blood sugar range
-            //  1 80 to 100 is good (Good)
-            // if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarGoodMin 
-            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarGoodMax)
-            // {
-            //     return VitalStatus.Normal.ToString();
-            // }
-            // // 2 101 to 125 is not ok (elevated)
-            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarNotOkMin 
-            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarNotOkMax)
-            // {
-            //     return VitalStatus.Raised.ToString();
-            // }
-            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarCriticalMin 
-            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarCriticalMax)
-            // {
-            //     return VitalStatus.High.ToString();
-            // }
-            // else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarlowMin 
-            // && bloodsugarInputModel.BloodsugarLevel <= vitalRangeBloodsugar.BloodSugarlowMax)
-            // {
-            //     return VitalStatus.Critical.ToString();
-            // }
-            // else
-            // {
-            //     return VitalStatus.Invalid.ToString();
-            // }
-
-            return VitalStatus.Invalid.ToString();
+            // check blood sugar range 
+            if (bloodsugarInputModel.BloodsugarLevel < vitalRangeBloodsugar.BloodSugarLowered)
+            {
+                return VitalStatus.Raised.ToString();
+            }
+            else if (bloodsugarInputModel.BloodsugarLevel < vitalRangeBloodsugar.BloodSugarGood)
+            {
+                return VitalStatus.Normal.ToString();
+            }
+            else if (bloodsugarInputModel.BloodsugarLevel < vitalRangeBloodsugar.BloodSugarRaised)
+            {
+                return VitalStatus.Raised.ToString();
+            }
+            else if (bloodsugarInputModel.BloodsugarLevel > vitalRangeBloodsugar.BloodSugarHigh)
+            {
+                return VitalStatus.High.ToString();
+            }
+            else
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+            
         }
 
     }

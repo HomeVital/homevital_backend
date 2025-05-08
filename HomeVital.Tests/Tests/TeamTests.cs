@@ -82,8 +82,8 @@ namespace HomeVital.Tests
             var teams = JsonConvert.DeserializeObject<List<TeamDto>>(content);
             Assert.NotNull(teams);
             Assert.NotEmpty(teams);
-            // teams should be 3 at startup with data initialization
-            Assert.Equal(3, teams.Count);
+            // teams should be 5 at startup with data initialization
+            Assert.Equal(5, teams.Count);
         }
 
         // Test an endpoint that returns a team by ID

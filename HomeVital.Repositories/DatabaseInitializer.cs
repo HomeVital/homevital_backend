@@ -60,6 +60,7 @@ namespace HomeVital.Repositories
                     new User { Kennitala = "1818181818", PatientID = 18 },
                     new User { Kennitala = "1919191919", PatientID = 19 },
                     new User { Kennitala = "2020202020", PatientID = 20 },
+                    new User { Kennitala = "2121212121", PatientID = 21 },
                     // 20 Workers 
                     new User { Kennitala = "1234123412", HealthcareWorkerID = 1 },
                     new User { Kennitala = "4321432143", HealthcareWorkerID = 2 },
@@ -107,7 +108,8 @@ namespace HomeVital.Repositories
                     new Patient { Name = "Gunnar Gunnarsson", Phone = "8766134", Address = "Glerárgata 32, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Elín Elínardóttir", Phone = "8257583", Address = "Aðalstræti 60, 600 Akureyri", TeamID = 3 },
                     new Patient { Name = "Sigurður Sigurðsson", Phone = "8108364", Address = "Strandgata 1, 600 Akureyri", TeamID = 1 },
-                    new Patient { Name = "Kolbrún Guðmundsdóttir", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 }
+                    new Patient { Name = "Kolbrún Guðmundsdóttir", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 },
+                    new Patient { Name = "Patient For TESTS", Phone = "8554013", Address = "Eyrarlandsvegur 12, 600 Akureyri", TeamID = 3 }
                 );
                 context.SaveChanges();
             }
@@ -174,7 +176,8 @@ namespace HomeVital.Repositories
                     new BloodPressureRange { PatientID = 17 },
                     new BloodPressureRange { PatientID = 18 },
                     new BloodPressureRange { PatientID = 19 },
-                    new BloodPressureRange { PatientID = 20 }
+                    new BloodPressureRange { PatientID = 20 },
+                    new BloodPressureRange { PatientID = 21 }
                 );
             }
             if (!context.BloodSugarRanges.Any())
@@ -199,7 +202,8 @@ namespace HomeVital.Repositories
                     new BloodSugarRange { PatientID = 17 },
                     new BloodSugarRange { PatientID = 18 },
                     new BloodSugarRange { PatientID = 19 },
-                    new BloodSugarRange { PatientID = 20 }
+                    new BloodSugarRange { PatientID = 20 },
+                    new BloodSugarRange { PatientID = 21 }
                 );
             }
             if (!context.BodyTemperatureRanges.Any())
@@ -224,7 +228,8 @@ namespace HomeVital.Repositories
                     new BodyTemperatureRange { PatientID = 17 },
                     new BodyTemperatureRange { PatientID = 18 },
                     new BodyTemperatureRange { PatientID = 19 },
-                    new BodyTemperatureRange { PatientID = 20 }
+                    new BodyTemperatureRange { PatientID = 20 },
+                    new BodyTemperatureRange { PatientID = 21 }
                 );
             }
             if (!context.BodyWeightRanges.Any())
@@ -249,7 +254,8 @@ namespace HomeVital.Repositories
                     new BodyWeightRange { PatientID = 17 },
                     new BodyWeightRange { PatientID = 18 },
                     new BodyWeightRange { PatientID = 19 },
-                    new BodyWeightRange { PatientID = 20 }
+                    new BodyWeightRange { PatientID = 20 },
+                    new BodyWeightRange { PatientID = 21 }
                 );
             }
             if (!context.OxygenSaturationRanges.Any())
@@ -274,7 +280,8 @@ namespace HomeVital.Repositories
                     new OxygenSaturationRange { PatientID = 17 },
                     new OxygenSaturationRange { PatientID = 18 },
                     new OxygenSaturationRange { PatientID = 19 },
-                    new OxygenSaturationRange { PatientID = 20 }
+                    new OxygenSaturationRange { PatientID = 20 },
+                    new OxygenSaturationRange { PatientID = 21 }
                 );
             }
             if (!context.Bloodsugars.Any())
@@ -408,130 +415,130 @@ namespace HomeVital.Repositories
             if (!context.BloodPressures.Any())
             {
                 context.BloodPressures.AddRange(
-                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-83), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 1, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-83), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 1, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 1, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
                     
-                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-77), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-275), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-8), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 2, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-77), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-275), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-8), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 2, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 2, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
                     
-                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-378), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-26), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-155), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
-                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 3, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-378), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-26), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-155), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-15), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-14), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-13), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-12), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-11), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-10), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-9), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-8), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 100, Diastolic = 77, Date = DateTime.UtcNow.AddDays(-7), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-6), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 3, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 110, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-2), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 3, Systolic = 100, Diastolic = 70, Date = DateTime.UtcNow.AddDays(-1), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
                     
-                    new BloodPressure { PatientID = 4, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 4, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-55), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-321), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 4, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 4, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-55), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 4, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-321), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
                     
-                    new BloodPressure { PatientID = 5, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 5, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-332), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 5, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-232), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 5, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 5, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-332), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 5, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-232), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "High"},
                     
-                    new BloodPressure { PatientID = 6, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-55), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 6, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-23), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 6, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 6, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-55), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 6, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-23), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 6, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-2), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-2), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-1), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 7, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
 
-                    new BloodPressure { PatientID = 8, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 8, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 8, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 8, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 8, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 8, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 9, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 9, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 9, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 9, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 9, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 9, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 10, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 10, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 10, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 10, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 10, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 10, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
                     
-                    new BloodPressure { PatientID = 11, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 11, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 11, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 11, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 11, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 11, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
                     
-                    new BloodPressure { PatientID = 12, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 12, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 12, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 12, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 12, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 12, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 13, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 13, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 13, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 13, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 13, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 13, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 14, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 14, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 14, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 14, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 14, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 14, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 15, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 15, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 15, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 15, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 15, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 15, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 16, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 16, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 16, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 16, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 16, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 16, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 17, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 17, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 17, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 17, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 17, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 17, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 18, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 18, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 18, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 18, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 18, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 18, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 19, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 19, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 19, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
+                    new BloodPressure { PatientID = 19, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 19, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Right", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 19, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Left", BodyPosition = "Sitting", Pulse = 70, Status = "High"},
 
-                    new BloodPressure { PatientID = 20, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
-                    new BloodPressure { PatientID = 20, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasureHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
-                    new BloodPressure { PatientID = 20, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasureHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"}
+                    new BloodPressure { PatientID = 20, Systolic = 120, Diastolic = 80, Date = DateTime.UtcNow.AddDays(-3), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "Normal"},
+                    new BloodPressure { PatientID = 20, Systolic = 130, Diastolic = 90, Date = DateTime.UtcNow.AddDays(-4), MeasuredHand = "Left", BodyPosition = "Laying", Pulse = 70, Status = "Raised"},
+                    new BloodPressure { PatientID = 20, Systolic = 150, Diastolic = 100, Date = DateTime.UtcNow.AddDays(-5), MeasuredHand = "Right", BodyPosition = "Sitting", Pulse = 70, Status = "High"}
                 );
             }
 

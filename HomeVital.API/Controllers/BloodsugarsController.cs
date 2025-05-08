@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/bloodsugar")]
     public class BloodsugarsController : ControllerBase
@@ -20,7 +20,7 @@ namespace HomeVital.API.Controllers
             }
 
             // Get all bloodsugars by patient ID
-            [Authorize(Roles = "Patient")]
+            // [Authorize(Roles = "Patient")]
             [HttpGet("{patientId}")]
             public async Task<ActionResult<IEnumerable<BloodsugarDto>>> GetBloodsugarsByPatientIdAsync(int patientId)
             {
@@ -29,7 +29,7 @@ namespace HomeVital.API.Controllers
             }
 
             // Create a new bloodsugar record for a patient
-            [Authorize(Roles = "Patient")]
+            // [Authorize(Roles = "Patient")]
             [HttpPost("{patientId}")]
             public async Task<ActionResult<BloodsugarDto>> CreateBloodsugarAsync(int patientId, BloodsugarInputModel bloodsugarInputModel)
             {
@@ -43,7 +43,7 @@ namespace HomeVital.API.Controllers
             }
 
             // Update a bloodsugar record by ID
-            [Authorize(Roles = "Patient")]
+            // [Authorize(Roles = "Patient")]
             [HttpPatch("{id}")]
             public async Task<ActionResult<BloodsugarDto>> UpdateBloodsugarAsync(int id, BloodsugarInputModel bloodsugarInputModel)
             {
@@ -57,7 +57,7 @@ namespace HomeVital.API.Controllers
             }
 
             // Delete a bloodsugar record by ID
-            [Authorize(Roles = "Patient")]
+            // [Authorize(Roles = "Patient")]
             [HttpDelete("{id}")]
             public async Task<ActionResult<BloodsugarDto>> DeleteBloodsugarAsync(int id)
             {

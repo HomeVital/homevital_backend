@@ -6,6 +6,7 @@ namespace HomeVital.Models.Dtos
         public int PatientID { get; set; }
 
         // Blood Sugar in mmol/L
+        public double BloodSugarLowered { get; set; }
         public double BloodSugarGood { get; set; }
         public double BloodSugarRaised { get; set; }
         public double BloodSugarHigh { get; set; }

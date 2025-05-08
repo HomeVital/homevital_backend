@@ -137,56 +137,70 @@ namespace HomeVital.Repositories.Implementations{
                 return VitalStatus.Normal.ToString();
             }
 
-            // // Calculate the average weight
-            // var totalWeight = bodyWeights.Sum(b => b.Weight);
-            // var averageWeight = totalWeight / bodyWeights.Count;
 
-            // // Calculate the percentage change
-            // var percentageChange = (currentWeight - averageWeight) / averageWeight * 100;
+            var weightLossFluctStatus = "";
+            var weightGainFluctStatus = "";
 
-            // calclate the percentage change based on the measured weight 30 days ago
-            var lastBodyWeight = bodyWeights.LastOrDefault();
-            if (lastBodyWeight == null)
+            // get the weight from 30 days ago or the oldest weight measurement
+            var oldestBodyWeight = bodyWeights.LastOrDefault();
+
+            // calculate the percentage change from the oldest body weight to the current weight
+            var percentageChangeFromOldest = ((currentWeight - oldestBodyWeight.Weight) / oldestBodyWeight.Weight) * 100;
+            // check if negative or positive
+            if (percentageChangeFromOldest < 0)
             {
+                // if negative make positive
+                percentageChangeFromOldest = Math.Abs(percentageChangeFromOldest);
+                // if negative, check the weight loss fluctuation percentage
+                if (percentageChangeFromOldest < bodyWeightRange.WeightLossFluctuationPercentageGood)
+                {
+                    weightLossFluctStatus = VitalStatus.Normal.ToString();
+                }
+                else if (percentageChangeFromOldest > bodyWeightRange.WeightLossFluctuationPercentageGood)
+                {
+                    weightLossFluctStatus = VitalStatus.High.ToString();
+                }
+            } 
+            else if (percentageChangeFromOldest > 0)
+            {
+                // if positive, check the weight gain fluctuation percentage
+                if (percentageChangeFromOldest < bodyWeightRange.WeightGainFluctuationPercentageGood)
+                {
+                    weightGainFluctStatus = VitalStatus.Normal.ToString();
+                }
+                else if (percentageChangeFromOldest > bodyWeightRange.WeightGainFluctuationPercentageGood)
+                {
+                    weightGainFluctStatus = VitalStatus.High.ToString();
+                }
+            }
+
+            // get most recent body weight and check if it is within the range WeightGainPercentageGoodMax 
+            var mostRecentBodyWeight = bodyWeights.FirstOrDefault();
+            // calculate the percentage change for the most recent body weight
+            var percentageChange = ((currentWeight - mostRecentBodyWeight.Weight) / mostRecentBodyWeight.Weight) * 100;
+
+            // check if the change between the current weight and the most recent body weight is within the range
+            if (percentageChange < bodyWeightRange.WeightGainPercentageGoodMax)
+            {
+                // check if the weight loss fluctuation status is high
+                if (weightLossFluctStatus == VitalStatus.High.ToString())
+                {
+                    return VitalStatus.High.ToString();
+                }
+                // check if the weight gain fluctuation status is high
+                if (weightGainFluctStatus == VitalStatus.High.ToString())
+                {
+                    return VitalStatus.High.ToString();
+                }
                 return VitalStatus.Normal.ToString();
-            }
-            var mostreRecentBodyWeight = bodyWeights.FirstOrDefault();
-            if (mostreRecentBodyWeight == null)
-            {
-                return VitalStatus.Normal.ToString();
-            }
-            var percentageChange30day = (currentWeight - lastBodyWeight.Weight) / lastBodyWeight.Weight * 100;
-            var percentageChangerecent = (currentWeight - mostreRecentBodyWeight.Weight) / mostreRecentBodyWeight.Weight * 100;
 
-            if (mostreRecentBodyWeight.Weight < currentWeight)
+            } 
+            else if (percentageChange > bodyWeightRange.WeightGainPercentageGoodMax)
             {
-                // Check if the percentage change is within the range of 5% decrease
-                if (percentageChange30day > bodyWeightRange.WeightLossFluctuationPercentageGood)
-                {
-                    return VitalStatus.High.ToString();
-                }
-                else if (percentageChangerecent > bodyWeightRange.WeightLossFluctuationPercentageGood)
-                {
-                    return VitalStatus.High.ToString();
-                }
-            }
-            else if (mostreRecentBodyWeight.Weight > currentWeight)
-            {
-                // Check if the percentage change is within the range of 5% increase
-                if (percentageChange30day > bodyWeightRange.WeightGainPercentageGoodMax)
-                {
-                    return VitalStatus.High.ToString();
-                }
-                else if (percentageChangerecent > bodyWeightRange.WeightGainPercentageGoodMax)
-                {
-                    return VitalStatus.High.ToString();
-                }
-
-                return VitalStatus.Normal.ToString();
+                return VitalStatus.High.ToString();
             }
 
-            // Default return in case no conditions are met
-            return VitalStatus.Normal.ToString();
+            return VitalStatus.Invalid.ToString();
         }
 
     }

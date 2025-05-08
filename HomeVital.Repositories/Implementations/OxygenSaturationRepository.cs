@@ -129,6 +129,11 @@ namespace HomeVital.Repositories.Implementations
 
 
             // check oxygen saturation range with the 3 ranges
+            // OxygenSaturationGood
+
+            // OxygenSaturationRaised
+
+            // OxygenSaturationHigh
 
             if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
             {
@@ -138,11 +143,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 return VitalStatus.Raised.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationHigh)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationHigh)
             {
-                return VitalStatus.High.ToString();
+                return VitalStatus.Raised.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue < 0)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationHigh)
             {
                 return VitalStatus.High.ToString();
             }
