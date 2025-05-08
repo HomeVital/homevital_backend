@@ -71,15 +71,23 @@ namespace HomeVital.Services.Implementations
                     return null;
 
                 }
+                // public int ID { get; set; }
+        // public string? Name { get; set; } = string.Empty;
+        // public string? Phone { get; set; } = string.Empty;
+        // // TeamID is a list of team ids
+        // public List<int>? TeamIDs { get; set; } = new List<int>();
+        // public string? Status { get; set; } = string.Empty;
                 // update the worker's team id
                 var healthcareWorkerInputModel = new HealthcareWorkerInputModel
                 {
                     // populate the input model with necessary properties
-                    // TeamIDs = teamID
-                    TeamIDs = worker.TeamIDs.Append(teamID).ToList()
-
+                    Name = worker.Name,
+                    Phone = worker.Phone,
+                    TeamIDs = worker.TeamIDs.Append(teamID).ToList(),
+                    Status = worker.Status,
+                    
                 };
-                await _healthcareWorkerRepository.UpdateHealthcareWorker(workerID, healthcareWorkerInputModel);
+                await _healthcareWorkerRepository.UpdateHealthcareWorker(worker.ID, healthcareWorkerInputModel);
             }
             
 
@@ -140,7 +148,7 @@ namespace HomeVital.Services.Implementations
                 team.TeamLeaderID = teamInputModel.TeamLeaderID;
                 team.TeamLeaderName = teamLeader.Name;
             }
-            
+            int teamLeaderID = team.TeamLeaderID ?? 0;
 
             if (teamInputModel.TeamLeaderID != null)
             {
@@ -158,7 +166,7 @@ namespace HomeVital.Services.Implementations
                     TeamIDs = teamLeader.TeamIDs.Append(id).ToList()
 
                 };
-                await _healthcareWorkerRepository.UpdateHealthcareWorker(teamInputModel.TeamLeaderID.Value, healthcareWorkerInputModel);
+                await _healthcareWorkerRepository.UpdateHealthcareWorker(teamLeaderID, healthcareWorkerInputModel);
             }
 
             // Save changes
