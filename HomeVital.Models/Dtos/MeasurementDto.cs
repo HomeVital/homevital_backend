@@ -34,7 +34,7 @@ namespace HomeVital.Models.Dtos
         public int? Systolic { get; set; }
         public int? Diastolic { get; set; }
         public int? BPM { get; set; }
-        public string? MeasureHand { get; set; } = string.Empty;
+        public string? MeasuredHand { get; set; } = string.Empty;
         public string? BodyPosition { get; set; } = string.Empty;
 
         // if type is blood sugar then rest of the fields will be null

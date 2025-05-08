@@ -46,6 +46,8 @@ public class BloodPressureRepository : IBloodPressureRepository
         // }
         // check blood pressure range
         bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
+        // make sure measure hand and body position are not null
+
 
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
@@ -76,7 +78,7 @@ public class BloodPressureRepository : IBloodPressureRepository
             
                 // Update only non-default values
             // Convert enum to string when setting the MeasureHand property
-            bloodPressure.MeasureHand = bloodPressureInputModel.MeasuredHand.ToString();
+            bloodPressure.MeasuredHand = bloodPressureInputModel.MeasuredHand.ToString();
             
             // Convert enum to string when setting the BodyPosition property
             bloodPressure.BodyPosition = bloodPressureInputModel.BodyPosition.ToString();
@@ -127,49 +129,67 @@ public class BloodPressureRepository : IBloodPressureRepository
     }
 
     // private function to check blood pressure range
-    private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange vitalRangeBloodpressure)
+    private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange BloodPressureRange)
     {
-        // SYS < 120 and DIA < 80
-        if (bloodPressureInputModel.Systolic < vitalRangeBloodpressure.SystolicGoodMax 
-        && bloodPressureInputModel.Diastolic < vitalRangeBloodpressure.DiastolicGoodMax
-        )
+        var sysStatus = string.Empty;
+        var diaStatus = string.Empty;
+
+        // Check if the blood pressure is within the normal range, start with checking the systolic values
+        if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicLowered)
         {
-            return VitalStatus.Normal.ToString();
+            sysStatus = VitalStatus.Raised.ToString();
         }
-        // SYS 120-129 and DIA < 80
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicOkMin 
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicOkMax 
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicOkMax)
+        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicGood)
         {
-            return  VitalStatus.Raised.ToString();
+            sysStatus = VitalStatus.Normal.ToString();
         }
-        // SYS 130-139 or DIA 80-89
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicNotOkMin 
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicNotOkMax 
-        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicNotOkMin 
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicNotOkMax)
+        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicRaised)
         {
-            return VitalStatus.High.ToString();
+            sysStatus = VitalStatus.Raised.ToString();
         }
-        // SYS > 140 - SystolicCriticalStage3Min or DIA > 90 - DiastolicCriticalStage3Min
-        else if (bloodPressureInputModel.Systolic >= vitalRangeBloodpressure.SystolicCriticalMin
-        && bloodPressureInputModel.Systolic <= vitalRangeBloodpressure.SystolicCriticalStage3Min
-        && bloodPressureInputModel.Diastolic >= vitalRangeBloodpressure.DiastolicCriticalMin
-        && bloodPressureInputModel.Diastolic <= vitalRangeBloodpressure.DiastolicCriticalStage3Min)
+        // Systolic high if now less than the systolic high value or greater than the systolic high value
+        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicHigh || bloodPressureInputModel.Systolic > BloodPressureRange.SystolicHigh)
         {
-            return VitalStatus.Critical.ToString();
-        }
-        // SYS > 180  or DIA > 120 
-        else if (bloodPressureInputModel.Systolic > vitalRangeBloodpressure.SystolicCriticalStage3Min
-        && bloodPressureInputModel.Diastolic > vitalRangeBloodpressure.DiastolicCriticalStage3Min)
-        {
-            return VitalStatus.CriticalHigh.ToString();
+            sysStatus = VitalStatus.High.ToString();
         }
         else
         {
-            return VitalStatus.Invalid.ToString();
+            sysStatus = VitalStatus.Invalid.ToString();
         }
-    }
 
+        if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicLowered)
+        {
+            diaStatus = VitalStatus.Raised.ToString();
+        }
+        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicGood)
+        {
+            diaStatus = VitalStatus.Normal.ToString();
+        }
+        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicRaised)
+        {
+            diaStatus = VitalStatus.Raised.ToString();
+        }
+        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicHigh || bloodPressureInputModel.Diastolic > BloodPressureRange.DiastolicHigh)
+        {
+            diaStatus = VitalStatus.High.ToString();
+        }
+        // Determine final status with systolic having more weight
+        string finalStatus;
+        if (sysStatus == VitalStatus.High.ToString() || sysStatus == VitalStatus.Raised.ToString())
+        {
+            finalStatus = sysStatus; // Prioritize systolic status
+        }
+        else if (sysStatus == VitalStatus.Normal.ToString())
+        {
+            finalStatus = diaStatus; // Consider diastolic status only if systolic is normal
+        }
+        else
+        {
+            finalStatus = VitalStatus.Invalid.ToString(); // Handle invalid cases
+        }
+
+        // Return or set the final status
+        return finalStatus;        
+    }
 
 }

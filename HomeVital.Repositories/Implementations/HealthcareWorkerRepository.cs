@@ -105,9 +105,9 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         if (healthcareWorkerToUpdate != null)
         {
             // Update basic properties
-            healthcareWorkerToUpdate.Name = healthcareWorker.Name;
-            healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
-            healthcareWorkerToUpdate.Status = healthcareWorker.Status;
+            // healthcareWorkerToUpdate.Name = healthcareWorker.Name;
+            // healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
+            // healthcareWorkerToUpdate.Status = healthcareWorker.Status;
             
             // Handle teams relationship properly
             if (healthcareWorker.TeamIDs != null)
