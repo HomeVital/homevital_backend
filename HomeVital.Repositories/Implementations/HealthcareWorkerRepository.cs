@@ -110,7 +110,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var newUser = new User
         {
             HealthcareWorkerID = newHealthcareWorker.ID,
-            Kennitala = healthcareWorker.Kennitala
+            Kennitala = healthcareWorker.Kennitala ?? throw new VarArgumentException("Kennitala cannot be null.")
         };
         
         await _dbContext.Users.AddAsync(newUser);

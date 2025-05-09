@@ -5,6 +5,7 @@ using HomeVital.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Models.Entities;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -39,7 +40,7 @@ namespace HomeVital.Repositories.Implementations
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientPlanInputModel.TeamID);
             if (!teamExists)
             {
-                throw new ResourceNotFoundException($"Team with ID {patientPlanInputModel.TeamID} does not exist.");
+                throw new ResourceNotFoundException($"Team with ID {patientPlanInputModel.TeamID} not found.");
             }
 
             var patient = await _dbContext.Patients
@@ -48,7 +49,7 @@ namespace HomeVital.Repositories.Implementations
                 
             if (patient == null)
             {
-                return null;
+                throw new ResourceNotFoundException($"Patient with ID {patientId} not found.");
             }
             
 
@@ -69,7 +70,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (patientPlan == null)
             {
-                return null;
+                throw new ResourceNotFoundException($"Patient plan with ID {id} not found.");
             }
 
             return _mapper.Map<PatientPlanDto>(patientPlan);

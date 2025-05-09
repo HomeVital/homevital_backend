@@ -157,6 +157,11 @@ namespace HomeVital.Repositories.Implementations{
 
             // get the weight from 30 days ago or the oldest weight measurement
             var oldestBodyWeight = bodyWeights.LastOrDefault();
+            if (oldestBodyWeight == null)
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+            
 
             // calculate the percentage change from the oldest body weight to the current weight
             var percentageChangeFromOldest = ((currentWeight - oldestBodyWeight.Weight) / oldestBodyWeight.Weight) * 100;
@@ -190,6 +195,11 @@ namespace HomeVital.Repositories.Implementations{
 
             // get most recent body weight and check if it is within the range WeightGainPercentageGoodMax 
             var mostRecentBodyWeight = bodyWeights.FirstOrDefault();
+
+            if (mostRecentBodyWeight == null)
+            {
+                return VitalStatus.Invalid.ToString();
+            }
             // calculate the percentage change for the most recent body weight
             var percentageChange = ((currentWeight - mostRecentBodyWeight.Weight) / mostRecentBodyWeight.Weight) * 100;
 
