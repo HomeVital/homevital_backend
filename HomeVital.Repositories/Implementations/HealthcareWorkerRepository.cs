@@ -5,6 +5,7 @@ using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations;
 
@@ -20,9 +21,15 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<List<HealthcareWorker>> GetHealthcareWorkersByIdsAsync(IEnumerable<int> ids)
     {
-        return await _dbContext.HealthcareWorkers
+        var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Where(hw => ids.Contains(hw.ID))
+            // .Include(hw => hw.Teams)
             .ToListAsync();
+        if (healthcareWorkers == null || !healthcareWorkers.Any())
+        {
+            throw new ResourceNotFoundException("No healthcare workers found with the provided IDs.");
+        }
+        return healthcareWorkers;
     }
     public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
@@ -30,6 +37,11 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .ToListAsync();
+
+        if (healthcareWorkers == null || !healthcareWorkers.Any())
+        {
+            throw new ResourceNotFoundException("No healthcare workers found.");
+        }
 
         return _mapper.Map<IEnumerable<HealthcareWorkerDto>>(healthcareWorkers);
     }
@@ -39,6 +51,12 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var healthcareWorker = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorker == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
+
         return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
     }
 
@@ -48,6 +66,12 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var healthcareWorkerToDelete = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorkerToDelete == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
+
         if (healthcareWorkerToDelete != null)
         {
             // remove from teams
@@ -101,13 +125,14 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var healthcareWorkerToUpdate = await _dbContext.HealthcareWorkers
             .Include(hw => hw.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorkerToUpdate == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
             
         if (healthcareWorkerToUpdate != null)
         {
-            // Update basic properties
-            // healthcareWorkerToUpdate.Name = healthcareWorker.Name;
-            // healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
-            // healthcareWorkerToUpdate.Status = healthcareWorker.Status;
             
             // Handle teams relationship properly
             if (healthcareWorker.TeamIDs != null)

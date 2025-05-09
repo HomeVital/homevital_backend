@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using HomeVital.API.Extensions;
+using HomeVital.Models.Exceptions;
 
 
 namespace HomeVital.API.Controllers
@@ -36,7 +38,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var newBloodPressure = await _bloodpressureService.CreateBloodPressure(patientId, bloodpressureInputModel);
@@ -50,7 +52,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var updatedBloodPressure = await _bloodpressureService.UpdateBloodPressure(id, bloodpressureInputModel);
@@ -64,7 +66,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var deletedBloodPressure = await _bloodpressureService.DeleteBloodPressure(id);

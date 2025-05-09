@@ -5,6 +5,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
 using System.Threading.Tasks;
 using AutoMapper;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Services
 {
@@ -22,6 +23,10 @@ namespace HomeVital.Services
         public async Task<IEnumerable<BloodPressureDto>> GetBloodPressuresByPatientId(int patientId)
         {
             var bloodPressures = await _bloodPressureRepository.GetBloodPressuresByPatientId(patientId);
+            if (bloodPressures == null || !bloodPressures.Any())
+            {
+                throw new ResourceNotFoundException("No blood pressure records found for the patient with ID: " + patientId);
+            }
             return _mapper.Map<IEnumerable<BloodPressureDto>>(bloodPressures);
         }
 
@@ -37,8 +42,7 @@ namespace HomeVital.Services
             // if the blood pressure record is not found, throw an exception
             if (bloodPressure == null)
             {
-                // throw new ArgumentException("Blood pressure record not found");
-                return null;
+                throw new ResourceNotFoundException("Blood pressure record not found with ID: " + id);
             }
             
             return await _bloodPressureRepository.UpdateBloodPressure(id, bloodPressureInputModel);

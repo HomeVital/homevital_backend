@@ -4,6 +4,7 @@ using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.Dtos;
 using AutoMapper;
 using HomeVital.Models.Entities;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Services
 {
@@ -35,8 +36,7 @@ namespace HomeVital.Services
 
             if (oxygenSaturation == null)
             {
-                // throw new ArgumentException("Oxygen saturation record not found");
-                return null;
+                throw new ResourceNotFoundException("Oxygen saturation record not found with ID: " + id);
             }
             return await _oxygenSaturationRepository.UpdateOxygenSaturation(id, oxygenSaturationInputModel);
         }
@@ -51,7 +51,7 @@ namespace HomeVital.Services
             var oxygenSaturation = await _oxygenSaturationRepository.GetOxygenSaturationById(id);
             if (oxygenSaturation == null)
             {
-                return null;
+                throw new ResourceNotFoundException("Oxygen saturation record not found with ID: " + id);
             }
             return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }

@@ -5,6 +5,7 @@ using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Models.Entities;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations;
 
@@ -29,8 +30,7 @@ public class PatientRepository : IPatientRepository
         var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patient.TeamID);
         if (!teamExists)
         {
-            // throw new ArgumentException($"Team with ID {patient.TeamID} does not exist."
-            return null;
+            throw new ResourceNotFoundException($"Team with ID {patient.TeamID} does not exist.");
         }
 
 
@@ -82,6 +82,10 @@ public class PatientRepository : IPatientRepository
     public async Task<IEnumerable<PatientDto>> GetPatients()
     {
         var patients = await _dbContext.Patients.ToListAsync();
+        if (patients == null || patients.Count() == 0)
+        {
+            throw new ResourceNotFoundException("No patients found.");
+        }
         var patientDtos = _mapper.Map<IEnumerable<PatientDto>>(patients);  
         return patientDtos; 
     }
@@ -146,8 +150,7 @@ public class PatientRepository : IPatientRepository
         var existingPatient = await _dbContext.Patients.FindAsync(id);
         if (existingPatient == null)
         {
-            // throw new KeyNotFoundException($"Patient with ID {id} not found");
-            return null;
+            throw new ResourceNotFoundException("Patient not found.");
         }
         
         // Verify that the team exists if TeamID is specified and different from current
@@ -156,17 +159,17 @@ public class PatientRepository : IPatientRepository
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientInput.TeamID);
             if (!teamExists)
             {
-                // throw new ArgumentException($"Team with ID {patientInput.TeamID} does not exist.");
-                return null;
+                throw new ResourceNotFoundException($"Team with ID {patientInput.TeamID} does not exist.");
             }
             // Only update TeamID if a valid team ID was provided
             existingPatient.TeamID = patientInput.TeamID;
         }
         // If TeamID is 0 and we want to clear the association, we need to make sure it's allowed by the database
-        else if (patientInput.TeamID == 0 && existingPatient.TeamID != 0)
-        {
+        // else if (patientInput.TeamID == 0 && existingPatient.TeamID != 0)
+        // {
+
             
-        }
+        // }
         if (!string.IsNullOrEmpty(patientInput.Address))
         {
             existingPatient.Address = patientInput.Address;

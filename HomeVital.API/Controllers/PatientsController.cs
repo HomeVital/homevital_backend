@@ -2,6 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
+
+
+
+
 
 namespace HomeVital.API.Controllers
 {
@@ -17,19 +23,6 @@ namespace HomeVital.API.Controllers
             _patientService = patientService;
         }
 
-        // [HttpGet] // Get all patients
-        // public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientsAsync()
-        // {
-        //     var patients = await _patientService.GetPatients();
-
-        //     if (patients == null || patients.Count() == 0)
-        //     {
-        //         return NotFound("No patients found.");
-        //     }
-            
-        //     return Ok(patients);
-        // }
-
         // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet] // Get all patients
         public async Task<ActionResult<Envelope<IEnumerable<PatientDto>>>> GetPatientsAsync(
@@ -42,7 +35,7 @@ namespace HomeVital.API.Controllers
 
             if (patients == null || !patients.Any())
             {
-                return NotFound("No patients found.");
+                throw new ResourceNotFoundException("No patients found.");
             }
 
             // Pagination logic
@@ -67,17 +60,18 @@ namespace HomeVital.API.Controllers
         [HttpGet("{id}")] // Get a patient by ID
         public async Task<ActionResult<PatientDto>> GetPatientByIdAsync(int id)
         {
+            // Check if the patient exists
             if (!ModelState.IsValid)
             {
-                return BadRequest("input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(id);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
             }
+
+
 
             return Ok(patient);
         }
@@ -88,12 +82,12 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var patient = await _patientService.DeletePatient(id);
             if (patient == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
             }
             return Ok(patient);
         }
@@ -104,7 +98,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var newPatient = await _patientService.CreatePatient(patientInputModel);
@@ -123,7 +117,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             // Check if the patient exists
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
@@ -131,7 +125,7 @@ namespace HomeVital.API.Controllers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (existingPatient == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
             }
 
             var updatedPatient = await _patientService.UpdatePatient(id, patientInputModel);

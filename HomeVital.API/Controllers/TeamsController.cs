@@ -5,7 +5,9 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using HomeVital.Models.Exceptions;
 using HomeVital.API.Extensions;
+
 
 
 
@@ -30,7 +32,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var newTeam = await _teamService.CreateTeamAsync(teamInputModel);
@@ -43,14 +45,14 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             // Check if the team exists
             var existingTeam = await _teamService.GetTeamByIdAsync(id);
             if (existingTeam == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Team not found with this ID: " + id);
             }
             return Ok(existingTeam);
         }
@@ -61,7 +63,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var teams = await _teamService.GetAllTeamsAsync();
             return Ok(teams);
@@ -73,13 +75,13 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             // Check if the team exists
             var existingTeam = await _teamService.GetTeamByIdAsync(id);
             if (existingTeam == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Team not found with this ID: " + id);
             }
 
             var updatedTeam = await _teamService.UpdateTeamAsync(id, teamInputModel);
@@ -92,13 +94,13 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             // Check if the team exists before attempting to delete
             var existingTeam = await _teamService.GetTeamByIdAsync(id);
             if (existingTeam == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Team not found with this ID: " + id);
             }
 
             // Call the service to delete the team and retrieve the deleted team's info

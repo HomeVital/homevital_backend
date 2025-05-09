@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
-
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
 
 namespace HomeVital.API.Controllers
 {
@@ -25,6 +26,10 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<IEnumerable<BodyTemperatureDto>>> GetBodyTemperaturesByPatientIdAsync(int patientId)
         {
             var bodyTemperatures = await _bodyTemperatureService.GetBodyTemperaturesByPatientId(patientId);
+            if (bodyTemperatures == null || !bodyTemperatures.Any())
+            {
+                throw new ResourceNotFoundException("No body temperatures found for the specified patient.");
+            }
             return Ok(bodyTemperatures);
         }
 
@@ -35,7 +40,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var newBodyTemperature = await _bodyTemperatureService.CreateBodyTemperature(patientId, bodyTemperatureInputModel);
@@ -49,7 +54,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var updatedBodyTemperature = await _bodyTemperatureService.UpdateBodyTemperature(id, bodyTemperatureInputModel);
@@ -63,7 +68,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var deletedBodyTemperature = await _bodyTemperatureService.DeleteBodyTemperature(id);

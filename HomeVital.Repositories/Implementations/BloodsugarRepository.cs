@@ -6,6 +6,7 @@ using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Enums;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -28,6 +29,11 @@ namespace HomeVital.Repositories.Implementations
                 .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
+            if (bloodsugars == null || bloodsugars.Count() == 0)
+            {
+                throw new ResourceNotFoundException("No blood sugar records found for this patient.");
+            }
+
             return _mapper.Map<IEnumerable<BloodsugarDto>>(bloodsugars);
         }
 
@@ -36,10 +42,10 @@ namespace HomeVital.Repositories.Implementations
             var vitalRangeBloodsugar = await _dbContext.BloodSugarRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            // if (vitalRangeBloodsugar == null)
-            // {
-            //     throw new System.ArgumentException("Bloodsugar range not found");
-            // }
+            if (vitalRangeBloodsugar == null)
+            {
+                throw new ResourceNotFoundException("Blood sugar range not found for this patient.");
+            }
 
             // check blood sugar range
             bloodsugarInputModel.Status = CheckBloodSugarRange(bloodsugarInputModel, vitalRangeBloodsugar);
@@ -58,6 +64,11 @@ namespace HomeVital.Repositories.Implementations
         {
             var bloodsugar = await _dbContext.Bloodsugars
                 .FirstOrDefaultAsync(b => b.ID == id);
+
+            if (bloodsugar == null)
+            {
+                throw new ResourceNotFoundException("Blood sugar record not found.");
+            }
 
             if (bloodsugar != null)
             {
@@ -86,7 +97,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (bloodsugar == null)
             {
-                return null;
+                throw new ResourceNotFoundException("Blood sugar record not found.");
             }
 
             _dbContext.Bloodsugars.Remove(bloodsugar);

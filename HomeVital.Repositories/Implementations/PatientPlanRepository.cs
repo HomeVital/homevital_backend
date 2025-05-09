@@ -39,7 +39,7 @@ namespace HomeVital.Repositories.Implementations
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientPlanInputModel.TeamID);
             if (!teamExists)
             {
-                return null;
+                throw new ResourceNotFoundException($"Team with ID {patientPlanInputModel.TeamID} does not exist.");
             }
 
             var patient = await _dbContext.Patients

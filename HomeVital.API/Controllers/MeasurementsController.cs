@@ -3,6 +3,10 @@ using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using HomeVital.Models.InputModels;
 using Microsoft.AspNetCore.Mvc;
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
+
+
 namespace HomeVital.API.Controllers
 {
     // [Authorize]
@@ -30,7 +34,7 @@ namespace HomeVital.API.Controllers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
-                return NotFound("Patient does not exist.");
+                throw new ResourceNotFoundException("Patient not found");
             }
             var measurements = await _measurementService.GetXMeasurementsByPatientId(patientId, count);
             return Ok(measurements);
@@ -50,7 +54,7 @@ namespace HomeVital.API.Controllers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
-                return NotFound("Patient does not exist.");
+                throw new ResourceNotFoundException(ModelState.RetrieveErrorString());
             }
 
             // Get measurements for the patient
@@ -89,7 +93,7 @@ namespace HomeVital.API.Controllers
             var measurements = await _measurementService.GetMeasurementsWithWarnings();
             if (measurements == null || !measurements.Any())
             {
-                return NotFound("No measurements found.");
+                throw new ResourceNotFoundException("No measurements found with warnings.");
             }
 
             // Pagination logic
@@ -121,7 +125,7 @@ namespace HomeVital.API.Controllers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
-                return NotFound("Patient does not exist.");
+                throw new ResourceNotFoundException("Patient not found");
             }
             var measurements = await _measurementService.GetPatientWarnings(patientId, onlyUnacknowledged);
             return Ok(measurements);
@@ -132,8 +136,11 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult> AcknowledgeMeasurement(MeasurementAckInputModel input)
         {
             var result = await _measurementService.AcknowledgeMeasurement(input);
-            if (!result)
-                return NotFound(result);
+            if (!result) 
+            {
+                // Acknowledgement failed
+                throw new ResourceNotFoundException("Acknowledgement failed");
+            }
                 
             return Ok(result);
         }

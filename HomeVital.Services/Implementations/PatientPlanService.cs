@@ -30,15 +30,13 @@ namespace HomeVital.Services
             var patient = await _patientRepository.GetPatientById(patientId);
             if (patient == null)
             {
-                return null;
-                // throw new NotFoundException("Patient not found");
+                throw new ResourceNotFoundException("Patient not found with ID: " + patientId);
             }
             // check if the team exists
             var team = await _patientPlanRepository.GetPatientPlanByIdAsync(patientId);
             if (team == null)
             {
-                return null;
-                // throw new NotFoundException("Team not found");
+                throw new ResourceNotFoundException("Team not found for patient with ID: " + patientId);
             }
 
             
@@ -46,8 +44,7 @@ namespace HomeVital.Services
 
             if (patientPlan == null)
             {
-                return null;
-                // throw new ArgumentException("Failed to create patient plan");
+                throw new Exception("Failed to create patient plan.");
             }
 
             // if the patient plan is created successfully and the plan is active, update the patient status to active

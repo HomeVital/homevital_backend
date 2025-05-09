@@ -30,15 +30,13 @@ namespace HomeVital.Services
             // check if the teamID is 0
             if (patient.TeamID == 0)
             {
-                // throw new BadRequestException("TeamID cannot be 0");
-                return null;
+                throw new VarArgumentException("TeamID cannot be 0.");
             }
             // check if the team exists
             var teamExists = await _teamRepository.GetTeamByIdAsync(patient.TeamID) != null;
             if (!teamExists)
             {
-                // throw new NotFoundException($"Team with ID {patient.TeamID} not found.");
-                return null;
+                throw new ResourceNotFoundException($"Team with ID {patient.TeamID} does not exist.");
             }
             return await _patientRepository.CreatePatient(patient);
         }
@@ -52,8 +50,7 @@ namespace HomeVital.Services
             var patients = await _patientRepository.GetPatients();
             if (patients == null || !patients.Any())
             {
-                return null;
-                // throw new NotFoundException("No patients found");
+                throw new ResourceNotFoundException("No patients found.");
             }
 
 
@@ -91,8 +88,7 @@ namespace HomeVital.Services
             var patient = await _patientRepository.GetPatientById(id);
             if (patient == null)
             {
-                return null;
-                // throw new NotFoundException($"Patient with ID {id} not found.");
+                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
             }
             // check if the patient has an active patientPlan
             var hasActivePlan = await CheckIfPatientHasActivePlan(patient.ID);
@@ -125,8 +121,7 @@ namespace HomeVital.Services
             var existingPatient = await _patientRepository.GetPatientById(id);
             if (existingPatient == null)
             {
-                // throw new KeyNotFoundException($"Patient with ID {id} not found.");
-                return null;
+                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
             }
 
             // Create an update model with only the fields that need to be updated
@@ -154,8 +149,7 @@ namespace HomeVital.Services
                 var teamExists = await _teamRepository.GetTeamByIdAsync(patient.TeamID) != null;
                 if (!teamExists)
                 {
-                    // throw new KeyNotFoundException($"Team with ID {patient.TeamID} not found.");
-                    return null;
+                    throw new ResourceNotFoundException($"Team with ID {patient.TeamID} does not exist.");
                 }
                 updateModel.TeamID = patient.TeamID;
             }

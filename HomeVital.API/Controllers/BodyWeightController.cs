@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
 
 
 namespace HomeVital.API.Controllers
@@ -25,6 +27,10 @@ namespace HomeVital.API.Controllers
     public async Task<ActionResult<IEnumerable<BodyWeightDto>>> GetBodyWeightsByPatientIdAsync(int patientId)
     {
         var bodyWeights = await _bodyWeightService.GetBodyWeightsByPatientId(patientId);
+        if (bodyWeights == null || !bodyWeights.Any())
+        {
+            throw new ResourceNotFoundException("No bodyweights found for this patient.");
+        }
         return Ok(bodyWeights);
     }
 
@@ -35,8 +41,8 @@ namespace HomeVital.API.Controllers
     {
         if (!ModelState.IsValid)
         {
-            throw new System.ArgumentException("Invalid input model");
-        }
+            throw new ModelFormatException(ModelState.RetrieveErrorString());
+        } 
 
         var newBodyWeight = await _bodyWeightService.CreateBodyWeight(patientId, bodyWeightInputModel);
         return Ok(newBodyWeight);
@@ -49,7 +55,7 @@ namespace HomeVital.API.Controllers
     {
         if (!ModelState.IsValid)
         {
-            throw new System.ArgumentException("Invalid input model");
+            throw new ModelFormatException(ModelState.RetrieveErrorString());
         }
 
         var updatedBodyWeight = await _bodyWeightService.UpdateBodyWeight(id, bodyWeightInputModel);
@@ -62,16 +68,10 @@ namespace HomeVital.API.Controllers
     public async Task<ActionResult<BodyWeightDto>> DeleteBodyWeightAsync(int id)
     {
         var deletedBodyWeight = await _bodyWeightService.DeleteBodyWeight(id);
+        
         return Ok(deletedBodyWeight);
     }
 
-    // Get a bodyweight record by ID
-    // [HttpGet("by-id/{id}")]
-    // public async Task<ActionResult<BodyWeightDto>> GetBodyWeightByIdAsync(int id)
-    // {
-    //     var bodyWeight = await _bodyWeightService.GetBodyWeightById(id);
-    //     return Ok(bodyWeight);
-    // }
     
     }
 }

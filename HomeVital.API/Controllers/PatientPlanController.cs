@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
-
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
 
 
 namespace HomeVital.API.Controllers
@@ -26,14 +27,14 @@ namespace HomeVital.API.Controllers
             
             if (!ModelState.IsValid)
             {
-                return BadRequest("input model is not valid");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             
             var createdPlan = await _patientPlanService.CreatePatientPlanAsync(patientPlanInputModel.PatientID, patientPlanInputModel);
 
             if (createdPlan == null)
             {
-                return BadRequest("Failed to create patient plan");
+                throw new UserException("Failed to create patient plan.");
             }
 
             return Ok(createdPlan);
@@ -46,7 +47,7 @@ namespace HomeVital.API.Controllers
             var plan = await _patientPlanService.GetPatientPlanByIdAsync(id);
             if (plan == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Patient plan not found with this ID: " + id);
             }
             return Ok(plan);
         }
@@ -59,7 +60,7 @@ namespace HomeVital.API.Controllers
             var plans = await _patientPlanService.GetPatientPlansByPatientIdAsync(patientId);
             if (plans == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("No patient plans found for this patient ID: " + patientId);
             }
             return Ok(plans);
         }

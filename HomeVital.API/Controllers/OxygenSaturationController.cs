@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
+
+using HomeVital.API.Extensions;
 using HomeVital.Models.Exceptions;
-// using HomeVital.API.Extensions;
 
 
 
@@ -33,18 +34,17 @@ namespace HomeVital.API.Controllers
         {
 
             // check if the patien exists
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
             if (patient == null)
             {
-                return NotFound("Patient does not exist.");
+                throw new ResourceNotFoundException("Patient not found with this ID: " + patientId);
             }
 
             var oxygensaturations = await _oxygensaturationService.GetOxygenSaturationsByPatientId(patientId);
             if (oxygensaturations == null || oxygensaturations.Count() == 0)
             {
-                return NotFound("No oxygen saturation records found for this patient.");
+                throw new ResourceNotFoundException("No oxygen saturation records found for this patient.");
             }
             
 
@@ -56,22 +56,12 @@ namespace HomeVital.API.Controllers
         [HttpPost("{patientId}")]
         public async Task<ActionResult<OxygenSaturationDto>> CreateOxygenSaturationAsync(int patientId, OxygenSaturationInputModel oxygensaturationInputModel)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new HomeVital.Models.Exceptions.ModelFormatException("The provided model is invalid.");
-
-            }
-
             var newOxygenSaturation = await _oxygensaturationService.CreateOxygenSaturation(patientId, oxygensaturationInputModel);
 
             if (newOxygenSaturation == null)
             {
-                return BadRequest("Failed to create oxygen saturation record.");
+                throw new ResourceNotFoundException("Failed to create oxygen saturation record.");
             }
-            // if (newOxygenSaturation.PatientID != patientId)
-            // {
-            //     return BadRequest("Patient ID mismatch.");
-            // }
 
             return Ok(newOxygenSaturation);
         }
@@ -83,12 +73,12 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var existingOxygenSaturation = await _oxygensaturationService.GetOxygenSaturationById(id);
             if (existingOxygenSaturation == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Oxygen saturation record not found with ID:" + id);
             }
 
             var updatedOxygenSaturation = await _oxygensaturationService.UpdateOxygenSaturation(id, oxygensaturationInputModel);
@@ -102,13 +92,13 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var existingOxygenSaturation = await _oxygensaturationService.GetOxygenSaturationById(id);
             if (existingOxygenSaturation == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("Oxygen saturation record with this ID:" + id + " not found.");
             }
 
             await _oxygensaturationService.DeleteOxygenSaturation(id);

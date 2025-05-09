@@ -3,7 +3,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using HomeVital.API.Extensions;
-
+using HomeVital.Models.Exceptions;
 
 
 
@@ -31,6 +31,11 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<BodyTemperatureRangeDto>> UpdateBodyTemperatureRangeAsync(int patientId, BodyTemperatureRangeInputModel bodyTemperatureRangeInputModel)
         {
             var bodyTemperatureRangeDto = await _vitalRangeService.UpdateBodyTemperatureRangeAsync(patientId, bodyTemperatureRangeInputModel);
+            
+            if (bodyTemperatureRangeDto == null)
+            {
+                throw new ResourceNotFoundException("No body temperature range records found for this patient.");
+            }
             return Ok(bodyTemperatureRangeDto);
         }
 
@@ -39,7 +44,13 @@ namespace HomeVital.API.Controllers
         [HttpPatch("bloodpressure/{patientId}")]
         public async Task<ActionResult<BloodPressureRangeDto>> UpdateBloodPressureRangeAsync(int patientId, BloodPressureRangeInputModel bloodPressureRangeInputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            }
+
             var bloodPressureRangeDto = await _vitalRangeService.UpdateBloodPressureRangeAsync(patientId, bloodPressureRangeInputModel);
+            
             return Ok(bloodPressureRangeDto);
         }
 
@@ -48,6 +59,11 @@ namespace HomeVital.API.Controllers
         [HttpPatch("bloodsugar/{patientId}")]
         public async Task<ActionResult<BloodSugarRangeDto>> UpdateBloodSugarRangeAsync(int patientId, BloodSugarRangeInputModel bloodSugarRangeInputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            }
+
             var bloodSugarRangeDto = await _vitalRangeService.UpdateBloodSugarRangeAsync(patientId, bloodSugarRangeInputModel);
             return Ok(bloodSugarRangeDto);
         }
@@ -57,6 +73,10 @@ namespace HomeVital.API.Controllers
         [HttpPatch("oxygensaturation/{patientId}")]
         public async Task<ActionResult<OxygenSaturationRangeDto>> UpdateOxygenSaturationRangeAsync(int patientId, OxygenSaturationRangeInputModel oxygenSaturationRangeInputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            }
             var oxygenSaturationRangeDto = await _vitalRangeService.UpdateOxygenSaturationRangeAsync(patientId, oxygenSaturationRangeInputModel);
             return Ok(oxygenSaturationRangeDto);
         }
@@ -66,13 +86,13 @@ namespace HomeVital.API.Controllers
         [HttpPatch("bodyweight/{patientId}")]
         public async Task<ActionResult<BodyWeightRangeDto>> UpdateBodyWeightRangeAsync(int patientId, BodyWeightRangeInputModel bodyWeightRangeInputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
+            }
             var bodyWeightRangeDto = await _vitalRangeService.UpdateBodyWeightRangeAsync(patientId, bodyWeightRangeInputModel);
 
-            if (bodyWeightRangeDto == null)
-            {
-                return NotFound("No body weight range records found for this patient.");
-            }
-
+            
             return Ok(bodyWeightRangeDto);
         }
 
@@ -81,12 +101,11 @@ namespace HomeVital.API.Controllers
         [HttpGet("{patientId}")]
         public async Task<ActionResult<VitalRangeDto>> GetVitalRangeAsync(int patientId)
         {
-            var vitalRangeDto = await _vitalRangeService.GetVitalRangeAsync(patientId);
-            if (vitalRangeDto == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound("No vital range records found for this patient.");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
-
+            var vitalRangeDto = await _vitalRangeService.GetVitalRangeAsync(patientId);
             return Ok(vitalRangeDto);
         }
     

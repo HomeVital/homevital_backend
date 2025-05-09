@@ -6,6 +6,7 @@ using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Enums;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -27,6 +28,11 @@ namespace HomeVital.Repositories.Implementations
                 .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
+            if (bodyTemperatures == null || bodyTemperatures.Count() == 0)
+            {
+                throw new ResourceNotFoundException("No body temperature records found for this patient.");
+            }
+
             return _mapper.Map<IEnumerable<BodyTemperatureDto>>(bodyTemperatures);
         }
 
@@ -37,10 +43,10 @@ namespace HomeVital.Repositories.Implementations
             var bodyTemperatureRange = await _dbContext.BodyTemperatureRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            // if (bodyTemperatureRange == null)
-            // {
-            //     throw new System.ArgumentException("Body temperature range not found");
-            // }
+            if (bodyTemperatureRange == null)
+            {
+                throw new ResourceNotFoundException("Body temperature range not found for this patient.");
+            }
 
             bodyTemperatureInputModel.Status = CheckBodyTemperatureRange(bodyTemperatureInputModel, bodyTemperatureRange); 
 
@@ -58,6 +64,11 @@ namespace HomeVital.Repositories.Implementations
         {
             var bodyTemperature = await _dbContext.BodyTemperatures
                 .FirstOrDefaultAsync(b => b.ID == id);
+
+            if (bodyTemperature == null)
+            {
+                throw new ResourceNotFoundException("Body temperature record not found.");
+            }
 
             if (bodyTemperature != null)
             {
@@ -82,6 +93,10 @@ namespace HomeVital.Repositories.Implementations
         {
             var bodyTemperature = await _dbContext.BodyTemperatures
                 .FirstOrDefaultAsync(b => b.ID == id);
+            if (bodyTemperature == null)
+            {
+                throw new ResourceNotFoundException("Body temperature record not found.");
+            }
 
             if (bodyTemperature != null)
             {

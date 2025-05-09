@@ -7,6 +7,8 @@ using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Enums;
+using HomeVital.Models.Exceptions;
+
 
 
 namespace HomeVital.Repositories.Implementations;
@@ -29,6 +31,10 @@ public class BloodPressureRepository : IBloodPressureRepository
             .OrderByDescending(b => b.Date)
             .ToListAsync();
 
+        if (bloodPressures == null || !bloodPressures.Any())
+        {
+            throw new ResourceNotFoundException("No blood pressure records found for the patient with ID: " + patientId);
+        }
         // order by date
         bloodPressures = bloodPressures.OrderByDescending(b => b.Date).ToList();
 
@@ -40,10 +46,10 @@ public class BloodPressureRepository : IBloodPressureRepository
         var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
             .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-        // if (vitalRangeBloodpressure == null)
-        // {
-        //     return null;
-        // }
+        if (vitalRangeBloodpressure == null)
+        {
+            throw new ResourceNotFoundException("Blood pressure range not found for the patient with ID: " + patientId);
+        }
         // check blood pressure range
         bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
         // make sure measure hand and body position are not null
@@ -64,6 +70,11 @@ public class BloodPressureRepository : IBloodPressureRepository
     {
         var bloodPressure = await _dbContext.BloodPressures
             .FirstOrDefaultAsync(b => b.ID == id);
+
+        if (bloodPressure == null)
+        {
+            throw new ResourceNotFoundException("Blood pressure not found with ID: " + id);
+        }
 
         if (bloodPressure != null)
         {
@@ -111,7 +122,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
         if (bloodPressure == null)
         {
-            return null;
+            throw new ResourceNotFoundException("Blood pressure not found with ID: " + id);
         }
 
         _dbContext.BloodPressures.Remove(bloodPressure);
@@ -124,6 +135,11 @@ public class BloodPressureRepository : IBloodPressureRepository
     {
         var bloodPressure = await _dbContext.BloodPressures
             .FirstOrDefaultAsync(b => b.ID == id);
+
+        if (bloodPressure == null)
+        {
+            throw new ResourceNotFoundException("Blood pressure not found with ID: " + id);
+        }
 
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
