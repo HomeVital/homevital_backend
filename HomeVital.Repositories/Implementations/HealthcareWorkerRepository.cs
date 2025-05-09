@@ -21,6 +21,10 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<List<HealthcareWorker>> GetHealthcareWorkersByIdsAsync(IEnumerable<int> ids)
     {
+        // get healthcare workers by ids
+        // query the database for healthcare workers with the specified IDs
+        // using Include to load related entities if necessary
+        // return the list of healthcare workers
         var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Where(hw => ids.Contains(hw.ID))
             // .Include(hw => hw.Teams)
@@ -34,6 +38,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
     public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
         // get all healthcare workers and their teams
+        // return the list of healthcare workers
         var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .ToListAsync();
@@ -48,6 +53,8 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id)
     {
+        // get healthcare worker by id and their teams
+        // return the healthcare worker
         var healthcareWorker = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
@@ -63,6 +70,9 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
     public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
     {
         // delete healthcare worker by id remove from teams and remove from user
+        // return the deleted healthcare worker
+        // check if the healthcare worker exists
+        // if not, throw an exception
         var healthcareWorkerToDelete = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
