@@ -138,13 +138,18 @@ namespace HomeVital.Repositories.Implementations
             // Start with empty lists
             List<Measurements> results = new List<Measurements>();
             
+            
+
             // Filter statuses that indicate warnings (not "Normal" or empty)
             var bloodPressures = await _dbContext.BloodPressures
+                .Include(bp => bp.Patient)
+                .ThenInclude(p => p.Team)
                 .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bp => new Measurements
                 {
                     ID = bp.ID,
                     PatientID = bp.PatientID,
+                    TeamID =(int)bp.Patient.TeamID!,
                     MeasurementType = "BloodPressure",
                     MeasurementDate = bp.Date,
                     MeasurementValues = new MeasurementValues
@@ -168,11 +173,14 @@ namespace HomeVital.Repositories.Implementations
             // Do the same for other measurement types
             // ...
             var bloodSugars = await _dbContext.Bloodsugars
+                .Include(bp => bp.Patient)
+                .ThenInclude(p => p.Team)
                 .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bs => new Measurements
                 {
                     ID = bs.ID,
                     PatientID = bs.PatientID,
+                    TeamID =(int)bs.Patient.TeamID!,
                     MeasurementType = "BloodSugar",
                     MeasurementDate = bs.Date,
                     MeasurementValues = new MeasurementValues
@@ -190,11 +198,14 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bloodSugars);
 
             var bodyWeights = await _dbContext.BodyWeights
+                .Include(bp => bp.Patient)
+                .ThenInclude(p => p.Team)
                 .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bw => new Measurements
                 {
                     ID = bw.ID,
                     PatientID = bw.PatientID,
+                    TeamID =(int)bw.Patient.TeamID!,
                     MeasurementType = "BodyWeight",
                     MeasurementDate = bw.Date,
                     MeasurementValues = new MeasurementValues
@@ -212,11 +223,14 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bodyWeights);
 
             var bodyTemperatures = await _dbContext.BodyTemperatures
+                .Include(bp => bp.Patient)
+                .ThenInclude(p => p.Team)
                 .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(bt => new Measurements
                 {
                     ID = bt.ID,
                     PatientID = bt.PatientID,
+                    TeamID =(int)bt.Patient.TeamID!,
                     MeasurementType = "BodyTemperature",
                     MeasurementDate = bt.Date,
                     MeasurementValues = new MeasurementValues
@@ -234,11 +248,14 @@ namespace HomeVital.Repositories.Implementations
             results.AddRange(bodyTemperatures);
 
             var oxygenSaturations = await _dbContext.OxygenSaturations
+                .Include(bp => bp.Patient)
+                .ThenInclude(p => p.Team)
                 .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
                 .Select(os => new Measurements
                 {
                     ID = os.ID,
                     PatientID = os.PatientID,
+                    TeamID =(int)os.Patient.TeamID!,
                     MeasurementType = "OxygenSaturation",
                     MeasurementDate = os.Date,
                     MeasurementValues = new MeasurementValues
@@ -303,6 +320,99 @@ namespace HomeVital.Repositories.Implementations
             
             // Do the same for other measurement types
             // ...
+            var bloodSugars = await _dbContext.Bloodsugars
+                .Where(m => m.PatientID == patientId && 
+                    !string.IsNullOrEmpty(m.Status) && 
+                    m.Status != "Normal" &&
+                    (!onlyUnacknowledged || !m.IsAcknowledged))
+                .Select(bs => new Measurements
+                {
+                    ID = bs.ID,
+                    MeasurementType = "BloodSugar",
+                    MeasurementDate = bs.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        BloodSugar = bs.BloodsugarLevel,
+                        Status = bs.Status,
+                        IsAcknowledged = bs.IsAcknowledged,
+                        AcknowledgedByWorkerID = bs.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bs.AcknowledgedDate,
+                        ResolutionNotes = bs.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bloodSugars);
+
+            var bodyWeights = await _dbContext.BodyWeights
+                .Where(m => m.PatientID == patientId && 
+                    !string.IsNullOrEmpty(m.Status) && 
+                    m.Status != "Normal" &&
+                    (!onlyUnacknowledged || !m.IsAcknowledged))
+                .Select(bw => new Measurements
+                {
+                    ID = bw.ID,
+                    MeasurementType = "BodyWeight",
+                    MeasurementDate = bw.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Weight = (float?)bw.Weight,
+                        Status = bw.Status,
+                        IsAcknowledged = bw.IsAcknowledged,
+                        AcknowledgedByWorkerID = bw.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bw.AcknowledgedDate,
+                        ResolutionNotes = bw.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bodyWeights);
+
+            var bodyTemperatures = await _dbContext.BodyTemperatures
+                .Where(m => m.PatientID == patientId && 
+                    !string.IsNullOrEmpty(m.Status) && 
+                    m.Status != "Normal" &&
+                    (!onlyUnacknowledged || !m.IsAcknowledged))
+                .Select(bt => new Measurements
+                {
+                    ID = bt.ID,
+                    MeasurementType = "BodyTemperature",
+                    MeasurementDate = bt.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        Temperature = bt.Temperature,
+                        Status = bt.Status,
+                        IsAcknowledged = bt.IsAcknowledged,
+                        AcknowledgedByWorkerID = bt.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bt.AcknowledgedDate,
+                        ResolutionNotes = bt.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
+
+            results.AddRange(bodyTemperatures);
+
+            var oxygenSaturations = await _dbContext.OxygenSaturations
+                .Where(m => m.PatientID == patientId && 
+                    !string.IsNullOrEmpty(m.Status) && 
+                    m.Status != "Normal" &&
+                    (!onlyUnacknowledged || !m.IsAcknowledged))
+                .Select(os => new Measurements
+                {
+                    ID = os.ID,
+                    MeasurementType = "OxygenSaturation",
+                    MeasurementDate = os.Date,
+                    MeasurementValues = new MeasurementValues
+                    {
+                        OxygenSaturation = os.OxygenSaturationValue,
+                        Status = os.Status,
+                        IsAcknowledged = os.IsAcknowledged,
+                        AcknowledgedByWorkerID = os.AcknowledgedByWorkerID,
+                        AcknowledgedDate = os.AcknowledgedDate,
+                        ResolutionNotes = os.ResolutionNotes
+                    },
+                })
+                .ToListAsync();
             
             // Sort by date (newest first)
             results = results.OrderByDescending(m => m.MeasurementDate).ToList();

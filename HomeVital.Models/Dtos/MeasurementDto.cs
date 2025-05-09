@@ -21,6 +21,7 @@ namespace HomeVital.Models.Dtos
         public int UID { get; set; }
         public int ID { get; set; }
         public int PatientID { get; set; }
+        public int TeamID { get; set; }
         public string MeasurementType { get; set; } = string.Empty;
         public DateTime MeasurementDate { get; set; }
         public MeasurementValues MeasurementValues { get; set; } = new MeasurementValues();
