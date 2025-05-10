@@ -13,7 +13,7 @@ using HomeVital.API.Extensions;
 
 namespace HomeVital.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/teams")]
 

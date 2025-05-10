@@ -122,6 +122,37 @@ namespace HomeVital.Repositories.Implementations
 
             // check range
 
+            // if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
+            // {
+            //     return VitalStatus.Normal.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationOkMin
+            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationOkMax)
+            // {
+            //     return VitalStatus.Raised.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationNotOkMin
+            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationNotOkMax)
+            // {
+            //     return VitalStatus.High.ToString();
+            // }
+            // else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationCriticalMax)
+            // {
+            //     return VitalStatus.Critical.ToString();
+            // }
+            // else
+            // {
+            //     return VitalStatus.Invalid.ToString();
+            // }
+
+
+            // check oxygen saturation range with the 3 ranges
+            // OxygenSaturationGood
+
+            // OxygenSaturationRaised
+
+            // OxygenSaturationHigh
+
             if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
             {
                 return VitalStatus.Normal.ToString();

@@ -81,6 +81,7 @@ namespace HomeVital.API.Controllers
         // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("warnings")]
         public async Task<ActionResult<Envelope<List<MeasurementDto>>>> GetMeasurementsWithWarnings(
+            [FromQuery] List<int> teamIDs,
             [FromQuery] int pageSize = 25,
             [FromQuery] int pageNumber = 1
         )
@@ -90,6 +91,11 @@ namespace HomeVital.API.Controllers
             if (measurements == null || !measurements.Any())
             {
                 throw new ResourceNotFoundException("No measurements found with warnings.");
+            }
+            // Filter by teamIDs if provided
+            if (teamIDs != null && teamIDs.Any())
+            {
+                measurements = measurements.Where(m => teamIDs.Contains(m.TeamID)).ToList();
             }
 
             // Pagination logic
