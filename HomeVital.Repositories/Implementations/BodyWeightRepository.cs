@@ -6,6 +6,7 @@ using HomeVital.Models.InputModels;
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Models.Entities;
 using HomeVital.Models.Enums;
+using HomeVital.Models.Exceptions;
 
 
 namespace HomeVital.Repositories.Implementations{
@@ -31,6 +32,11 @@ namespace HomeVital.Repositories.Implementations{
                 .OrderByDescending(b => b.Date)
                 .ToListAsync();
 
+            if (bodyWeights == null || bodyWeights.Count() == 0)
+            {
+                throw new ResourceNotFoundException("No body weight records found for this patient.");
+            }
+
             return _mapper.Map<IEnumerable<BodyWeightDto>>(bodyWeights);
         }
 
@@ -39,10 +45,10 @@ namespace HomeVital.Repositories.Implementations{
             var bodyWeightRange = await _dbContext.BodyWeightRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
-            // if (bodyWeightRange == null)
-            // {
-            //     throw new System.ArgumentException("BodyWeight range not found");
-            // }
+            if (bodyWeightRange == null)
+            {
+                throw new ResourceNotFoundException("Body weight range not found for this patient.");
+            }
 
             // check body weight range
             bodyWeightInputModel.Status = CheckBodyWeightRange(patientId, bodyWeightInputModel.Weight, bodyWeightRange);
@@ -52,8 +58,6 @@ namespace HomeVital.Repositories.Implementations{
             bodyWeight.PatientID = patientId;
             bodyWeight.Date = DateTime.UtcNow;
 
-            
-            
 
             _dbContext.BodyWeights.Add(bodyWeight);
             await _dbContext.SaveChangesAsync();
@@ -65,6 +69,11 @@ namespace HomeVital.Repositories.Implementations{
         {
             var bodyWeight = await _dbContext.BodyWeights
                 .FirstOrDefaultAsync(b => b.ID == id);
+
+            if (bodyWeight == null)
+            {
+                throw new ResourceNotFoundException("Body weight record not found.");
+            }
 
             if (bodyWeight != null)
             {
@@ -90,6 +99,11 @@ namespace HomeVital.Repositories.Implementations{
         {
             var bodyWeight = await _dbContext.BodyWeights
                 .FirstOrDefaultAsync(b => b.ID == id);
+            if (bodyWeight == null)
+            {
+                // msg include the id
+                throw new ResourceNotFoundException("Body weight record not found with ID: " + id);
+            }
 
             if (bodyWeight != null)
             {
@@ -107,7 +121,7 @@ namespace HomeVital.Repositories.Implementations{
         
             if (bodyWeight == null)
             {
-                return null;
+                throw new ResourceNotFoundException("Body weight record not found with ID: " + id);
             }
         
             return _mapper.Map<BodyWeightDto>(bodyWeight);
@@ -143,6 +157,11 @@ namespace HomeVital.Repositories.Implementations{
 
             // get the weight from 30 days ago or the oldest weight measurement
             var oldestBodyWeight = bodyWeights.LastOrDefault();
+            if (oldestBodyWeight == null)
+            {
+                return VitalStatus.Invalid.ToString();
+            }
+            
 
             // calculate the percentage change from the oldest body weight to the current weight
             var percentageChangeFromOldest = ((currentWeight - oldestBodyWeight.Weight) / oldestBodyWeight.Weight) * 100;
@@ -176,6 +195,11 @@ namespace HomeVital.Repositories.Implementations{
 
             // get most recent body weight and check if it is within the range WeightGainPercentageGoodMax 
             var mostRecentBodyWeight = bodyWeights.FirstOrDefault();
+
+            if (mostRecentBodyWeight == null)
+            {
+                return VitalStatus.Invalid.ToString();
+            }
             // calculate the percentage change for the most recent body weight
             var percentageChange = ((currentWeight - mostRecentBodyWeight.Weight) / mostRecentBodyWeight.Weight) * 100;
 

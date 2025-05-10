@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace HomeVital.Models.Exceptions
 {
-    public class ModelFormatException : Exception
+    public class ResourceNotFoundException : Exception
     {
-        public ModelFormatException(String message) : base(message) {}
-        
+        public ResourceNotFoundException(string message) : base(message) {}
     }
 }

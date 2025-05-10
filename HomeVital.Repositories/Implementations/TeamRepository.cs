@@ -6,6 +6,7 @@ using HomeVital.Models.Entities;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
+using HomeVital.Models.Exceptions;
 
 
 namespace HomeVital.Repositories.Implementations
@@ -35,7 +36,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                return null;
+                throw new ResourceNotFoundException("Team not found with ID: " + id);
             }
 
             return team;
@@ -51,7 +52,7 @@ namespace HomeVital.Repositories.Implementations
                 
             if (team == null)
             {
-                return null;
+                throw new ResourceNotFoundException("Team not found with ID: " + id);
             }
             return team;
         }
@@ -73,7 +74,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (team == null)
             {
-                return ; // Team not found
+                throw new ResourceNotFoundException("Team not found with ID: " + id);
             }
 
             // Remove relationships with patients
@@ -104,7 +105,7 @@ namespace HomeVital.Repositories.Implementations
                 .ToListAsync();
             if (teams == null)
             {
-                return null; // No teams found
+                throw new ResourceNotFoundException("No teams found.");
             }
             return teams;
         }

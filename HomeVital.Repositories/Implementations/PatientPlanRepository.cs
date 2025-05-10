@@ -5,6 +5,7 @@ using HomeVital.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using HomeVital.Models.Entities;
 using HomeVital.Models.InputModels;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations
 {
@@ -39,7 +40,7 @@ namespace HomeVital.Repositories.Implementations
             var teamExists = await _dbContext.Teams.AnyAsync(t => t.ID == patientPlanInputModel.TeamID);
             if (!teamExists)
             {
-                return null;
+                throw new ResourceNotFoundException($"Team with ID {patientPlanInputModel.TeamID} not found.");
             }
 
             var patient = await _dbContext.Patients
@@ -48,13 +49,20 @@ namespace HomeVital.Repositories.Implementations
                 
             if (patient == null)
             {
-                return null;
+                throw new ResourceNotFoundException($"Patient with ID {patientId} not found.");
             }
-            
 
+            // Check if the patient already has an active plan
+            var hasActivePlan = patient.PatientPlans.Any(p => p.IsActive);
+            if (hasActivePlan)
+            {
+                // change the end date of the active plan to the current date so the new plan can be the active one
+                var activePlan = patient.PatientPlans.First(p => p.IsActive);
+                activePlan.EndDate = DateTime.UtcNow;
+                _dbContext.PatientPlans.Update(activePlan);
+                await _dbContext.SaveChangesAsync();
+            }
             _dbContext.PatientPlans.Add(patientPlan);
-
-            patient.UpdateStatusBasedOnPlans();
 
             await _dbContext.SaveChangesAsync();
 
@@ -69,7 +77,7 @@ namespace HomeVital.Repositories.Implementations
 
             if (patientPlan == null)
             {
-                return null;
+                throw new ResourceNotFoundException($"Patient plan with ID {id} not found.");
             }
 
             return _mapper.Map<PatientPlanDto>(patientPlan);

@@ -39,7 +39,7 @@ namespace HomeVital.Services
         // if the body weight record is not found, throw an exception
         if (bodyWeight == null)
         {
-            throw new ArgumentException("Body weight record not found");
+            // throw new ArgumentException("Body weight record not found");
         }
         
         return await _bodyWeightRepository.UpdateBodyWeight(id, bodyWeightInputModel);

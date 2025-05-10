@@ -3,6 +3,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
 
 
 namespace HomeVital.API.Controllers
@@ -31,7 +32,7 @@ namespace HomeVital.API.Controllers
             
             if (healthcareWorkers == null || !healthcareWorkers.Any())
             {
-                throw new NotFoundException("No healthcare workers found.");
+                throw new ResourceNotFoundException("No healthcare workers found");
             }
 
             // Pagination logic
@@ -59,7 +60,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var healthcareWorker = await _healthcareWorkerService.GetHealthcareWorkerById(id);
             return Ok(healthcareWorker);
@@ -71,7 +72,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var healthcareWorker = await _healthcareWorkerService.DeleteHealthcareWorker(id);
             return Ok(healthcareWorker);
@@ -83,7 +84,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var newHealthcareWorker = await _healthcareWorkerService.CreateHealthcareWorker(healthcareWorkerInputModel);
@@ -96,7 +97,7 @@ namespace HomeVital.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
 
             var updatedHealthcareWorker = await _healthcareWorkerService.UpdateHealthcareWorker(id, healthcareWorkerInputModel);

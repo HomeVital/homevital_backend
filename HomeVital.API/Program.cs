@@ -14,6 +14,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+using HomeVital.API.ExceptionHandlerExtensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -141,6 +143,10 @@ app.UseSwaggerUI(x =>
 #endif
 }
 );
+
+app.UseGlobalExceptionHandler();
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

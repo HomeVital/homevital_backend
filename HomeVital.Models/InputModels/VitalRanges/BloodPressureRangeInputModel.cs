@@ -5,7 +5,6 @@ namespace HomeVital.Models.InputModels
         public int PatientID { get; set; }
 
         // Blood Pressure
-        // Blood Pressure
         public int SystolicLowered { get; set; }
         public int SystolicGood { get; set; } 
         public int SystolicRaised { get; set; } 

@@ -3,6 +3,8 @@ using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
 
 namespace HomeVital.API.Controllers
 {
@@ -25,6 +27,10 @@ namespace HomeVital.API.Controllers
             public async Task<ActionResult<IEnumerable<BloodsugarDto>>> GetBloodsugarsByPatientIdAsync(int patientId)
             {
                 var bloodsugars = await _bloodsugarService.GetBloodsugarsByPatientId(patientId);
+                if (bloodsugars == null || !bloodsugars.Any())
+                {
+                    throw new ResourceNotFoundException($"No blood sugar records found for patient ID {patientId}.");
+                }
                 return Ok(bloodsugars);
             }
 
@@ -35,7 +41,7 @@ namespace HomeVital.API.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new System.ArgumentException("Invalid input model");
+                    throw new ModelFormatException(ModelState.RetrieveErrorString());
                 }
 
                 var newBloodsugar = await _bloodsugarService.CreateBloodsugar(patientId, bloodsugarInputModel);
@@ -49,7 +55,7 @@ namespace HomeVital.API.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new System.ArgumentException("Invalid input model");
+                    throw new ModelFormatException(ModelState.RetrieveErrorString());
                 }
 
                 var updatedBloodsugar = await _bloodsugarService.UpdateBloodsugar(id, bloodsugarInputModel);
@@ -63,7 +69,7 @@ namespace HomeVital.API.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new System.ArgumentException("Invalid input model");
+                    throw new ModelFormatException(ModelState.RetrieveErrorString());
                 }
 
                 var bloodsugar = await _bloodsugarService.DeleteBloodsugar(id);

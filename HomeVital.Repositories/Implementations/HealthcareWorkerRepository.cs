@@ -5,6 +5,7 @@ using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Repositories.Implementations;
 
@@ -20,34 +21,67 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
 
     public async Task<List<HealthcareWorker>> GetHealthcareWorkersByIdsAsync(IEnumerable<int> ids)
     {
-        return await _dbContext.HealthcareWorkers
+        // get healthcare workers by ids
+        // query the database for healthcare workers with the specified IDs
+        // using Include to load related entities if necessary
+        // return the list of healthcare workers
+        var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Where(hw => ids.Contains(hw.ID))
+            // .Include(hw => hw.Teams)
             .ToListAsync();
+        if (healthcareWorkers == null || !healthcareWorkers.Any())
+        {
+            throw new ResourceNotFoundException("No healthcare workers found with the provided IDs.");
+        }
+        return healthcareWorkers;
     }
     public async Task<IEnumerable<HealthcareWorkerDto>> GetHealthcareWorkers()
     {
         // get all healthcare workers and their teams
+        // return the list of healthcare workers
         var healthcareWorkers = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .ToListAsync();
+
+        if (healthcareWorkers == null || !healthcareWorkers.Any())
+        {
+            throw new ResourceNotFoundException("No healthcare workers found.");
+        }
 
         return _mapper.Map<IEnumerable<HealthcareWorkerDto>>(healthcareWorkers);
     }
 
     public async Task<HealthcareWorkerDto> GetHealthcareWorkerById(int id)
     {
+        // get healthcare worker by id and their teams
+        // return the healthcare worker
         var healthcareWorker = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorker == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
+
         return _mapper.Map<HealthcareWorkerDto>(healthcareWorker);
     }
 
     public async Task<HealthcareWorkerDto> DeleteHealthcareWorker(int id)
     {
         // delete healthcare worker by id remove from teams and remove from user
+        // return the deleted healthcare worker
+        // check if the healthcare worker exists
+        // if not, throw an exception
         var healthcareWorkerToDelete = await _dbContext.HealthcareWorkers
             .Include(h => h.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorkerToDelete == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
+
         if (healthcareWorkerToDelete != null)
         {
             // remove from teams
@@ -86,7 +120,7 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var newUser = new User
         {
             HealthcareWorkerID = newHealthcareWorker.ID,
-            Kennitala = healthcareWorker.Kennitala
+            Kennitala = healthcareWorker.Kennitala ?? throw new VarArgumentException("Kennitala cannot be null.")
         };
         
         await _dbContext.Users.AddAsync(newUser);
@@ -101,13 +135,14 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
         var healthcareWorkerToUpdate = await _dbContext.HealthcareWorkers
             .Include(hw => hw.Teams)
             .FirstOrDefaultAsync(x => x.ID == id);
+
+        if (healthcareWorkerToUpdate == null)
+        {
+            throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        }
             
         if (healthcareWorkerToUpdate != null)
         {
-            // Update basic properties
-            // healthcareWorkerToUpdate.Name = healthcareWorker.Name;
-            // healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
-            // healthcareWorkerToUpdate.Status = healthcareWorker.Status;
             
             // Handle teams relationship properly
             if (healthcareWorker.TeamIDs != null)

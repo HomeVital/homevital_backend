@@ -5,6 +5,7 @@ using HomeVital.Models.InputModels;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Entities;
+using HomeVital.Models.Exceptions;
 
 namespace HomeVital.Services.Implementations
 {
@@ -46,8 +47,7 @@ namespace HomeVital.Services.Implementations
                 var teamLeader = await _healthcareWorkerRepository.GetHealthcareWorkerById(teamInputModel.TeamLeaderID.Value);
                 if (teamLeader == null)
                 {
-                    // throw new KeyNotFoundException("Team leader not found");
-                    return null;
+                    throw new ResourceNotFoundException("Team leader not found with ID: " + teamInputModel.TeamLeaderID.Value);
                 }
                 // update the team leader id
                 createdTeam.TeamLeaderID = teamInputModel.TeamLeaderID;
@@ -57,7 +57,10 @@ namespace HomeVital.Services.Implementations
                 createdTeam.TeamLeaderName = teamLeader.Name;
             }
             // add the team leader to the list of workers
-            workerIDs.Add(teamInputModel.TeamLeaderID.Value);
+            if (teamInputModel.TeamLeaderID != null)
+            {
+                workerIDs.Add(teamInputModel.TeamLeaderID.Value);
+            }
             // // add team leader name to the team
             // createdTeam.TeamLeaderName = teamLeader.Name;
 
@@ -67,8 +70,7 @@ namespace HomeVital.Services.Implementations
                 var worker = await _healthcareWorkerRepository.GetHealthcareWorkerById(workerID);
                 if (worker == null)
                 {
-                    // throw new KeyNotFoundException("Worker not found");
-                    return null;
+                    throw new ResourceNotFoundException("Healthcare worker not found with ID: " + workerID);
 
                 }
                 // public int ID { get; set; }
@@ -96,8 +98,7 @@ namespace HomeVital.Services.Implementations
                 var patient = await _patientRepository.GetPatientById(patientID);
                 if (patient == null)
                 {
-                    // throw new KeyNotFoundException("Patient not found");
-                    return null;
+                    throw new ResourceNotFoundException("Patient not found with ID: " + patientID);
                 }
                 // if patient is found and team id is 0, update the patient's team id
                 if (patient.TeamID == 0)
@@ -125,8 +126,7 @@ namespace HomeVital.Services.Implementations
             var team = await _teamRepository.GetTeamWithRelationsAsync(id);
             if (team == null)
             {
-                // throw new KeyNotFoundException("Team not found");
-                return null;
+                throw new ResourceNotFoundException("Team not found with ID: " + id);
             }
 
             // Update the team's name if provided
@@ -142,8 +142,7 @@ namespace HomeVital.Services.Implementations
                 var teamLeader = await _healthcareWorkerRepository.GetHealthcareWorkerById(teamInputModel.TeamLeaderID.Value);
                 if (teamLeader == null)
                 {
-                    // throw new KeyNotFoundException("Team leader not found");
-                    return null;
+                    throw new ResourceNotFoundException("Team leader not found with ID: " + teamInputModel.TeamLeaderID.Value);
                 }
                 team.TeamLeaderID = teamInputModel.TeamLeaderID;
                 team.TeamLeaderName = teamLeader.Name;
@@ -155,8 +154,7 @@ namespace HomeVital.Services.Implementations
                 var teamLeader = await _healthcareWorkerRepository.GetHealthcareWorkerById(teamInputModel.TeamLeaderID.Value);
                 if (teamLeader == null)
                 {
-                    // throw new KeyNotFoundException("Team leader not found");
-                    return null;
+                    throw new ResourceNotFoundException("Team leader not found with ID: " + teamInputModel.TeamLeaderID.Value);
                 }
                 // update the teamids for the team leader 
                 var healthcareWorkerInputModel = new HealthcareWorkerInputModel
@@ -180,8 +178,7 @@ namespace HomeVital.Services.Implementations
             var team = await _teamRepository.GetTeamByIdAsync(id);
             if (team == null)
             {
-                // throw new KeyNotFoundException("Team not found");
-                return;
+                throw new ResourceNotFoundException("Team not found with ID: " + id);
             }
 
             await _teamRepository.DeleteTeamAsync(id);

@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+
+using HomeVital.Models.Exceptions;
+using HomeVital.API.Extensions;
+
 namespace HomeVital.API.Controllers
 {
     [ApiController]
@@ -25,64 +29,16 @@ namespace HomeVital.API.Controllers
         {   
             if(!ModelState.IsValid)
             {
-                throw new System.ArgumentException("Invalid input model");
+                throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
             var user_ = await _userService.MockLogin(registerInputModel);
             if (user_ == null)
             {
-                return NotFound();
+                throw new ResourceNotFoundException("User not found with this Kennitala: " + registerInputModel.Kennitala);
             }
             return Ok(user_.Kennitala);
         }
 
-        // [HttpPost("Login")]
-        // // POST api/user/Login
-        // // take in Kennitala and password and returns the user id if the user exists in the database
-        // public async Task<ActionResult<string>> Login([FromBody] RegisterInputModel registerInputModel)
-        // {
-        //     if(!ModelState.IsValid)
-        //     {
-        //         throw new System.ArgumentException("Invalid input model");
-        //     }
-        //     var user_ = await _userService.Login(registerInputModel);
-        //     if (user_ == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     return Ok(user_.Id);
-        // }
-        
-        // [HttpPost("Login")]
-        // public async Task<ActionResult<string>> Login([FromBody] RegisterInputModel registerInputModel)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         throw new System.ArgumentException("Invalid input model");
-        //     }
-        //     var user_ = await _userService.Login(registerInputModel);
-        //     if (user_ == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     var token = _tokenService.GenerateToken(user_.Kennitala, user_.Roles?? new string[0]);
-        //     return Ok(token);
-        // }
-
-        [HttpGet("GetPatientData")]
-        [Authorize(Roles = "Patient")]
-        public IActionResult GetAdminData()
-        {
-            // Only accessible by users with the "Admin" role
-            return Ok("This is admin data.");
-        }
-
-        [HttpGet("GetHealthcareWorkerData")]
-        [Authorize(Roles = "HealthcareWorker, Patient")]
-        public IActionResult GetUserData()
-        {
-            // Only accessible by users with the "User" role
-            return Ok("This is HealthcareWorker data.");
-        }
 
         [HttpPost("generate-token")]
         public async Task<IActionResult> GenerateToken([FromBody] RegisterInputModel registerInputModel)
@@ -90,7 +46,7 @@ namespace HomeVital.API.Controllers
             var user = await _userService.Login(registerInputModel);
             if (user == null)
             {
-                return Unauthorized();
+                throw new ResourceNotFoundException("User not found with this Kennitala: " + registerInputModel.Kennitala);
             }
 
             var token = _tokenService.GenerateToken(user);

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace HomeVital.Models.Exceptions
 {
-    public class ModelFormatException : Exception
+    public class VarArgumentException : Exception
     {
-        public ModelFormatException(String message) : base(message) {}
-        
+        public VarArgumentException(string message) : base(message) {}
     }
+   
 }
