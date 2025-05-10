@@ -76,6 +76,12 @@ public class BloodPressureRepository : IBloodPressureRepository
             throw new ResourceNotFoundException("Blood pressure not found with ID: " + id);
         }
 
+        // check the date, if the date on the measurement is older than 1 day, throw an exception
+        if (bloodPressure.Date < DateTime.UtcNow.AddDays(-1))
+        {
+            throw new MethodNotAllowedException("Blood pressure measurement is older than 1 day with ID: " + id);
+        }
+
         if (bloodPressure != null)
         {
             // check blood pressure range using CheckBloodPressureRange
@@ -123,6 +129,11 @@ public class BloodPressureRepository : IBloodPressureRepository
         if (bloodPressure == null)
         {
             throw new ResourceNotFoundException("Blood pressure not found with ID: " + id);
+        }
+        // check the date, if the date on the measurement is older than 1 day, throw an exception
+        if (bloodPressure.Date < DateTime.UtcNow.AddDays(-1))
+        {
+            throw new MethodNotAllowedException("Blood pressure measurement is older than 1 day with ID: " + id);
         }
 
         _dbContext.BloodPressures.Remove(bloodPressure);
