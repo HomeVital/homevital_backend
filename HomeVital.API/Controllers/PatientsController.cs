@@ -47,7 +47,7 @@ namespace HomeVital.API.Controllers
 
             // Wrap in envelope
             var envelope = new Envelope<IEnumerable<PatientDto>>(
-                paginatedData,
+                paginatedData!,
                 totalCount,
                 pageSize,
                 pageNumber
@@ -65,14 +65,9 @@ namespace HomeVital.API.Controllers
             {
                 throw new ModelFormatException(ModelState.RetrieveErrorString());
             }
-            var patient = await _patientService.GetPatientById(id);
-            if (patient == null)
-            {
-                throw new ResourceNotFoundException("Patient not found with this ID: " + id);
-            }
 
-
-
+            var patient = await _patientService.GetPatientById(id)!;
+           
             return Ok(patient);
         }
 

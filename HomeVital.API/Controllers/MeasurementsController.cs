@@ -29,11 +29,12 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<IEnumerable<Measurements>>> GetXMeasurementsByPatientId(int patientId, int count)
         {
             // check if the patient exists
-            var patient = await _patientService.GetPatientById(patientId);
-            if (patient == null)
+            // model validation
+            if(patientId <= 0)
             {
                 throw new ResourceNotFoundException("Patient not found");
             }
+
             var measurements = await _measurementService.GetXMeasurementsByPatientId(patientId, count);
             return Ok(measurements);
         }
@@ -46,19 +47,9 @@ namespace HomeVital.API.Controllers
             [FromQuery] int pageNumber = 1
         )
         {
-            // Check if the patient exists
-            var patient = await _patientService.GetPatientById(patientId);
-            if (patient == null)
-            {
-                throw new ResourceNotFoundException(ModelState.RetrieveErrorString());
-            }
-
             // Get measurements for the patient
             var measurements = await _measurementService.GetMeasurementsByPatientId(patientId);
-            // if (measurements == null)
-            // {
-                
-            // }
+            
 
             // Pagination logic
             var totalCount = measurements.Count();
@@ -120,13 +111,7 @@ namespace HomeVital.API.Controllers
         // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("patient/{patientId}/warnings")]
         public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
-        {
-            // check if the patient exists
-            var patient = await _patientService.GetPatientById(patientId);
-            if (patient == null)
-            {
-                throw new ResourceNotFoundException("Patient not found");
-            }
+        {            
             var measurements = await _measurementService.GetPatientWarnings(patientId, onlyUnacknowledged);
             return Ok(measurements);
         }
