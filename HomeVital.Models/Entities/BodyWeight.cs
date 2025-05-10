@@ -14,5 +14,8 @@ namespace HomeVital.Models.Entities
         public int? AcknowledgedByWorkerID { get; set; }
         public DateTime? AcknowledgedDate { get; set; }
         public string ResolutionNotes { get; set; } = string.Empty;
+
+        // Saga
+        public bool IsStoredInSaga { get; set; } = false;
     }
 }

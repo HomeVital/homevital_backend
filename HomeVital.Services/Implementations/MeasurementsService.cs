@@ -61,5 +61,11 @@ namespace HomeVital.Services.Implementations
         {
             return await _measurementsRepository.AcknowledgeMeasurement(input);
         }
+
+        public async Task<bool> SetSagaStatus(SagaAckInputModel input)
+        {
+           
+            return await _measurementsRepository.SetSagaStatus(input);
+        }
     }
 }

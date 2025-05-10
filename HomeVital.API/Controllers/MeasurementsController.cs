@@ -142,7 +142,21 @@ namespace HomeVital.API.Controllers
                 throw new ResourceNotFoundException("Acknowledgement failed");
             }
                 
-            return Ok(result);
+            return Ok(new { Message = "Acknowledgement succeeded" });
+        }
+
+        // Post to set saga status
+        [HttpPost("saga")]
+        public async Task<ActionResult> SetSagaStatus(SagaAckInputModel input)
+        {
+            var result = await _measurementService.SetSagaStatus(input);
+            if (!result) 
+            {
+                // Acknowledgement failed
+                throw new ResourceNotFoundException("Acknowledgement failed");
+            } 
+                
+            return Ok(new { Message = "Registration succeeded" });
         }
     }
 }
