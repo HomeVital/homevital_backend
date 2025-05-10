@@ -96,6 +96,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 throw new ResourceNotFoundException("Blood sugar record not found.");
             }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bloodsugar.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Blood sugar record is older than 1 day.");
+            }
 
             if (bloodsugar != null)
             {
@@ -131,6 +136,11 @@ namespace HomeVital.Repositories.Implementations
             if (bloodsugar == null)
             {
                 throw new ResourceNotFoundException("Blood sugar record not found.");
+            }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bloodsugar.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Blood sugar record is older than 1 day.");
             }
 
             _dbContext.Bloodsugars.Remove(bloodsugar);

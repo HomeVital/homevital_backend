@@ -53,6 +53,21 @@ namespace HomeVital.API.ExceptionHandlerExtensions
                             statusCode = (int)HttpStatusCode.Unauthorized;
                             response = new { error = exception.Message };
                         }
+                        else if (exception is MethodNotAllowedException)
+                        {
+                            statusCode = (int)HttpStatusCode.MethodNotAllowed;
+                            response = new { error = exception.Message };
+                        }
+                        else if (exception is NotImplementedException)
+                        {
+                            statusCode = (int)HttpStatusCode.NotImplemented;
+                            response = new { error = exception.Message };
+                        }
+                        else if (exception is UnauthorizedAccessException)
+                        {
+                            statusCode = (int)HttpStatusCode.Unauthorized;
+                            response = new { error = exception.Message };
+                        }
 
                         // Set the status code and write the response
                         context.Response.StatusCode = statusCode;

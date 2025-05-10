@@ -74,6 +74,11 @@ namespace HomeVital.Repositories.Implementations{
             {
                 throw new ResourceNotFoundException("Body weight record not found.");
             }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bodyWeight.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Body weight record is older than 1 day with ID: " + id);
+            }
 
             if (bodyWeight != null)
             {
@@ -101,8 +106,12 @@ namespace HomeVital.Repositories.Implementations{
                 .FirstOrDefaultAsync(b => b.ID == id);
             if (bodyWeight == null)
             {
-                // msg include the id
                 throw new ResourceNotFoundException("Body weight record not found with ID: " + id);
+            }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bodyWeight.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Body weight record is older than 1 day with ID: " + id);
             }
 
             if (bodyWeight != null)

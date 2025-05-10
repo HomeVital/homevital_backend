@@ -64,6 +64,15 @@ namespace HomeVital.Repositories.Implementations
         {
             var oxygenSaturation = await _dbContext.OxygenSaturations
                 .FirstOrDefaultAsync(b => b.ID == id);
+            if (oxygenSaturation == null)
+            {
+                throw new ResourceNotFoundException("Oxygen saturation record not found with ID: " + id);
+            }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (oxygenSaturation.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Oxygen saturation record is older than 1 day with ID: " + id);
+            }
 
             if (oxygenSaturation != null)
             {
@@ -79,10 +88,6 @@ namespace HomeVital.Repositories.Implementations
                 oxygenSaturation.Status = oxygenSaturationInputModel.Status;
                 await _dbContext.SaveChangesAsync();
             }
-            if (oxygenSaturation == null)
-            {
-                throw new ResourceNotFoundException("Oxygen saturation record not found with ID: " + id);
-            }
 
             return _mapper.Map<OxygenSaturationDto>(oxygenSaturation);
         }
@@ -95,6 +100,12 @@ namespace HomeVital.Repositories.Implementations
             {
                 throw new ResourceNotFoundException("Oxygen saturation record not found with ID: " + id);
             }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (oxygenSaturation.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Oxygen saturation record is older than 1 day with ID: " + id);
+            }
+
             if (oxygenSaturation != null)
             {
                 _dbContext.OxygenSaturations.Remove(oxygenSaturation);

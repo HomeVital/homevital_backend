@@ -69,6 +69,11 @@ namespace HomeVital.Repositories.Implementations
             {
                 throw new ResourceNotFoundException("Body temperature record not found.");
             }
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bodyTemperature.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Body temperature record is older than 1 day.");
+            }
 
             if (bodyTemperature != null)
             {
@@ -96,6 +101,12 @@ namespace HomeVital.Repositories.Implementations
             if (bodyTemperature == null)
             {
                 throw new ResourceNotFoundException("Body temperature record not found.");
+            }
+
+            // check the date, if the date on the measurement is older than 1 day, throw an exception
+            if (bodyTemperature.Date < DateTime.UtcNow.AddDays(-1))
+            {
+                throw new MethodNotAllowedException("Body temperature record is older than 1 day.");
             }
 
             if (bodyTemperature != null)

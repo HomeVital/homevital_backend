@@ -34,7 +34,12 @@ namespace HomeVital.Repositories.Implementations
                         BPM = bp.Pulse,
                         MeasuredHand = bp.MeasuredHand,
                         BodyPosition = bp.BodyPosition,
-                        Status = bp.Status
+                        Status = bp.Status,
+                        IsAcknowledged = bp.IsAcknowledged,
+                        AcknowledgedByWorkerID = bp.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bp.AcknowledgedDate,
+                        ResolutionNotes = bp.ResolutionNotes,
+                        IsStoredInSaga = bp.IsStoredInSaga
                     },
                     
                 })
@@ -50,7 +55,12 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementValues = new MeasurementValues
                     {
                         BloodSugar = bs.BloodsugarLevel,
-                        Status = bs.Status
+                        Status = bs.Status,
+                        IsAcknowledged = bs.IsAcknowledged,
+                        AcknowledgedByWorkerID = bs.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bs.AcknowledgedDate,
+                        ResolutionNotes = bs.ResolutionNotes,
+                        IsStoredInSaga = bs.IsStoredInSaga
                     },
                 })
                 .ToListAsync();
@@ -65,7 +75,12 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementValues = new MeasurementValues
                     {
                         Weight = (float?)bw.Weight,
-                        Status = bw.Status
+                        Status = bw.Status,
+                        IsAcknowledged = bw.IsAcknowledged,
+                        AcknowledgedByWorkerID = bw.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bw.AcknowledgedDate,
+                        ResolutionNotes = bw.ResolutionNotes,
+                        IsStoredInSaga = bw.IsStoredInSaga
                     },
                     
                 })
@@ -81,7 +96,12 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementValues = new MeasurementValues
                     {
                         Temperature = bt.Temperature,
-                        Status = bt.Status
+                        Status = bt.Status,
+                        IsAcknowledged = bt.IsAcknowledged,
+                        AcknowledgedByWorkerID = bt.AcknowledgedByWorkerID,
+                        AcknowledgedDate = bt.AcknowledgedDate,
+                        ResolutionNotes = bt.ResolutionNotes,
+                        IsStoredInSaga = bt.IsStoredInSaga
                     },
                 })
                 .ToListAsync();
@@ -96,7 +116,13 @@ namespace HomeVital.Repositories.Implementations
                     MeasurementValues = new MeasurementValues 
                     {
                         OxygenSaturation = os.OxygenSaturationValue,
-                        Status = os.Status
+                        Status = os.Status,
+                        IsAcknowledged = os.IsAcknowledged,
+                        AcknowledgedByWorkerID = os.AcknowledgedByWorkerID,
+                        AcknowledgedDate = os.AcknowledgedDate,
+                        ResolutionNotes = os.ResolutionNotes,
+                        IsStoredInSaga = os.IsStoredInSaga
+
                     },
                 })
                 .ToListAsync();
@@ -478,6 +504,53 @@ namespace HomeVital.Repositories.Implementations
                     os.AcknowledgedByWorkerID = input.WorkerID;
                     os.AcknowledgedDate = DateTime.UtcNow;
                     os.ResolutionNotes = input.ResolutionNotes;
+                    break;
+                    
+                default:
+                    return false;
+            }
+            
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> SetSagaStatus(SagaAckInputModel input)
+        {
+            switch (input.MeasurementType.ToLower())
+            {
+                case "bloodpressure":
+                    var bp = await _dbContext.BloodPressures.FindAsync(input.MeasurementID);
+                    if (bp == null) return false;
+                    
+                    bp.IsStoredInSaga = true;
+                    break;
+                    
+                case "bloodsugar":
+                    var bs = await _dbContext.Bloodsugars.FindAsync(input.MeasurementID);
+                    if (bs == null) return false;
+                    
+                    bs.IsStoredInSaga = true;
+                    break;
+                    
+                case "bodytemperature":
+                    var bt = await _dbContext.BodyTemperatures.FindAsync(input.MeasurementID);
+                    if (bt == null) return false;
+                    
+                    bt.IsStoredInSaga = true;
+                    break;
+                    
+                case "bodyweight":
+                    var bw = await _dbContext.BodyWeights.FindAsync(input.MeasurementID);
+                    if (bw == null) return false;
+                    
+                    bw.IsStoredInSaga = true;
+                    break;
+                    
+                case "oxygensaturation":
+                    var os = await _dbContext.OxygenSaturations.FindAsync(input.MeasurementID);
+                    if (os == null) return false;
+                    
+                    os.IsStoredInSaga = true;
                     break;
                     
                 default:
