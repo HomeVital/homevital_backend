@@ -12,15 +12,23 @@ namespace HomeVital.Services
     {
         private readonly IOxygenSaturationRepository _oxygenSaturationRepository;
         private readonly IMapper _mapper;
+        private readonly IPatientRepository _patientRepository;
 
-        public OxygenSaturationService(IOxygenSaturationRepository oxygenSaturationRepository, IMapper mapper)
+        public OxygenSaturationService(IOxygenSaturationRepository oxygenSaturationRepository, IMapper mapper, IPatientRepository patientRepository)
         {
+            _patientRepository = patientRepository;
             _oxygenSaturationRepository = oxygenSaturationRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<OxygenSaturationDto>> GetOxygenSaturationsByPatientId(int patientId)
         {
+            // check if the patient exists
+            var patient = await _patientRepository.GetPatientById(patientId);
+            if (patient == null)
+            {
+                throw new ResourceNotFoundException("Patient not found with ID: " + patientId);
+            }
             var oxygenSaturations = await _oxygenSaturationRepository.GetOxygenSaturationsByPatientId(patientId);
             return _mapper.Map<IEnumerable<OxygenSaturationDto>>(oxygenSaturations);
         }

@@ -33,14 +33,6 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<IEnumerable<OxygenSaturationDto>>> GetOxygenSaturationsByPatientIdAsync(int patientId)
         {
 
-            // check if the patien exists
-            var patient = await _patientService.GetPatientById(patientId);
-
-            if (patient == null)
-            {
-                throw new ResourceNotFoundException("Patient not found with this ID: " + patientId);
-            }
-
             var oxygensaturations = await _oxygensaturationService.GetOxygenSaturationsByPatientId(patientId);
             if (oxygensaturations == null || oxygensaturations.Count() == 0)
             {
