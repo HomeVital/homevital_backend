@@ -57,7 +57,10 @@ namespace HomeVital.Services.Implementations
                 createdTeam.TeamLeaderName = teamLeader.Name;
             }
             // add the team leader to the list of workers
-            workerIDs.Add(teamInputModel.TeamLeaderID.Value);
+            if (teamInputModel.TeamLeaderID != null)
+            {
+                workerIDs.Add(teamInputModel.TeamLeaderID.Value);
+            }
             // // add team leader name to the team
             // createdTeam.TeamLeaderName = teamLeader.Name;
 

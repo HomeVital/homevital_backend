@@ -29,9 +29,7 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<IEnumerable<Measurements>>> GetXMeasurementsByPatientId(int patientId, int count)
         {
             // check if the patient exists
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 throw new ResourceNotFoundException("Patient not found");
@@ -49,9 +47,7 @@ namespace HomeVital.API.Controllers
         )
         {
             // Check if the patient exists
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 throw new ResourceNotFoundException(ModelState.RetrieveErrorString());
@@ -120,9 +116,7 @@ namespace HomeVital.API.Controllers
         public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
         {
             // check if the patient exists
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var patient = await _patientService.GetPatientById(patientId);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (patient == null)
             {
                 throw new ResourceNotFoundException("Patient not found");

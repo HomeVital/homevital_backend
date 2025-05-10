@@ -80,7 +80,7 @@ namespace HomeVital.Services
 
         }
 
-        public async Task<PatientDto?> GetPatientById(int id)
+        public async Task<PatientDto> GetPatientById(int id)
         {
             // return await _patientRepository.GetPatientById(id);
 

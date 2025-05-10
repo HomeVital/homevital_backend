@@ -51,11 +51,18 @@ namespace HomeVital.Repositories.Implementations
             {
                 throw new ResourceNotFoundException($"Patient with ID {patientId} not found.");
             }
-            
 
+            // Check if the patient already has an active plan
+            var hasActivePlan = patient.PatientPlans.Any(p => p.IsActive);
+            if (hasActivePlan)
+            {
+                // change the end date of the active plan to the current date so the new plan can be the active one
+                var activePlan = patient.PatientPlans.First(p => p.IsActive);
+                activePlan.EndDate = DateTime.UtcNow;
+                _dbContext.PatientPlans.Update(activePlan);
+                await _dbContext.SaveChangesAsync();
+            }
             _dbContext.PatientPlans.Add(patientPlan);
-
-            patient.UpdateStatusBasedOnPlans();
 
             await _dbContext.SaveChangesAsync();
 

@@ -87,7 +87,7 @@ public class BloodPressureRepository : IBloodPressureRepository
                 bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
             }
             
-                // Update only non-default values
+            // Update only non-default values
             // Convert enum to string when setting the MeasureHand property
             bloodPressure.MeasuredHand = bloodPressureInputModel.MeasuredHand.ToString();
             
