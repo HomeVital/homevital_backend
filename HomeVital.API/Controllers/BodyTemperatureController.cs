@@ -4,10 +4,12 @@ using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
 using HomeVital.Models.Exceptions;
 using HomeVital.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace HomeVital.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/bodytemperature")]
 
@@ -21,7 +23,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Get all body temperatures by patient ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<IEnumerable<BodyTemperatureDto>>> GetBodyTemperaturesByPatientIdAsync(int patientId)
         {
@@ -34,7 +36,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Create a new body temperature record for a patient
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpPost("{patientId}")]
         public async Task<ActionResult<BodyTemperatureDto>> CreateBodyTemperatureAsync(int patientId, BodyTemperatureInputModel bodyTemperatureInputModel)
         {
@@ -48,7 +50,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a body temperature record by ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpPatch("{id}")]
         public async Task<ActionResult<BodyTemperatureDto>> UpdateBodyTemperatureAsync(int id, BodyTemperatureInputModel bodyTemperatureInputModel)
         {
@@ -62,7 +64,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Delete a body temperature record by ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<BodyTemperatureDto>> DeleteBodyTemperatureAsync(int id)
         {

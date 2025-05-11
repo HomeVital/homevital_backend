@@ -4,6 +4,8 @@ using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Exceptions;
 using HomeVital.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace HomeVital.API.Controllers

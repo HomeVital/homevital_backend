@@ -36,9 +36,9 @@ try {
     $testClasses = @(
         # "PatientTest", 
         # "TeamTest",
-        # "WorkerTest",  
+        "WorkerTest"
         # "PatientPlanTests" ,
-        "VitalTest"
+        # "VitalTest"
     )
 
     $overallSuccess = $true
