@@ -9,6 +9,7 @@ using HomeVital.API;
 using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
+using HomeVital.Tests.Utils;
 
 // This test class is used to test the Patch Vital range endpoints in the HomeVital API
 
@@ -33,6 +34,8 @@ namespace HomeVital.Tests
                 try
                 {
                     var client = _factory.CreateClient();
+                    var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
                     var response = await client.GetAsync("/api/patients");
                     if (response.IsSuccessStatusCode)
                     {
@@ -56,6 +59,13 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
+
+
             var response = await client.GetAsync("/api/vitalrange/1");
             response.EnsureSuccessStatusCode();
 
@@ -77,6 +87,12 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.PatientKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var bloodSugarInputModel = new BloodsugarInputModel
             {
                 BloodsugarLevel = bloodSugarLevel
@@ -105,6 +121,12 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.PatientKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var bodyTemperatureInputModel = new BodyTemperatureInputModel
             {
                 Temperature = temperature
@@ -132,6 +154,11 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.PatientKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
            
             // Update the patient's weight
             var weightInputModel = new BodyWeightInputModel
@@ -163,6 +190,12 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.PatientKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var oxygenInputModel = new OxygenSaturationInputModel
             {
                 OxygenSaturationValue = oxygenSaturation
@@ -192,6 +225,12 @@ namespace HomeVital.Tests
             await WaitForDatabaseAsync();
 
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.PatientKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var bloodPressureInputModel = new BloodPressureInputModel
             {
                 Systolic = systolic,

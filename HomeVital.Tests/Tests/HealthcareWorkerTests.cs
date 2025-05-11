@@ -9,7 +9,7 @@ using HomeVital.API;
 using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
-
+using HomeVital.Tests.Utils;
 namespace HomeVital.Tests
 {
     public class WorkerTest : IClassFixture<WebApplicationFactory<Program>>
@@ -33,6 +33,8 @@ namespace HomeVital.Tests
                 try
                 {
                     var client = _factory.CreateClient();
+                    var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
                     var response = await client.GetAsync("/api/healthcareworkers");
                     if (response.IsSuccessStatusCode)
                     {
@@ -56,6 +58,11 @@ namespace HomeVital.Tests
             // Arrange
             var client = _factory.CreateClient();
             
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             // Act
             var response = await client.GetAsync("/api/healthcareworkers/2");
             response.EnsureSuccessStatusCode();
@@ -76,6 +83,11 @@ namespace HomeVital.Tests
     
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
             
             // Act
             var response = await client.GetAsync("/api/healthcareworkers");
@@ -98,6 +110,12 @@ namespace HomeVital.Tests
             
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var newWorker = new HealthcareWorkerInputModel
             {
                 Name = "Test Worker",
@@ -128,6 +146,12 @@ namespace HomeVital.Tests
             
             // get worker with id 2
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var response = await client.GetAsync("/api/healthcareworkers/2");
             response.EnsureSuccessStatusCode();
 
@@ -141,13 +165,8 @@ namespace HomeVital.Tests
             // Arrange
             var updatedWorker = new HealthcareWorker
             {
-                Name = "Updated Worker",
-                Phone = "987654321",
-                Status = "Inactive",
-                Teams = new List<Team>
-                {
-                    new Team { ID = 2 }
-                }
+                Name = "Updated Worker"
+                
             };
             var content = new StringContent(JsonConvert.SerializeObject(updatedWorker), System.Text.Encoding.UTF8, "application/json");
 
@@ -161,7 +180,6 @@ namespace HomeVital.Tests
             // Assert
             Assert.NotNull(actualWorker);
             Assert.IsType<HealthcareWorker>(actualWorker);
-            Assert.Equal("Updated Worker", actualWorker.Name);
 
             // get the updated worker to check if the changes were saved
             response = await client.GetAsync("/api/healthcareworkers/2");
@@ -172,8 +190,7 @@ namespace HomeVital.Tests
 
             Assert.NotNull(actualWorker);
             Assert.IsType<HealthcareWorker>(actualWorker);
-            // not equal to the original name
-            Assert.NotEqual("Jane Smith", actualWorker.Name);
+            Assert.Equal("Updated Worker", actualWorker.Name);
         }
 
         [Fact]
@@ -183,6 +200,11 @@ namespace HomeVital.Tests
             
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
             
             // Act
             var response = await client.DeleteAsync("/api/healthcareworkers/1");
@@ -198,10 +220,13 @@ namespace HomeVital.Tests
 
             // get the deleted worker to check if the worker was deleted
             response = await client.GetAsync("/api/healthcareworkers/1");
+            Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
             responseString = await response.Content.ReadAsStringAsync();
-            actualWorker = JsonConvert.DeserializeObject<HealthcareWorker>(responseString);
+            
+            var expectedError = new { error = "Healthcare worker not found with ID: 1" };
+            var actualError = JsonConvert.DeserializeObject<dynamic>(responseString);
 
-            Assert.Null(actualWorker);
+            Assert.Equal(expectedError.error, (string)actualError.error);
         }
     }
 }        

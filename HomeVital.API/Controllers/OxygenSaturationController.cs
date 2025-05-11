@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HomeVital.Models.InputModels;
 using HomeVital.Models.Dtos;
 using HomeVital.Services.Interfaces;
-
+using Microsoft.AspNetCore.Authorization;
 using HomeVital.API.Extensions;
 using HomeVital.Models.Exceptions;
 
@@ -12,7 +12,7 @@ using HomeVital.Models.Exceptions;
 
 namespace HomeVital.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/oxygensaturation")]
     public class OxygenSaturationController : ControllerBase
@@ -28,7 +28,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Get all oxygensaturations by patient ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<IEnumerable<OxygenSaturationDto>>> GetOxygenSaturationsByPatientIdAsync(int patientId)
         {
@@ -44,7 +44,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Create a new oxygensaturation record for a patient
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpPost("{patientId}")]
         public async Task<ActionResult<OxygenSaturationDto>> CreateOxygenSaturationAsync(int patientId, OxygenSaturationInputModel oxygensaturationInputModel)
         {
@@ -59,7 +59,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Update a oxygensaturation record by ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpPatch("{id}")]
         public async Task<ActionResult<OxygenSaturationDto>> UpdateOxygenSaturationAsync(int id, OxygenSaturationInputModel oxygensaturationInputModel)
         {
@@ -78,7 +78,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Delete a oxygensaturation record by ID
-        // [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOxygenSaturationAsync(int id)
         {

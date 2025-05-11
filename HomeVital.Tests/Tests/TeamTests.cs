@@ -35,6 +35,10 @@ namespace HomeVital.Tests
                 try
                 {
                     var client = _factory.CreateClient();
+                    // get auth token
+                    var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
                     var response = await client.GetAsync("/api/patients");
                     if (response.IsSuccessStatusCode)
                     {
@@ -60,10 +64,8 @@ namespace HomeVital.Tests
             // Arrange
             var client = _factory.CreateClient();
             var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
-
             // Debug: Ensure token is not null or empty
             Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
-
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
 
             // Act

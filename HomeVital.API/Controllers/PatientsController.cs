@@ -4,6 +4,7 @@ using HomeVital.Services.Interfaces;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.Exceptions;
 using HomeVital.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -11,7 +12,7 @@ using HomeVital.API.Extensions;
 
 namespace HomeVital.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/patients")]
     public class PatientsController : ControllerBase
@@ -23,7 +24,7 @@ namespace HomeVital.API.Controllers
             _patientService = patientService;
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpGet] // Get all patients
         public async Task<ActionResult<Envelope<IEnumerable<PatientDto>>>> GetPatientsAsync(
             [FromQuery] int pageSize = 25,
@@ -56,7 +57,7 @@ namespace HomeVital.API.Controllers
             return Ok(envelope);
         }
         
-        // [Authorize(Roles = "Patient, HealthcareWorker")]
+        [Authorize(Roles = "Patient, HealthcareWorker")]
         [HttpGet("{id}")] // Get a patient by ID
         public async Task<ActionResult<PatientDto>> GetPatientByIdAsync(int id)
         {
@@ -71,7 +72,7 @@ namespace HomeVital.API.Controllers
             return Ok(patient);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpDelete("{id}")] // Delete a patient by ID
         public async Task<ActionResult<PatientDto>> DeletePatientAsync(int id)
         {
@@ -87,7 +88,7 @@ namespace HomeVital.API.Controllers
             return Ok(patient);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpPost] // Create a new patient
         public async Task<ActionResult<PatientDto>> CreatePatientAsync(PatientInputModel patientInputModel)
         {
@@ -106,7 +107,7 @@ namespace HomeVital.API.Controllers
         }
 
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a patient by ID
         public async Task<ActionResult<PatientDto>> UpdatePatientAsync(int id, PatientInputModel patientInputModel)
         {

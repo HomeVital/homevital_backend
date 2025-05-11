@@ -9,6 +9,7 @@ using HomeVital.API;
 using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Models.InputModels;
+using HomeVital.Tests.Utils;
 
 namespace HomeVital.Tests
 {
@@ -35,6 +36,9 @@ namespace HomeVital.Tests
                 try
                 {
                     var client = _factory.CreateClient();
+                    var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
                     var response = await client.GetAsync("/api/patients");
                     if (response.IsSuccessStatusCode)
                     {
@@ -62,6 +66,11 @@ namespace HomeVital.Tests
 
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
             
             // Act
             var response = await client.GetAsync("/api/patients");
@@ -84,6 +93,11 @@ namespace HomeVital.Tests
 
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
             
             // Act
             var response = await client.GetAsync("/api/patients/6");
@@ -106,6 +120,12 @@ namespace HomeVital.Tests
 
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var newPatient = new Patient { Name = "Test Patient", Phone = "123456789", Status = "Active", Address = "123 Main St", TeamID = 1 };
             var content = new StringContent(JsonConvert.SerializeObject(newPatient), System.Text.Encoding.UTF8, "application/json");
 
@@ -130,6 +150,12 @@ namespace HomeVital.Tests
 
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+
             var updatedPatient = new Patient { Name = "Updated Patient", Phone = "123456789", Status = "Active", Address = "123 Main St", TeamID = 1 };
             var content = new StringContent(JsonConvert.SerializeObject(updatedPatient), System.Text.Encoding.UTF8, "application/json");
 
@@ -154,6 +180,11 @@ namespace HomeVital.Tests
 
             // Arrange
             var client = _factory.CreateClient();
+
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            // Debug: Ensure token is not null or empty
+            Assert.False(string.IsNullOrEmpty(authToken), "Auth token is null or empty");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
             
             // Act
             var response = await client.DeleteAsync("/api/patients/6");
