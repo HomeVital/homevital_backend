@@ -17,11 +17,6 @@ namespace HomeVital.Services.Implementations
             _measurementsRepository = measurementsRepository;
         }
 
-        // public async Task<MeasurementDto> GetMeasurementsById(int id)
-        // {
-        //     return await _measurementsRepository.GetMeasurementsById(id);
-        // }
-
         public async Task<List<Measurements>> GetMeasurementsByPatientId(int id)
         {
             // Get all measurements for the patient

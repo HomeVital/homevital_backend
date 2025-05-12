@@ -128,42 +128,22 @@ namespace HomeVital.Repositories.Implementations
         }
 
 
+        /// <summary>
+        /// Checks the oxygen saturation range and returns the status.
+        /// </summary>
+        /// <param name="oxygenSaturationInputModel">The oxygen saturation input model.</param>
+        /// <param name="oxygenSaturationRange">The oxygen saturation range.</param>
+        /// <returns>The status of the oxygen saturation.</returns>
+        /// <remarks>
+        /// This method checks the oxygen saturation range based on the input model and predefined ranges.
+        /// It returns the status as a string.
+        /// - If the oxygen saturation value is greater than the good range, it returns "Normal".
+        /// - If the oxygen saturation value is between the raised range and the good range, it returns "Raised".
+        /// - If the oxygen saturation value is between the good range and the high range, it returns "Raised".
+        /// - If the oxygen saturation value is less than or equal to the high range, it returns "High".
+        /// - If the oxygen saturation value is invalid, it returns "Invalid".
         private static string CheckOxygenSaturationRange(OxygenSaturationInputModel oxygenSaturationInputModel, OxygenSaturationRange oxygenSaturationRange)
         {
-
-            // check range
-
-            // if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
-            // {
-            //     return VitalStatus.Normal.ToString();
-            // }
-            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationOkMin
-            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationOkMax)
-            // {
-            //     return VitalStatus.Raised.ToString();
-            // }
-            // else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationNotOkMin
-            //     && oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationNotOkMax)
-            // {
-            //     return VitalStatus.High.ToString();
-            // }
-            // else if (oxygenSaturationInputModel.OxygenSaturationValue <= oxygenSaturationRange.OxygenSaturationCriticalMax)
-            // {
-            //     return VitalStatus.Critical.ToString();
-            // }
-            // else
-            // {
-            //     return VitalStatus.Invalid.ToString();
-            // }
-
-
-            // check oxygen saturation range with the 3 ranges
-            // OxygenSaturationGood
-
-            // OxygenSaturationRaised
-
-            // OxygenSaturationHigh
-
             if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationGood)
             {
                 return VitalStatus.Normal.ToString();

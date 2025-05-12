@@ -35,7 +35,7 @@ namespace HomeVital.API.Controllers
 
             if (createdPlan == null)
             {
-                throw new UserException("Failed to create patient plan.");
+                throw new HomeVitalInvalidOperationException("Failed to create patient plan.");
             }
 
             return Ok(createdPlan);

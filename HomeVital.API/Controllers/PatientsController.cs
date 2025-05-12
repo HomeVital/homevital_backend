@@ -100,7 +100,7 @@ namespace HomeVital.API.Controllers
             var newPatient = await _patientService.CreatePatient(patientInputModel);
             if (newPatient == null)
             {
-                return BadRequest("Failed to create patient");
+                throw new HomeVitalInvalidOperationException("Failed to create patient.");
             }
 
             return Ok(newPatient);

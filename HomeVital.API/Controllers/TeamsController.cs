@@ -36,6 +36,11 @@ namespace HomeVital.API.Controllers
             }
 
             var newTeam = await _teamService.CreateTeamAsync(teamInputModel);
+
+            if (newTeam == null)
+            {
+                throw new HomeVitalInvalidOperationException("Failed to create team.");
+            }
             return Ok(newTeam);
         }
 

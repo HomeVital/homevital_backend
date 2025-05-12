@@ -90,6 +90,10 @@ namespace HomeVital.API.Controllers
             }
 
             var newHealthcareWorker = await _healthcareWorkerService.CreateHealthcareWorker(healthcareWorkerInputModel);
+            if (newHealthcareWorker == null)
+            {
+                throw new HomeVitalInvalidOperationException("Failed to create healthcare worker.");
+            }
             return Ok(newHealthcareWorker);
         }
 

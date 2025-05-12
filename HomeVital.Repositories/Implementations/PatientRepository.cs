@@ -65,6 +65,8 @@ public class PatientRepository : IPatientRepository
             PatientID = newPatient.ID  
         };
 
+
+        // add vital ranges to db
         _dbContext.BodyTemperatureRanges.Add(newVitalRangeBodyTemp);
         _dbContext.BloodPressureRanges.Add(newVitalRangeBloodPressure);
         _dbContext.BloodSugarRanges.Add(newVitalRangeBloodSugar);
