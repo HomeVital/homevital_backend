@@ -27,6 +27,7 @@ namespace HomeVital.Repositories.Implementations{
 
         public async Task<IEnumerable<BodyWeightDto>> GetBodyWeightsByPatientId(int patientId)
         {
+            // query the database for body weight records for the given patient ID
             var bodyWeights = await _dbContext.BodyWeights
                 .Where(b => b.PatientID == patientId)
                 .OrderByDescending(b => b.Date)
@@ -36,12 +37,13 @@ namespace HomeVital.Repositories.Implementations{
             {
                 throw new ResourceNotFoundException("No body weight records found for this patient.");
             }
-
+            // return the body weights 
             return _mapper.Map<IEnumerable<BodyWeightDto>>(bodyWeights);
         }
 
         public async Task<BodyWeightDto> CreateBodyWeight(int patientId, BodyWeightInputModel bodyWeightInputModel)
         {
+            // query the database for body weight records for the given patient ID
             var bodyWeightRange = await _dbContext.BodyWeightRanges
                 .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
@@ -58,7 +60,7 @@ namespace HomeVital.Repositories.Implementations{
             bodyWeight.PatientID = patientId;
             bodyWeight.Date = DateTime.UtcNow;
 
-
+            // add the body weight to the database
             _dbContext.BodyWeights.Add(bodyWeight);
             await _dbContext.SaveChangesAsync();
 
@@ -67,6 +69,8 @@ namespace HomeVital.Repositories.Implementations{
 
         public async Task<BodyWeightDto> UpdateBodyWeight(int id, BodyWeightInputModel bodyWeightInputModel)
         {
+            // check if the body weight record exists
+            // query the database for body weight records for the given patient ID
             var bodyWeight = await _dbContext.BodyWeights
                 .FirstOrDefaultAsync(b => b.ID == id);
 
@@ -84,11 +88,13 @@ namespace HomeVital.Repositories.Implementations{
             {
                 bodyWeight.Weight = bodyWeightInputModel.Weight;
                 
+                // get the body weight range for the patient
                 var bodyWeightRange = await _dbContext.BodyWeightRanges
                     .FirstOrDefaultAsync(b => b.PatientID == bodyWeight.PatientID);
 
                 if (bodyWeightRange != null)
                 {
+                    // check body weight range using CheckBodyWeightRange
                     bodyWeightInputModel.Status = CheckBodyWeightRange(bodyWeight.PatientID, bodyWeightInputModel.Weight, bodyWeightRange);
                 }
 
@@ -102,6 +108,8 @@ namespace HomeVital.Repositories.Implementations{
 
         public async Task<BodyWeightDto> DeleteBodyWeight(int id)
         {
+            // check if the body weight record exists
+            // query the database for body weight records for the given patient ID
             var bodyWeight = await _dbContext.BodyWeights
                 .FirstOrDefaultAsync(b => b.ID == id);
             if (bodyWeight == null)
@@ -125,6 +133,7 @@ namespace HomeVital.Repositories.Implementations{
 
         public async Task<BodyWeightDto> GetBodyWeightById(int id)
         {
+            // check if the body weight record exists
             var bodyWeight = await _dbContext.BodyWeights
                 .FirstOrDefaultAsync(b => b.ID == id);
         

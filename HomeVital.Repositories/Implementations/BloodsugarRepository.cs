@@ -151,6 +151,11 @@ namespace HomeVital.Repositories.Implementations
 
         /// <summary>
         /// Determines the status of a blood sugar level based on the patient's vital range.
+        /// if the blood sugar level is below the lower limit, it is considered "Raised".
+        /// if the blood sugar level is between the lower limit and the good limit, it is considered "Normal".
+        /// if the blood sugar level is between the good limit and the raised limit, it is considered "Raised".
+        /// if the blood sugar level is above the high limit, it is considered "High".
+        /// if the blood sugar level is invalid, it is considered "Invalid".
         /// </summary>
         /// <param name="bloodsugarInputModel">The input model containing the blood sugar level.</param>
         /// <param name="vitalRangeBloodsugar">The patient's blood sugar range.</param>

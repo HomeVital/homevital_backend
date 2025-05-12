@@ -44,7 +44,7 @@ namespace HomeVital.Services
 
             if (patientPlan == null)
             {
-                throw new Exception("Failed to create patient plan.");
+                throw new HomeVitalInvalidOperationException("Failed to create patient plan.");
             }
 
             // if the patient plan is created successfully and the plan is active, update the patient status to active

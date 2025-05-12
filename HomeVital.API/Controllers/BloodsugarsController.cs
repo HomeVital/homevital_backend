@@ -46,6 +46,11 @@ namespace HomeVital.API.Controllers
                 }
 
                 var newBloodsugar = await _bloodsugarService.CreateBloodsugar(patientId, bloodsugarInputModel);
+
+                if (newBloodsugar == null)
+                {
+                    throw new HomeVitalInvalidOperationException("Failed to create blood sugar record.");
+                }
                 return Ok(newBloodsugar);
             }
 

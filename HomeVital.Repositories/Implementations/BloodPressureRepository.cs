@@ -26,6 +26,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<IEnumerable<BloodPressureDto>> GetBloodPressuresByPatientId(int patientId)
     {
+        // query the database for blood pressure records for the given patient ID
         var bloodPressures = await _dbContext.BloodPressures
             .Where(b => b.PatientID == patientId)
             .OrderByDescending(b => b.Date)
@@ -43,6 +44,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> CreateBloodPressure(int patientId, BloodPressureInputModel bloodPressureInputModel)
     {
+        // query the database for blood pressure records for the given patient ID
         var vitalRangeBloodpressure = await _dbContext.BloodPressureRanges
             .FirstOrDefaultAsync(b => b.PatientID == patientId);
 
@@ -54,11 +56,12 @@ public class BloodPressureRepository : IBloodPressureRepository
         bloodPressureInputModel.Status = CheckBloodPressureRange(bloodPressureInputModel, vitalRangeBloodpressure);
         // make sure measure hand and body position are not null
 
-
+        // map the input model to the entity
         var bloodPressure = _mapper.Map<BloodPressure>(bloodPressureInputModel);
         bloodPressure.PatientID = patientId;
         bloodPressure.Date = DateTime.UtcNow;
 
+        // add the blood pressure record to the database
         _dbContext.BloodPressures.Add(bloodPressure);
         await _dbContext.SaveChangesAsync();
 
@@ -68,6 +71,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> UpdateBloodPressure(int id, BloodPressureInputModel bloodPressureInputModel)
     {
+        // query the database for blood pressure records for the given patient ID
         var bloodPressure = await _dbContext.BloodPressures
             .FirstOrDefaultAsync(b => b.ID == id);
 
@@ -115,7 +119,7 @@ public class BloodPressureRepository : IBloodPressureRepository
             {
                 bloodPressure.Status = bloodPressureInputModel.Status;
             }
-
+            // save the changes to the database
             await _dbContext.SaveChangesAsync();
         }
         return _mapper.Map<BloodPressureDto>(bloodPressure);
@@ -123,6 +127,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> DeleteBloodPressure(int id)
     {
+        // query the database for blood pressure records for the given patient ID
         var bloodPressure = await _dbContext.BloodPressures
             .FirstOrDefaultAsync(b => b.ID == id);
 
@@ -136,6 +141,7 @@ public class BloodPressureRepository : IBloodPressureRepository
             throw new MethodNotAllowedException("Blood pressure measurement is older than 1 day with ID: " + id);
         }
 
+        // delete the blood pressure record from the database
         _dbContext.BloodPressures.Remove(bloodPressure);
         await _dbContext.SaveChangesAsync();
 
@@ -144,6 +150,7 @@ public class BloodPressureRepository : IBloodPressureRepository
 
     public async Task<BloodPressureDto> GetBloodPressureById(int id)
     {
+        // query the database for blood pressure records for the given patient ID
         var bloodPressure = await _dbContext.BloodPressures
             .FirstOrDefaultAsync(b => b.ID == id);
 
@@ -155,9 +162,31 @@ public class BloodPressureRepository : IBloodPressureRepository
         return _mapper.Map<BloodPressureDto>(bloodPressure);
     }
 
-    // private function to check blood pressure range
+    /// <summary>
+    /// Checks the blood pressure range and returns the status.
+    /// Systolic and diastolic values are checked against the ranges defined in the BloodPressureRange entity.
+    /// The systolic value is given more weight in determining the final status.
+    /// </summary>
+    /// <param name="bloodPressureInputModel">The input model containing the blood pressure values.</param>
+    /// <param name="BloodPressureRange">The range of blood pressure values.</param>
+    /// <returns>The status of the blood pressure.</returns>
+    /// <remarks>
+    /// The method checks the systolic and diastolic values against the defined ranges.
+    /// - If the systolic value is below the "SystolicLowered", the status is "Raised".
+    /// - If the systolic value is below the "SystolicGood", the status is "Normal".
+    /// - If the systolic value is below the "SystolicRaised", the status is "Raised".
+    /// - If the systolic value is below the "SystolicHigh" or above the "SystolicHigh", the status is "High".
+    /// - If the systolic value is invalid, the status is "Invalid".
+    /// - If the diastolic value is below the "DiastolicLowered", the status is "Raised".
+    /// - If the diastolic value is below the "DiastolicGood", the status is "Normal".
+    /// - If the diastolic value is below the "DiastolicRaised", the status is "Raised".
+    /// - If the diastolic value is below the "DiastolicHigh" or above the "DiastolicHigh", the status is "High".
+    /// - If the diastolic value is invalid, the status is "Invalid".
+    /// - The final status is determined based on the systolic value having more weight.
+    /// </summary>
     private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange BloodPressureRange)
     {
+        // Initialize the status variables
         var sysStatus = string.Empty;
         var diaStatus = string.Empty;
 

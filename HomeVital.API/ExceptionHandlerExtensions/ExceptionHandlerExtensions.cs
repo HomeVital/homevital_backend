@@ -68,6 +68,12 @@ namespace HomeVital.API.ExceptionHandlerExtensions
                             statusCode = (int)HttpStatusCode.Unauthorized;
                             response = new { error = exception.Message };
                         }
+                        // HomeVitalInvalidOperationException
+                        else if (exception is HomeVitalInvalidOperationException)
+                        {
+                            statusCode = (int)HttpStatusCode.InternalServerError;
+                            response = new { error = exception.Message };
+                        }
 
                         // Set the status code and write the response
                         context.Response.StatusCode = statusCode;

@@ -47,6 +47,11 @@ namespace HomeVital.API.Controllers
         } 
 
         var newBodyWeight = await _bodyWeightService.CreateBodyWeight(patientId, bodyWeightInputModel);
+
+        if (newBodyWeight == null)
+        {
+            throw new HomeVitalInvalidOperationException("Failed to create body weight record.");
+        }
         return Ok(newBodyWeight);
     }
 

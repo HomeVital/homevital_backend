@@ -46,6 +46,11 @@ namespace HomeVital.API.Controllers
             }
 
             var newBodyTemperature = await _bodyTemperatureService.CreateBodyTemperature(patientId, bodyTemperatureInputModel);
+
+            if (newBodyTemperature == null)
+            {
+                throw new HomeVitalInvalidOperationException("Failed to create body temperature record.");
+            }
             return Ok(newBodyTemperature);
         }
 

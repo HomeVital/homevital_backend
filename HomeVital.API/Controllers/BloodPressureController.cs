@@ -44,6 +44,11 @@ namespace HomeVital.API.Controllers
             }
 
             var newBloodPressure = await _bloodpressureService.CreateBloodPressure(patientId, bloodpressureInputModel);
+
+            if (newBloodPressure == null)
+            {
+                throw new HomeVitalInvalidOperationException("Failed to create blood pressure record.");
+            }
             return Ok(newBloodPressure);
         }
 

@@ -52,7 +52,7 @@ namespace HomeVital.API.Controllers
 
             if (newOxygenSaturation == null)
             {
-                throw new ResourceNotFoundException("Failed to create oxygen saturation record.");
+                throw new HomeVitalInvalidOperationException("Failed to create oxygen saturation record.");
             }
 
             return Ok(newOxygenSaturation);
