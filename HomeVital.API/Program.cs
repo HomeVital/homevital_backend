@@ -118,14 +118,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+// Check command-line arguments for "dummy"
+var _args = Environment.GetCommandLineArgs();
+bool runDummyData = _args.Contains("data", StringComparer.OrdinalIgnoreCase);
 
-// Initialize the database with seed data
-using (var scope = app.Services.CreateScope())
+// dont run dummy data if the command line argument "nodata" is present
+if (runDummyData)
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<HomeVitalDbContext>();
-    DatabaseInitializer.Initialize(context);
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<HomeVitalDbContext>();
+        DatabaseInitializer.Initialize(context);
+    }
 }
+
 
 app.UseSwagger();
 app.UseSwaggerUI();
