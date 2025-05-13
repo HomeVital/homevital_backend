@@ -14,14 +14,17 @@ namespace HomeVital.Services
         private readonly IPatientPlanRepository _patientPlanRepository;
         private readonly IMapper _mapper;
         private readonly IPatientRepository _patientRepository;
+        private readonly ITeamRepository _teamRepository;
 
-        public PatientPlanService(IPatientPlanRepository patientPlanRepository, IMapper mapper, IPatientRepository patientRepository)
+        public PatientPlanService(IPatientPlanRepository patientPlanRepository, IMapper mapper, IPatientRepository patientRepository, ITeamRepository teamRepository)
         {
-            _patientRepository = patientRepository;
             _patientPlanRepository = patientPlanRepository;
             _mapper = mapper;
+            _patientRepository = patientRepository;
+            _teamRepository = teamRepository;
         }
 
+        
         public async Task<PatientPlanDto> CreatePatientPlanAsync( int patientId, PatientPlanInputModel patientPlanInputModel)
         {
             // Create a new patient plan
@@ -33,7 +36,7 @@ namespace HomeVital.Services
                 throw new ResourceNotFoundException("Patient not found with ID: " + patientId);
             }
             // check if the team exists
-            var team = await _patientPlanRepository.GetPatientPlanByIdAsync(patientId);
+            var team = await _teamRepository.GetTeamByIdAsync(patient.TeamID);
             if (team == null)
             {
                 throw new ResourceNotFoundException("Team not found for patient with ID: " + patientId);
