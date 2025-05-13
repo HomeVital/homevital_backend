@@ -170,7 +170,7 @@ namespace HomeVital.Repositories.Implementations
             var bloodPressures = await _dbContext.BloodPressures
                 .Include(bp => bp.Patient)
                 .ThenInclude(p => p.Team)
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" && !m.IsAcknowledged)
                 .Select(bp => new Measurements
                 {
                     ID = bp.ID,
@@ -201,7 +201,7 @@ namespace HomeVital.Repositories.Implementations
             var bloodSugars = await _dbContext.Bloodsugars
                 .Include(bp => bp.Patient)
                 .ThenInclude(p => p.Team)
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" && !m.IsAcknowledged)
                 .Select(bs => new Measurements
                 {
                     ID = bs.ID,
@@ -226,7 +226,7 @@ namespace HomeVital.Repositories.Implementations
             var bodyWeights = await _dbContext.BodyWeights
                 .Include(bp => bp.Patient)
                 .ThenInclude(p => p.Team)
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" && !m.IsAcknowledged)
                 .Select(bw => new Measurements
                 {
                     ID = bw.ID,
@@ -251,7 +251,7 @@ namespace HomeVital.Repositories.Implementations
             var bodyTemperatures = await _dbContext.BodyTemperatures
                 .Include(bp => bp.Patient)
                 .ThenInclude(p => p.Team)
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" && !m.IsAcknowledged)
                 .Select(bt => new Measurements
                 {
                     ID = bt.ID,
@@ -276,7 +276,7 @@ namespace HomeVital.Repositories.Implementations
             var oxygenSaturations = await _dbContext.OxygenSaturations
                 .Include(bp => bp.Patient)
                 .ThenInclude(p => p.Team)
-                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal")
+                .Where(m => !string.IsNullOrEmpty(m.Status) && m.Status != "Normal" && !m.IsAcknowledged)
                 .Select(os => new Measurements
                 {
                     ID = os.ID,
