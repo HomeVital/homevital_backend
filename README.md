@@ -132,5 +132,6 @@ This will run all the tests in the project and output the results to the console
 
 The tests are located in the HomeVital.Tests project and are divided into different classes based on the functionality being tested. Each test class contains multiple test methods that test different aspects of the API.
 
+> We have a running API on https://homevitaldev-app.azurewebsites.net/api but there are no guranties that the service is working at all times.
 
 If you run into any trouble, please contact us and let us know of the trouble.
