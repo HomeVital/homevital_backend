@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("api/measurements")]
     public class MeasurementsController : ControllerBase
@@ -41,7 +41,7 @@ namespace HomeVital.API.Controllers
             return Ok(measurements);
         }
         
-        [Authorize(Roles = "HealthcareWorker, Patient")]
+        // [Authorize(Roles = "HealthcareWorker, Patient")]
         [HttpGet("{patientId}")]
         public async Task<ActionResult<Envelope<List<MeasurementDto>>>> GetMeasurementsByPatientId(
             int patientId,
@@ -71,7 +71,7 @@ namespace HomeVital.API.Controllers
             return Ok(envelope);
         }
         
-        [Authorize(Roles = "HealthcareWorker")]
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("warnings")]
         public async Task<ActionResult<Envelope<List<MeasurementDto>>>> GetMeasurementsWithWarnings(
             [FromQuery] List<int> teamIDs,
@@ -110,7 +110,7 @@ namespace HomeVital.API.Controllers
         }
 
         // Get unacknowledged warnings for a specific patient
-        [Authorize(Roles = "HealthcareWorker")]
+        // [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("patient/{patientId}/warnings")]
         public async Task<ActionResult<List<Measurements>>> GetPatientWarnings(int patientId, bool onlyUnacknowledged = true)
         {            

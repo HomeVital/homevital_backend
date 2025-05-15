@@ -184,51 +184,70 @@ public class BloodPressureRepository : IBloodPressureRepository
     /// - If the diastolic value is invalid, the status is "Invalid".
     /// - The final status is determined based on the systolic value having more weight.
     /// </summary>
-    private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange BloodPressureRange)
+    private static string CheckBloodPressureRange(BloodPressureInputModel bloodPressureInputModel, BloodPressureRange _BloodPressureRange)
     {
         // Initialize the status variables
-        var sysStatus = string.Empty;
-        var diaStatus = string.Empty;
+        var sysStatus = VitalStatus.Invalid.ToString(); // Default to Invalid
+        var diaStatus = VitalStatus.Invalid.ToString(); // Default to Invalid
+        var SYS = bloodPressureInputModel.Systolic;
+        var DIA = bloodPressureInputModel.Diastolic;
+        var SYSLowered = _BloodPressureRange.SystolicLowered;
+        var SYSGood = _BloodPressureRange.SystolicGood;
+        var SYSRaised = _BloodPressureRange.SystolicRaised;
+        var SYSHigh = _BloodPressureRange.SystolicHigh;
+        var DIALowered = _BloodPressureRange.DiastolicLowered;
+        var DIAGood = _BloodPressureRange.DiastolicGood;
+        var DIARaised = _BloodPressureRange.DiastolicRaised;
+        var DIAHigh = _BloodPressureRange.DiastolicHigh;
 
-        // Check if the blood pressure is within the normal range, start with checking the systolic values
-        if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicLowered)
+
+        // console log the input model
+        Console.WriteLine($"Console log -->>> Systolic -->>>: {bloodPressureInputModel.Systolic}, Diastolic: {bloodPressureInputModel.Diastolic}");
+
+        // Check systolic values
+        if (SYS <= SYSLowered)
         {
             sysStatus = VitalStatus.Raised.ToString();
         }
-        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicGood)
+        else if (SYS <= SYSGood)
         {
             sysStatus = VitalStatus.Normal.ToString();
         }
-        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicRaised)
+        else if (SYS <= SYSRaised)
         {
             sysStatus = VitalStatus.Raised.ToString();
         }
-        // Systolic high if now less than the systolic high value or greater than the systolic high value
-        else if (bloodPressureInputModel.Systolic < BloodPressureRange.SystolicHigh || bloodPressureInputModel.Systolic > BloodPressureRange.SystolicHigh)
+        else if (SYS <= SYSHigh)
         {
             sysStatus = VitalStatus.High.ToString();
         }
-        else
+        else if (SYS >= SYSHigh)
         {
-            sysStatus = VitalStatus.Invalid.ToString();
+            sysStatus = VitalStatus.High.ToString();
         }
 
-        if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicLowered)
+        // Check diastolic values
+        if (DIA <= DIALowered)
         {
             diaStatus = VitalStatus.Raised.ToString();
         }
-        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicGood)
+        else if (DIA <= DIAGood)
         {
             diaStatus = VitalStatus.Normal.ToString();
         }
-        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicRaised)
+        else if (DIA <= DIARaised)
         {
             diaStatus = VitalStatus.Raised.ToString();
         }
-        else if (bloodPressureInputModel.Diastolic < BloodPressureRange.DiastolicHigh || bloodPressureInputModel.Diastolic > BloodPressureRange.DiastolicHigh)
+        else if (DIA >= DIAHigh)
         {
             diaStatus = VitalStatus.High.ToString();
         }
+        else if (DIA <= DIAHigh)
+        {
+            diaStatus = VitalStatus.High.ToString();
+        }
+
         // Determine final status with systolic having more weight
         string finalStatus;
         if (sysStatus == VitalStatus.High.ToString() || sysStatus == VitalStatus.Raised.ToString())
@@ -241,11 +260,71 @@ public class BloodPressureRepository : IBloodPressureRepository
         }
         else
         {
-            finalStatus = VitalStatus.Invalid.ToString(); // Handle invalid cases
+            finalStatus = sysStatus; // If systolic is invalid, use systolic status
         }
 
         // Return or set the final status
-        return finalStatus;        
+        return finalStatus;
+        // // Initialize the status variables
+        // var sysStatus = string.Empty;
+        // var diaStatus = string.Empty;
+
+        // // Check if the blood pressure is within the normal range, start with checking the systolic values
+        // if (bloodPressureInputModel.Systolic <= BloodPressureRange.SystolicLowered)
+        // {
+        //     sysStatus = VitalStatus.Raised.ToString();
+        // }
+        // else if (bloodPressureInputModel.Systolic <= BloodPressureRange.SystolicGood)
+        // {
+        //     sysStatus = VitalStatus.Normal.ToString();
+        // }
+        // else if (bloodPressureInputModel.Systolic <= BloodPressureRange.SystolicRaised)
+        // {
+        //     sysStatus = VitalStatus.Raised.ToString();
+        // }
+        // // Systolic high if now less than the systolic high value or greater than the systolic high value
+        // else if (bloodPressureInputModel.Systolic >= BloodPressureRange.SystolicHigh)
+        // {
+        //     sysStatus = VitalStatus.High.ToString();
+        // }
+        // // else
+        // // {
+        // //     sysStatus = VitalStatus.Invalid.ToString();
+        // // }
+
+        // if (bloodPressureInputModel.Diastolic <= BloodPressureRange.DiastolicLowered)
+        // {
+        //     diaStatus = VitalStatus.Raised.ToString();
+        // }
+        // else if (bloodPressureInputModel.Diastolic <= BloodPressureRange.DiastolicGood)
+        // {
+        //     diaStatus = VitalStatus.Normal.ToString();
+        // }
+        // else if (bloodPressureInputModel.Diastolic <= BloodPressureRange.DiastolicRaised)
+        // {
+        //     diaStatus = VitalStatus.Raised.ToString();
+        // }
+        // else if (bloodPressureInputModel.Diastolic >= BloodPressureRange.DiastolicHigh)
+        // {
+        //     diaStatus = VitalStatus.High.ToString();
+        // }
+        // // Determine final status with systolic having more weight
+        // string finalStatus;
+        // if (sysStatus == VitalStatus.High.ToString() || sysStatus == VitalStatus.Raised.ToString())
+        // {
+        //     finalStatus = sysStatus; // Prioritize systolic status
+        // }
+        // else if (sysStatus == VitalStatus.Normal.ToString())
+        // {
+        //     finalStatus = diaStatus; // Consider diastolic status only if systolic is normal
+        // }
+        // else
+        // {
+        //     finalStatus = sysStatus; // If systolic is invalid, use diastolic status
+        // }
+
+        // // Return or set the final status
+        // return finalStatus;        
     }
 
 }

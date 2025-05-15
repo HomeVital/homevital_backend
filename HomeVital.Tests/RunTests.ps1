@@ -4,6 +4,21 @@ Write-Host "=======================================================" -Foreground
 Write-Host "         Running HomeVital Test Suite                  " -ForegroundColor Cyan
 Write-Host "         (Sequential File Execution)                   " -ForegroundColor Cyan
 Write-Host "=======================================================" -ForegroundColor Cyan
+Write-Host "`nInitializing test data..." -ForegroundColor Yellow
+
+# Run the data initialization logic
+try {
+    dotnet run --project ..\HomeVital.API\HomeVital.API.csproj -- data -- test
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Data initialization failed with exit code $LASTEXITCODE" -ForegroundColor Red
+        exit $LASTEXITCODE
+    }
+    Write-Host "Data initialization completed successfully." -ForegroundColor Green
+}
+catch {
+    Write-Host "Error during data initialization: $_" -ForegroundColor Red
+    exit 1
+}
 
 # Determine the current directory and project path
 $currentDir = Get-Location
@@ -32,18 +47,22 @@ try {
     }
 
     # Define the list of test classes to run in sequence
-    # The key here is that "PatientTest" and "TeamTest" don't have an "s" at the end in your codebase
     $testClasses = @(
-        # "PatientTest", 
-        # "TeamTest",
-        "WorkerTest"
-        # "PatientPlanTests" ,
-        # "VitalTest"
+        "PatientTest", 
+        "TeamTest",
+        "WorkerTest",
+        "VitalTest",
+        "PatientPlanTests",
+        "OxygenSatTests",
+        "BloodSugarTests",
+        "BloodPressureTests",
+        "BodyWeightTests",
+        "BodyTempTests",
+        "MeasurementsTests"
     )
 
     $overallSuccess = $true
     $summary = @()
-
 
     # Run each test class in sequence
     foreach ($testClass in $testClasses) {

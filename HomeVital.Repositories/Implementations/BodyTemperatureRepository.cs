@@ -59,7 +59,7 @@ namespace HomeVital.Repositories.Implementations
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<BodyTemperatureDto>(bodyTemperature);
-        }
+        } 
 
         public async Task<BodyTemperatureDto> UpdateBodyTemperature(int id, BodyTemperatureInputModel bodyTemperatureInputModel)
         {
@@ -148,7 +148,7 @@ namespace HomeVital.Repositories.Implementations
             {
                 return VitalStatus.Normal.ToString();
             }
-            else if (bodyTemperatureInputModel.Temperature <= bodyTemperatureRange.TemperatureNotOk)
+            else if (bodyTemperatureInputModel.Temperature < bodyTemperatureRange.TemperatureNotOk)
             {
                 return VitalStatus.Normal.ToString();
             }
@@ -156,7 +156,7 @@ namespace HomeVital.Repositories.Implementations
             {
                 return VitalStatus.Raised.ToString();
             }
-            else if (bodyTemperatureInputModel.Temperature > bodyTemperatureRange.TemperatureCritical)
+            else if (bodyTemperatureInputModel.Temperature >= bodyTemperatureRange.TemperatureCritical)
             {
                 return VitalStatus.High.ToString();
             }

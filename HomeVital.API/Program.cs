@@ -125,6 +125,18 @@ bool runDummyData = _args.Contains("data", StringComparer.OrdinalIgnoreCase);
 // dont run dummy data if the command line argument "nodata" is present
 if (runDummyData)
 {
+    // if the command line argument "test" is present initialize the database then stop the application
+    if (_args.Contains("test", StringComparer.OrdinalIgnoreCase))
+    {
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<HomeVitalDbContext>();
+            DatabaseInitializer.Initialize(context);
+        }
+        return;
+    }
+
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;

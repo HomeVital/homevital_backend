@@ -8,6 +8,7 @@ namespace HomeVital.Tests.Utils
 {
     public static class AuthSetup
     {
+        
         public static async Task<string> GetAuthTokenAsync(HttpClient client, string Kennitala)
         {
             var loginData = new
@@ -27,6 +28,7 @@ namespace HomeVital.Tests.Utils
                 throw new HttpRequestException($"Failed to fetch auth token. Status code: {response.StatusCode}, Content: {errorContent}");
             }
 
+            
             // Parse the response
             var responseContent = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
