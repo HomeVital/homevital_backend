@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/b6ef596a-63e2-4053-b4fb-8f894215bd51/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/homevitaltesting",
+    "appService.deploySubpath": "."
+}

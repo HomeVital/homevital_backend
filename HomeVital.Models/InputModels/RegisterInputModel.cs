@@ -5,6 +5,7 @@ namespace HomeVital.Models.InputModels;
 public class RegisterInputModel
 {
     [Required]
-    [MinLength(5)]
-    public string UserName { get; set; } = null!;
+    [MinLength(10)]
+    [MaxLength(10)]
+    public string Kennitala { get; set; } = null!;
 }

@@ -1,11 +1,7 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
-
 using HomeVital.Repositories.dbContext;
-using HomeVital.Models.Entities;
 using HomeVital.Models.Dtos;
 using HomeVital.Repositories.Interfaces;
 using HomeVital.Models.InputModels;
@@ -23,28 +19,28 @@ public class UserRepository : IUserRepository
         _mapper = mapper;
     }
 
-    public async Task <UserDto> Register(RegisterInputModel inputModel)
+    public async Task <UserDto?> MockLogin(RegisterInputModel registerInputModel)
     {
-        if (_dbContext.Users.Any(u => u.UserName == inputModel.UserName))
+        // var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Kennitala == registerInputModel.Kennitala);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Kennitala == registerInputModel.Kennitala);
+        if (user == null)
         {
-            throw new Exception($"{inputModel.UserName} is already registered");
+            return null;
         }
+        // map the model so id is not exposed
+        user.Id = 0;
+        return _mapper.Map<UserDto>(user);
 
-        User? user = new User
-        {
-            UserName = inputModel.UserName,
-        };
-
-        _dbContext.Users.Add(user);
-        await _dbContext.SaveChangesAsync();
-
-        User? storedUser = await _dbContext.Users
-        .FirstOrDefaultAsync(u => u.Id == user.Id);
-
-        var userDto = _mapper.Map<UserDto>(storedUser);
-
-        return userDto;
     }
 
+    public async Task <UserDto?> Login(RegisterInputModel registerInputModel)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Kennitala == registerInputModel.Kennitala);
+        if (user == null)
+        {
+            return null;
+        }
+        return _mapper.Map<UserDto>(user);
+    }
 
 }
