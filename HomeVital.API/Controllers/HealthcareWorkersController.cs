@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeVital.API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/healthcareworkers")]
 
@@ -23,7 +23,7 @@ namespace HomeVital.API.Controllers
             _healthcareWorkerService = healthcareWorkerService;
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpGet] // Get all healthcare workers
         public async Task<ActionResult<Envelope<IEnumerable<HealthcareWorkerDto>>>> GetHealthcareWorkersAsync(
             [FromQuery] int pageSize = 25,
@@ -56,7 +56,7 @@ namespace HomeVital.API.Controllers
             // return Ok(healthcareWorkers);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpGet("{id}")] // Get a healthcare worker by ID
         public async Task<ActionResult<HealthcareWorkerDto>> GetHealthcareWorkerByIdAsync(int id)
         {
@@ -68,7 +68,7 @@ namespace HomeVital.API.Controllers
             return Ok(healthcareWorker);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpDelete("{id}")] // Delete a healthcare worker by ID
         public async Task<ActionResult<HealthcareWorkerDto>> DeleteHealthcareWorkerAsync(int id)
         {
@@ -80,7 +80,7 @@ namespace HomeVital.API.Controllers
             return Ok(healthcareWorker);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpPost] // Create a new healthcare worker
         public async Task<ActionResult<HealthcareWorkerDto>> CreateHealthcareWorkerAsync(HealthcareWorkerInputModel healthcareWorkerInputModel)
         {
@@ -97,7 +97,7 @@ namespace HomeVital.API.Controllers
             return Ok(newHealthcareWorker);
         }
 
-        // [Authorize(Roles = "HealthcareWorker")]
+        [Authorize(Roles = "HealthcareWorker")]
         [HttpPatch("{id}")] // Update a healthcare worker by ID
         public async Task<ActionResult<HealthcareWorkerDto>> UpdateHealthcareWorkerAsync(int id, HealthcareWorkerInputModel healthcareWorkerInputModel)
         {

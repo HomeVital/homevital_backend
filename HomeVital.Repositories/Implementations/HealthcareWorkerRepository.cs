@@ -133,38 +133,86 @@ public class HealthcareWorkerRepository : IHealthcareWorkerRepository
     public async Task<HealthcareWorkerDto> UpdateHealthcareWorker(int id, HealthcareWorkerInputModel healthcareWorker)
     {
         var healthcareWorkerToUpdate = await _dbContext.HealthcareWorkers
-            .Include(hw => hw.Teams)
-            .FirstOrDefaultAsync(x => x.ID == id);
+        .Include(hw => hw.Teams)
+        .FirstOrDefaultAsync(x => x.ID == id);
 
         if (healthcareWorkerToUpdate == null)
         {
             throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
         }
-            
-        if (healthcareWorkerToUpdate != null)
+
+        // Update other properties of the healthcare worker
+        // if they are not empty string or null
+        if (!string.IsNullOrEmpty(healthcareWorker.Name))
         {
-            
-            // Handle teams relationship properly
-            if (healthcareWorker.TeamIDs != null)
-            {
-                // Clear current teams and add the new ones
-                healthcareWorkerToUpdate.Teams.Clear();
-                
-                // Fetch actual team entities from the database
-                var teams = await _dbContext.Teams
-                    .Where(t => healthcareWorker.TeamIDs.Contains(t.ID))
-                    .ToListAsync();
-                    
-                foreach (var team in teams)
-                {
-                    healthcareWorkerToUpdate.Teams.Add(team);
-                }
-            }
-            
-            await _dbContext.SaveChangesAsync();
+            healthcareWorkerToUpdate.Name = healthcareWorker.Name;
+        }
+        if (!string.IsNullOrEmpty(healthcareWorker.Phone))
+        {
+            healthcareWorkerToUpdate.Phone = healthcareWorker.Phone;
+        }
+        if (!string.IsNullOrEmpty(healthcareWorker.Status))
+        {
+            healthcareWorkerToUpdate.Status = healthcareWorker.Status;
         }
         
+        // healthcareWorkerToUpdate.Name = healthcareWorker.Name ?? healthcareWorkerToUpdate.Name;
+        // healthcareWorkerToUpdate.Phone = healthcareWorker.Phone ?? healthcareWorkerToUpdate.Phone;
+        // healthcareWorkerToUpdate.Status = healthcareWorker.Status ?? healthcareWorkerToUpdate.Status;
+
+        // Handle teams relationship properly
+        if (healthcareWorker.TeamIDs != null)
+        {
+            // Clear current teams and add the new ones
+            healthcareWorkerToUpdate.Teams.Clear();
+
+            // Fetch actual team entities from the database
+            var teams = await _dbContext.Teams
+                .Where(t => healthcareWorker.TeamIDs.Contains(t.ID))
+                .ToListAsync();
+
+            foreach (var team in teams)
+            {
+                healthcareWorkerToUpdate.Teams.Add(team);
+            }
+        }
+
+        await _dbContext.SaveChangesAsync();
+
         return _mapper.Map<HealthcareWorkerDto>(healthcareWorkerToUpdate);
+        // var healthcareWorkerToUpdate = await _dbContext.HealthcareWorkers
+        //     .Include(hw => hw.Teams)
+        //     .FirstOrDefaultAsync(x => x.ID == id);
+
+        // if (healthcareWorkerToUpdate == null)
+        // {
+        //     throw new ResourceNotFoundException("Healthcare worker not found with ID: " + id);
+        // }
+            
+        // if (healthcareWorkerToUpdate != null)
+        // {
+            
+        //     // Handle teams relationship properly
+        //     if (healthcareWorker.TeamIDs != null)
+        //     {
+        //         // Clear current teams and add the new ones
+        //         healthcareWorkerToUpdate.Teams.Clear();
+                
+        //         // Fetch actual team entities from the database
+        //         var teams = await _dbContext.Teams
+        //             .Where(t => healthcareWorker.TeamIDs.Contains(t.ID))
+        //             .ToListAsync();
+                    
+        //         foreach (var team in teams)
+        //         {
+        //             healthcareWorkerToUpdate.Teams.Add(team);
+        //         }
+        //     }
+            
+        //     await _dbContext.SaveChangesAsync();
+        // }
+        
+        // return _mapper.Map<HealthcareWorkerDto>(healthcareWorkerToUpdate);
     }
     
 }

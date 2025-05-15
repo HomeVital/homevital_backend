@@ -148,7 +148,7 @@ namespace HomeVital.Repositories.Implementations
             {
                 return VitalStatus.Normal.ToString();
             }
-            else if (oxygenSaturationInputModel.OxygenSaturationValue >= oxygenSaturationRange.OxygenSaturationRaised)
+            else if (oxygenSaturationInputModel.OxygenSaturationValue > oxygenSaturationRange.OxygenSaturationRaised)
             {
                 return VitalStatus.Raised.ToString();
             }

@@ -182,62 +182,63 @@ namespace HomeVital.Tests
         }
 
         // Test an endpoint that deletes a team
-        // [Fact]
-        // public async Task TestTeamControllerDelete()
-        // {
-        //     await WaitForDatabaseAsync();
+        [Fact]
+        public async Task TestTeamControllerDelete()
+        {
+            await WaitForDatabaseAsync();
 
-        //     // Arrange
-        //     var client = _factory.CreateClient();
-        //     var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
-        //     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
+            // Arrange
+            var client = _factory.CreateClient();
+            var authToken = await AuthSetup.GetAuthTokenAsync(client, Constants.WorkerKennitala);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authToken);
 
-        //     // Get the team to be deleted
-        //     var getResponse = await client.GetAsync("/api/teams/1");
-        //     getResponse.EnsureSuccessStatusCode();
-        //     var getContent = await getResponse.Content.ReadAsStringAsync();
-        //     var teamToDelete = JsonConvert.DeserializeObject<TeamDto>(getContent);
-        //     Assert.NotNull(teamToDelete);
-        //     // check what workers are in the team and what patients are in the team and check if the status for team is updated
-        //     var workersInTeam = teamToDelete.WorkerIDs;
-        //     var patientsInTeam = teamToDelete.PatientIDs;
-        //     Assert.NotNull(workersInTeam);
-        //     Assert.NotNull(patientsInTeam);
+            // Get the team to be deleted
+            var getResponse = await client.GetAsync("/api/teams/4");
+            getResponse.EnsureSuccessStatusCode();
+            var getContent = await getResponse.Content.ReadAsStringAsync();
+            var teamToDelete = JsonConvert.DeserializeObject<TeamDto>(getContent);
+            Assert.NotNull(teamToDelete);
+            // check what workers are in the team and what patients are in the team and check if the status for team is updated
+            var workersInTeam = teamToDelete.WorkerIDs;
+            var patientsInTeam = teamToDelete.PatientIDs;
+            Assert.NotNull(workersInTeam);
+            Assert.NotNull(patientsInTeam);
 
-        //     // Act
-        //     var response = await client.DeleteAsync("/api/teams/1");
-        //     response.EnsureSuccessStatusCode();
+            // Act
+            var response = await client.DeleteAsync("/api/teams/4");
+            response.EnsureSuccessStatusCode();
 
-        //     // Assert
-        //     var content = await response.Content.ReadAsStringAsync();
-        //     Assert.Equal("{}", content);
+            // Assert
+            var content = await response.Content.ReadAsStringAsync();
+            // content is the team that was deleted
+            Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
 
-        //     // check if the team is deleted
-        //     var checkResponse = await client.GetAsync("/api/teams/1");
-        //     Assert.Equal(System.Net.HttpStatusCode.NotFound, checkResponse.StatusCode);
+            // check if the team is deleted
+            var checkResponse = await client.GetAsync("/api/teams/4");
+            Assert.Equal(System.Net.HttpStatusCode.NotFound, checkResponse.StatusCode);
             
-        //     // check if the workers in the team are updated
-        //     var checkWorkersResponse = await client.GetAsync("/api/healthcareworkers/1");
-        //     checkWorkersResponse.EnsureSuccessStatusCode();
-        //     var checkWorkersContent = await checkWorkersResponse.Content.ReadAsStringAsync();
-        //     var updatedWorker = JsonConvert.DeserializeObject<HealthcareWorker>(checkWorkersContent);
-        //     // check that the workers teamID's list does not contain the deleted teamID 1 
+            // check if the workers in the team are updated
+            var checkWorkersResponse = await client.GetAsync("/api/healthcareworkers/18");
+            checkWorkersResponse.EnsureSuccessStatusCode();
+            var checkWorkersContent = await checkWorkersResponse.Content.ReadAsStringAsync();
+            var updatedWorker = JsonConvert.DeserializeObject<HealthcareWorker>(checkWorkersContent);
+            // check that the workers teamID's list does not contain the deleted teamID 1 
             
-        //     // Extract the IDs from the worker's Teams collection
-        //     var teamIds = updatedWorker.Teams.Select(team => team.ID).ToHashSet();
+            // Extract the IDs from the worker's Teams collection
+            var teamIds = updatedWorker.Teams.Select(team => team.ID).ToHashSet();
 
-        //     // Check that the TeamID 1 is not in the worker's Teams
-        //     Assert.DoesNotContain(1, teamIds);
+            // Check that the TeamID 1 is not in the worker's Teams
+            Assert.DoesNotContain(1, teamIds);
 
-        //     // check if the patients in the team are updated and that their TeamID is set to 0
-        //     var checkPatientsResponse = await client.GetAsync("/api/patients/1");
-        //     checkPatientsResponse.EnsureSuccessStatusCode();
-        //     var checkPatientsContent = await checkPatientsResponse.Content.ReadAsStringAsync();
-        //     var updatedPatient = JsonConvert.DeserializeObject<Patient>(checkPatientsContent);
-        //     // check that the patients TeamID is set to 0
-        //     Assert.Equal(0, updatedPatient.TeamID);
+            // check if the patients in the team are updated and that their TeamID is set to 0
+            var checkPatientsResponse = await client.GetAsync("/api/patients/4");
+            checkPatientsResponse.EnsureSuccessStatusCode();
+            var checkPatientsContent = await checkPatientsResponse.Content.ReadAsStringAsync();
+            var updatedPatient = JsonConvert.DeserializeObject<Patient>(checkPatientsContent);
+            // check that the patients TeamID is set to 0
+            Assert.Equal(0, updatedPatient.TeamID);
 
-        // }
+        }
 
     }
 }

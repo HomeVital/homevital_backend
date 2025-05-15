@@ -163,11 +163,8 @@ namespace HomeVital.Tests
             Assert.Equal("Freyr Björgvin", worker.Name);
 
             // Arrange
-            var updatedWorker = new HealthcareWorker
-            {
-                Name = "Updated Worker"
-                
-            };
+            var updatedWorker = worker;
+            updatedWorker.Name = "Updated Worker";
             var content = new StringContent(JsonConvert.SerializeObject(updatedWorker), System.Text.Encoding.UTF8, "application/json");
 
             // Act

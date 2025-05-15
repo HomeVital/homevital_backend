@@ -175,7 +175,7 @@ namespace HomeVital.Repositories.Implementations
                 {
                     ID = bp.ID,
                     PatientID = bp.PatientID,
-                    TeamID =(int)bp.Patient.TeamID!,
+                    TeamID = bp.Patient.Team != null ? (int)bp.Patient.TeamID! : 0, 
                     MeasurementType = "BloodPressure",
                     MeasurementDate = bp.Date,
                     MeasurementValues = new MeasurementValues
@@ -206,7 +206,7 @@ namespace HomeVital.Repositories.Implementations
                 {
                     ID = bs.ID,
                     PatientID = bs.PatientID,
-                    TeamID =(int)bs.Patient.TeamID!,
+                    TeamID = bs.Patient.Team != null ? (int)bs.Patient.TeamID! : 0,
                     MeasurementType = "BloodSugar",
                     MeasurementDate = bs.Date,
                     MeasurementValues = new MeasurementValues
@@ -231,7 +231,7 @@ namespace HomeVital.Repositories.Implementations
                 {
                     ID = bw.ID,
                     PatientID = bw.PatientID,
-                    TeamID =(int)bw.Patient.TeamID!,
+                    TeamID = bw.Patient.Team != null ? (int)bw.Patient.TeamID! : 0,
                     MeasurementType = "BodyWeight",
                     MeasurementDate = bw.Date,
                     MeasurementValues = new MeasurementValues
@@ -256,7 +256,7 @@ namespace HomeVital.Repositories.Implementations
                 {
                     ID = bt.ID,
                     PatientID = bt.PatientID,
-                    TeamID =(int)bt.Patient.TeamID!,
+                    TeamID = bt.Patient.Team != null ? (int)bt.Patient.TeamID! : 0,
                     MeasurementType = "BodyTemperature",
                     MeasurementDate = bt.Date,
                     MeasurementValues = new MeasurementValues
@@ -281,7 +281,7 @@ namespace HomeVital.Repositories.Implementations
                 {
                     ID = os.ID,
                     PatientID = os.PatientID,
-                    TeamID =(int)os.Patient.TeamID!,
+                    TeamID = os.Patient.Team != null ? (int)os.Patient.TeamID! : 0,
                     MeasurementType = "OxygenSaturation",
                     MeasurementDate = os.Date,
                     MeasurementValues = new MeasurementValues

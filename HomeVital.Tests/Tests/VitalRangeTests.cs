@@ -110,9 +110,12 @@ namespace HomeVital.Tests
         }
 
         [Theory]
-        [InlineData(35.5f, "High")]            // Below TemperatureUnderAverage
+        [InlineData(35.5f, "Raised")]            // Below TemperatureUnderAverage
+        [InlineData(35.96f, "Normal")]         // Between TemperatureUnderAverage and TemperatureGood
         [InlineData(36.0f, "Normal")]         // Equal to TemperatureGood
+        [InlineData(37.1f, "Normal")]         // Between TemperatureGood and TemperatureNotOk
         [InlineData(37.5f, "Raised")]        // Between TemperatureNotOk and TemperatureCritical
+        [InlineData(38.1f, "Raised")]        // Between TemperatureNotOk and TemperatureCritical
         [InlineData(38.5f, "High")]         // Above TemperatureCritical
         [InlineData(80.0f, "High")]         // abnormal input
         public async Task TestBodyTemperatureRanges(float temperature, string expectedStatus)
@@ -184,6 +187,8 @@ namespace HomeVital.Tests
         [InlineData(92, "Raised")]       // Between OxygenSaturationHigh and OxygenSaturationRaised
         [InlineData(90, "High")]        // Below OxygenSaturationHigh
         [InlineData(55, "High")]        // Below OxygenSaturationHigh
+        [InlineData(100, "Normal")]      // Above OxygenSaturationGood
+        [InlineData(101, "Normal")]        // 0-100% saturation so invalid input but set to normal
         public async Task TestOxygenSaturationRanges(int oxygenSaturation, string expectedStatus)
         {
             // Wait for the database to be ready

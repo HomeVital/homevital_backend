@@ -7,6 +7,7 @@ namespace HomeVital.Tests.Utils
         public const int MaxRetryAttempts = 3;
         // public const string DefaultLanguage = "en-US";
         public const string WorkerKennitala = "1234567890";
-        public const string PatientKennitala = "6666666666";
+        public const string PatientKennitala = "1010101010";
+        public const int PatientId = 14;
     }
 }

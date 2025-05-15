@@ -175,7 +175,7 @@ namespace HomeVital.Repositories.Implementations
             {
                 return VitalStatus.Raised.ToString();
             }
-            else if (bloodsugarInputModel.BloodsugarLevel > vitalRangeBloodsugar.BloodSugarHigh)
+            else if (bloodsugarInputModel.BloodsugarLevel >= vitalRangeBloodsugar.BloodSugarHigh)
             {
                 return VitalStatus.High.ToString();
             }

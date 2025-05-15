@@ -604,8 +604,8 @@ namespace HomeVital.Repositories
                     new BodyWeight { PatientID = 3, Weight = 86.2f, Date = DateTime.UtcNow.AddDays(-1), Status = "High" },
                     
                     new BodyWeight { PatientID = 4, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-457), Status = "Normal" },
-                    new BodyWeight { PatientID = 4, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-85), Status = "High" },
-                    new BodyWeight { PatientID = 4, Weight = 90.5f, Date = DateTime.UtcNow.AddDays(-7), Status = "High" },
+                    new BodyWeight { PatientID = 4, Weight = 70.2f, Date = DateTime.UtcNow.AddDays(-85), Status = "High" },
+                    new BodyWeight { PatientID = 4, Weight = 70.7f, Date = DateTime.UtcNow.AddDays(-7), Status = "High" },
                     
                     new BodyWeight { PatientID = 5, Weight = 70.5f, Date = DateTime.UtcNow.AddDays(-3), Status = "Normal" },
                     new BodyWeight { PatientID = 5, Weight = 80.5f, Date = DateTime.UtcNow.AddDays(-66), Status = "High" },
