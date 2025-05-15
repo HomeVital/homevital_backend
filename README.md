@@ -58,11 +58,15 @@ cd .\HomeVital.API\
 ```sh
 dotnet run
 ```
-10. Open your web browser and navigate to http://localhost:5118/ or http://localhost:5118/swagger to see the API documentation. (Under LaunchSettings.json you can change the port if you want to run it on a different port.)
+10. Run the following command to run API with Dummy data
+```sh
+dotnet run data
+```
+11. Open your web browser and navigate to http://localhost:5118/ or http://localhost:5118/swagger to see the API documentation. (Under LaunchSettings.json you can change the port if you want to run it on a different port.)
 
-11. You can use Postman or any other API testing tool to test the API endpoints.
+12. You can use Postman or any other API testing tool to test the API endpoints.
 
-12. You can use the SQL Server Management Studio or Pgadmin to connect to the database and see the data that is being stored in the database.
+13. You can use the SQL Server Management Studio or Pgadmin to connect to the database and see the data that is being stored in the database.
 
 
 
