@@ -88,15 +88,15 @@ namespace HomeVital.Repositories
             if (!context.Patients.Any())
             {
                 context.Patients.AddRange(
-                    // 20 Patients
-                    new Patient { Name = "Þórir Gunnar Valgeirsson", Phone = "8834575", Address = "Geislagata 9, 600 Akureyri", TeamID = 3 },
-                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "8957970", Address = "Eyrarlandsvegur 1, 600 Akureyri,", TeamID = 2 },
+                    // 20 Patients 
+                    new Patient { Name = "Guðrún Guðmundsdóttir", Phone = "8834575", Address = "Geislagata 9, 600 Akureyri", TeamID = 3 },
+                    new Patient { Name = "Kolbrún Eggertsdóttir", Phone = "8957970", Address = "Eyrarlandsvegur 1, 600 Akureyri,", TeamID = 2 },
                     new Patient { Name = "Aron Ingi Jónsson", Phone = "8554013", Address = "Strandgata 12, 600 Akureyri", TeamID = 3 },
                     new Patient { Name = "Sindri Þór Guðmundsson", Phone = "8037056", Address = "Eyrarlandsvegur 10, 600 Akureyri", TeamID = 4 },
                     new Patient { Name = "Sturla Emil Sturluson", Phone = "8533691", Address = "Brekkugata 17, 600 Akureyri", TeamID = 5 },
                     new Patient { Name = "Jón Jónsson", Phone = "8255942", Address = "Þingvallastræti 23, 600 Akureyri", TeamID = 1 },
                     new Patient { Name = "Sigurður Sigurðsson", Phone = "8404784", Address = "Eyrarlandsvegur 26, 600 Akureyri", TeamID = 2 },
-                    new Patient { Name = "Guðrún Guðmundsdóttir", Phone = "8926335", Address = "Eyrarlandsvegur 1, 600 Akureyri", TeamID = 5 },
+                    new Patient { Name = "Þórir Gunnar Valgeirsson", Phone = "8926335", Address = "Eyrarlandsvegur 1, 600 Akureyri", TeamID = 5 },
                     new Patient { Name = "Sigríður Eggertsdóttir", Phone = "8363273", Address = "Glerárgata 22, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Einar Einarsson", Phone = "8328049", Address = "Skipagata 9, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Anna Björnsdóttir", Phone = "8060289", Address = "Strandgata 23, 600 Akureyri", TeamID = 3 },
@@ -108,7 +108,7 @@ namespace HomeVital.Repositories
                     new Patient { Name = "Gunnar Gunnarsson", Phone = "8766134", Address = "Glerárgata 32, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Elín Elínardóttir", Phone = "8257583", Address = "Aðalstræti 60, 600 Akureyri", TeamID = 3 },
                     new Patient { Name = "Sigurður Sigurðsson", Phone = "8108364", Address = "Strandgata 1, 600 Akureyri", TeamID = 1 },
-                    new Patient { Name = "Kolbrún Guðmundsdóttir", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 },
+                    new Patient { Name = "Jakub Ingvar Pitak", Phone = "8834930", Address = "Skólastígur 3, 600 Akureyri", TeamID = 2 },
                     new Patient { Name = "Patient For TESTS", Phone = "8554013", Address = "Eyrarlandsvegur 12, 600 Akureyri", TeamID = 3 }
                 );
                 context.SaveChanges();
