@@ -76,7 +76,7 @@ try {
         
         # Run tests for this file with detailed diagnostics
         Write-Host "Starting tests for $testClass..." -ForegroundColor Yellow
-        dotnet test $testProjectPath --filter "$filter" --blame-hang-timeout 60000
+        dotnet test $testProjectPath --filter "$filter" --verbosity minimal
         
         # Track results
         if ($LASTEXITCODE -eq 0) {
@@ -92,7 +92,7 @@ try {
         Write-Host "$separator`n" -ForegroundColor Blue
         
         # Optional: Add a small pause between test files to make output more readable
-        Start-Sleep -Seconds 2
+        # Start-Sleep -Seconds 2
     }
 
     # Show overall summary
