@@ -99,7 +99,7 @@ namespace HomeVital.Tests
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(bloodSugarInputModel), System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("/api/bloodsugar/1", content);
+            var response = await client.PostAsync("/api/bloodsugar/2", content);
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
